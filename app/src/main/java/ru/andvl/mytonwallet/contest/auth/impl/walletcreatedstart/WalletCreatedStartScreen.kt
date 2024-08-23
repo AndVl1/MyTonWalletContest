@@ -41,21 +41,21 @@ fun WalletCreatedStartScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = stringResource(R.string.wallet_created_start_screen_title),
+            text = stringResource(R.string.auth_wallet_created_start_screen_title),
             style = MaterialTheme.typography.headlineMedium
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = stringResource(R.string.wallet_created_start_screen_description),
+            text = stringResource(R.string.auth_wallet_created_start_screen_description),
             style = MaterialTheme.typography.bodyLarge
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
         TonWalletButton(
-            text = stringResource(R.string.wallet_created_set_up_passcode),
+            text = stringResource(R.string.auth_wallet_created_set_up_passcode),
             onClick = onSetUpClicked,
             modifier = Modifier
                 .fillMaxWidth()
