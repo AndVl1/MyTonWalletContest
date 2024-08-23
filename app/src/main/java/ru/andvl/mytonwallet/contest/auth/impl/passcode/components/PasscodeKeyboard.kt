@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastForEach
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeButtonItem
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeState
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
@@ -30,12 +31,12 @@ fun PasscodeKeyboard(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        buttons.chunked(3).forEach { rowButtons ->
+        buttons.chunked(3).fastForEach { rowButtons ->
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                rowButtons.forEach { button ->
+                rowButtons.fastForEach { button ->
                     when (button) {
                         is PasscodeButtonItem.DigitButton -> {
                             PasscodeButton(
