@@ -17,12 +17,12 @@ fun PasscodeLockTitleWithDescription(modifier: Modifier = Modifier) {
         modifier = modifier
     ) {
         Text(
-            text = stringResource(R.string.passcode_lock_screen_title),
+            text = stringResource(R.string.auth_passcode_lock_screen_title),
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Medium,
         )
         Text(
-            text = stringResource(R.string.passcode_lock_screen_description),
+            text = stringResource(R.string.auth_passcode_lock_screen_description),
             style = MaterialTheme.typography.bodyLarge,
         )
     }

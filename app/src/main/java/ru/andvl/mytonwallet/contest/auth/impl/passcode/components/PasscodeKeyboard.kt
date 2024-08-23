@@ -16,13 +16,14 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
+import kotlinx.collections.immutable.ImmutableList
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeButtonItem
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeState
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
 fun PasscodeKeyboard(
-    buttons: List<List<PasscodeButtonItem>>,
+    buttons: ImmutableList<ImmutableList<PasscodeButtonItem>>,
     onClick: (PasscodeButtonItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
