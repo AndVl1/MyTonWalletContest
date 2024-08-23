@@ -14,10 +14,12 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.defaultComponentContext
+import com.arkivanov.decompose.extensions.compose.stack.animation.LocalStackAnimationProvider
 import org.koin.android.ext.android.get
 import ru.andvl.mytonwallet.contest.root.api.LocalRootNavigation
 import ru.andvl.mytonwallet.contest.root.api.RootDecomposeComponent
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
+import ru.andvl.mytonwallet.contest.ui.utils.WalletStackAnimationProvider
 
 class MainActivity : ComponentActivity() {
     private val rootComponentFactory: RootDecomposeComponent.Factory = get()
@@ -29,7 +31,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyTonWalletContestTheme {
                 CompositionLocalProvider(
-                    LocalRootNavigation provides root
+                    LocalRootNavigation provides root,
+                    LocalStackAnimationProvider provides WalletStackAnimationProvider
                 ) {
                     root.Render(
                         Modifier.fillMaxSize()
