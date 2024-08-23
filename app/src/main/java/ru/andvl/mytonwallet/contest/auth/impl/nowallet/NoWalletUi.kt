@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
@@ -57,28 +56,18 @@ fun NoWalletScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         ButtonPrimary(
+            text = stringResource(R.string.create_new_wallet),
             onClick = onCreateClicked,
             modifier = Modifier.fillMaxWidth(0.77f)
-        ) {
-            Text(
-                text = stringResource(R.string.create_new_wallet),
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         ButtonSecondary(
+            text = stringResource(R.string.import_existing_wallet),
             onClick = onImportClicked,
             modifier = Modifier.fillMaxWidth(0.77f)
-        ) {
-            Text(
-                text = stringResource(R.string.import_existing_wallet),
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
+        )
     }
 }
 
