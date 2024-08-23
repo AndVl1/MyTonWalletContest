@@ -1,12 +1,27 @@
 package ru.andvl.mytonwallet.contest.auth.impl.nowallet
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import ru.andvl.mytonwallet.contest.auth.impl.model.AuthNavigationConfig
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import ru.andvl.mytonwallet.contest.R
+import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
+import ru.andvl.mytonwallet.contest.ui.theme.components.ButtonPrimary
+import ru.andvl.mytonwallet.contest.ui.theme.components.ButtonSecondary
 
 @Composable
 fun NoWalletScreen(
@@ -14,12 +29,66 @@ fun NoWalletScreen(
     onImportClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier.fillMaxSize()) {
-        Button(onCreateClicked) {
-            Text("Create New Wallet")
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(R.drawable.diamond),
+            contentDescription = null,
+            modifier = Modifier.size(124.dp)
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = stringResource(R.string.mytonwallet),
+            style = MaterialTheme.typography.headlineMedium
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = stringResource(R.string.no_wallet_screen_description),
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        ButtonPrimary(
+            onClick = onCreateClicked,
+            modifier = Modifier.fillMaxWidth(0.77f)
+        ) {
+            Text(
+                text = stringResource(R.string.create_new_wallet),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold
+            )
         }
-        Button(onImportClicked) {
-            Text("Import Existing Wallet")
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        ButtonSecondary(
+            onClick = onImportClicked,
+            modifier = Modifier.fillMaxWidth(0.77f)
+        ) {
+            Text(
+                text = stringResource(R.string.import_existing_wallet),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold
+            )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NoWalletScreenPreview() {
+    MyTonWalletContestTheme {
+        NoWalletScreen(
+            onCreateClicked = {},
+            onImportClicked = {}
+        )
     }
 }
