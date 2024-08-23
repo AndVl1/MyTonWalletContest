@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,32 +43,34 @@ fun NoWalletScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = stringResource(R.string.mytonwallet),
+            text = stringResource(R.string.auth_mytonwallet_title),
             style = MaterialTheme.typography.headlineMedium
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = stringResource(R.string.no_wallet_screen_description),
+            text = stringResource(R.string.auth_no_wallet_screen_description),
             style = MaterialTheme.typography.bodyLarge
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
         TonWalletButton(
-            text = stringResource(R.string.create_new_wallet),
+            text = stringResource(R.string.auth_create_new_wallet),
             onClick = onCreateClicked,
-            modifier = Modifier.fillMaxWidth(0.77f)
+            modifier = Modifier.fillMaxWidth()
+                .padding(horizontal = 24.dp)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         TonWalletButton(
-            text = stringResource(R.string.import_existing_wallet),
+            text = stringResource(R.string.auth_import_existing_wallet),
             buttonStyle = ButtonStyle.SECONDARY,
             onClick = onImportClicked,
-            modifier = Modifier.fillMaxWidth(0.77f)
+            modifier = Modifier.fillMaxWidth()
+                .padding(horizontal = 24.dp)
         )
     }
 }
