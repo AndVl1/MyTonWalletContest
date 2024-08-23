@@ -1,7 +1,6 @@
 package ru.andvl.mytonwallet.contest.ui.theme.components
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -11,16 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
 fun ButtonPrimary(
+    text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable (RowScope.() -> Unit)
 ) {
     Button(
         onClick = onClick,
@@ -34,15 +35,20 @@ fun ButtonPrimary(
             contentColor = MaterialTheme.colorScheme.onPrimary
         ),
         modifier = modifier,
-        content = content
-    )
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold
+        )
+    }
 }
 
 @Composable
 fun ButtonSecondary(
+    text: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    content: @Composable (RowScope.() -> Unit)
+    modifier: Modifier = Modifier
 ) {
     TextButton(
         onClick = onClick,
@@ -54,9 +60,14 @@ fun ButtonSecondary(
         colors = ButtonDefaults.textButtonColors(
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer
         ),
-        modifier = modifier,
-        content = content
-    )
+        modifier = modifier
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold
+        )
+    }
 }
 
 @Preview(showBackground = true)
@@ -64,15 +75,10 @@ fun ButtonSecondary(
 fun PrimaryButtonPreview() {
     MyTonWalletContestTheme {
         ButtonPrimary(
+            text = stringResource(R.string.import_existing_wallet),
             onClick = {},
             modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = "Create New Wallet",
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
+        )
     }
 }
 
@@ -81,14 +87,9 @@ fun PrimaryButtonPreview() {
 fun ButtonSecondaryPreview() {
     MyTonWalletContestTheme {
         ButtonSecondary(
+            text = stringResource(R.string.import_existing_wallet),
             onClick = {},
             modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = "Create New Wallet",
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
+        )
     }
 }
