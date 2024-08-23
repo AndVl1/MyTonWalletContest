@@ -25,7 +25,7 @@ data class PasscodeState(
         )
     ),
 
-    val correctPasscodeLength: Int = 4,
+    val correctPasscodeLength: Int = PasscodeLength.FOUR.value,
     val inputPasscode: String = "",
     val isPasswordIncorrect: Boolean = false
 ) : State
