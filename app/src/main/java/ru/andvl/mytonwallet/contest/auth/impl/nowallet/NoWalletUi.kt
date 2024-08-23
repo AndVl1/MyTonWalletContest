@@ -19,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
-import ru.andvl.mytonwallet.contest.ui.theme.components.ButtonPrimary
-import ru.andvl.mytonwallet.contest.ui.theme.components.ButtonSecondary
+import ru.andvl.mytonwallet.contest.ui.theme.components.ButtonStyle
+import ru.andvl.mytonwallet.contest.ui.theme.components.TonWalletButton
 
 @Composable
 fun NoWalletScreen(
@@ -55,7 +55,7 @@ fun NoWalletScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        ButtonPrimary(
+        TonWalletButton(
             text = stringResource(R.string.create_new_wallet),
             onClick = onCreateClicked,
             modifier = Modifier.fillMaxWidth(0.77f)
@@ -63,8 +63,9 @@ fun NoWalletScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        ButtonSecondary(
+        TonWalletButton(
             text = stringResource(R.string.import_existing_wallet),
+            buttonStyle = ButtonStyle.SECONDARY,
             onClick = onImportClicked,
             modifier = Modifier.fillMaxWidth(0.77f)
         )
