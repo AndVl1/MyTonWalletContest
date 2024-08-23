@@ -37,11 +37,7 @@ class AuthDecomposeComponentImpl(
         config: AuthNavigationConfig.StartDestination,
         componentContext: ComponentContext
     ): DecomposeComponent = when (config) {
-        AuthNavigationConfig.NoWalletScreen -> NoCurrentWalletDecomposeComponentImpl(
-            componentContext,
-            navigation
-        )
-
+        AuthNavigationConfig.NoWalletScreen -> NoCurrentWalletDecomposeComponentImpl(componentContext, navigation)
         AuthNavigationConfig.PasscodeScreen -> PasscodeDecomposeComponentImpl(
             componentContext,
             navigation
@@ -56,19 +52,14 @@ class AuthDecomposeComponentImpl(
         is AuthNavigationConfig.RecoveryListScreen -> TODO()
         is AuthNavigationConfig.RecoveryTestScreen -> TODO()
         is AuthNavigationConfig.SetPasswordScreen -> TODO()
-        is AuthNavigationConfig.WalletCreatedStartScreen -> WalletCreatedStartDecomposeComponentImpl(
-            componentContext,
-            navigation
-        )
+        is AuthNavigationConfig.WalletCreatedStartScreen -> TODO()
     }
 
     private fun walletImportFlow(
         config: AuthNavigationConfig.WalletImportFlow,
         componentContext: ComponentContext
     ): DecomposeComponent = when (config) {
-        is AuthNavigationConfig.WalletImportScreen -> WalletImportDecomposeComponentImpl(
-            componentContext
-        )
+        is AuthNavigationConfig.WalletImportScreen -> WalletImportDecomposeComponentImpl(componentContext)
     }
 
     private fun getInitialConfiguration(launchType: AuthLaunchType): AuthNavigationConfig {
