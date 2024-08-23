@@ -80,7 +80,7 @@ fun TonWalletButton(
 fun PrimaryButtonPreview() {
     MyTonWalletContestTheme {
         TonWalletButton(
-            text = stringResource(R.string.import_existing_wallet),
+            text = stringResource(R.string.auth_import_existing_wallet),
             buttonStyle = ButtonStyle.PRIMARY,
             onClick = {},
             modifier = Modifier.padding(16.dp)
@@ -93,7 +93,7 @@ fun PrimaryButtonPreview() {
 fun ButtonSecondaryPreview() {
     MyTonWalletContestTheme {
         TonWalletButton(
-            text = stringResource(R.string.import_existing_wallet),
+            text = stringResource(R.string.auth_import_existing_wallet),
             buttonStyle = ButtonStyle.SECONDARY,
             onClick = {},
             modifier = Modifier.padding(16.dp)

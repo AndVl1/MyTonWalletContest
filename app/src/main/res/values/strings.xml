@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyTonWalletContest</string>
-    <string name="mytonwallet">MyTonWallet</string>
-    <string name="no_wallet_screen_description">Securely store and send crypto.</string>
-    <string name="create_new_wallet">Create New Wallet</string>
-    <string name="import_existing_wallet">Import Existing Wallet</string>
+    <string name="auth_mytonwallet_title">MyTonWallet</string>
+    <string name="auth_no_wallet_screen_description">Securely store and send crypto.</string>
+    <string name="auth_create_new_wallet">Create New Wallet</string>
+    <string name="auth_import_existing_wallet">Import Existing Wallet</string>
 </resources>
