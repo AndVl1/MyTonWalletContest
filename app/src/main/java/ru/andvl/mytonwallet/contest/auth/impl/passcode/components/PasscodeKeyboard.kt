@@ -22,7 +22,7 @@ import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
 fun PasscodeKeyboard(
-    buttons: List<PasscodeButtonItem>,
+    buttons: List<List<PasscodeButtonItem>>,
     onClick: (PasscodeButtonItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -31,7 +31,7 @@ fun PasscodeKeyboard(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        buttons.chunked(3).fastForEach { rowButtons ->
+        buttons.fastForEach { rowButtons ->
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
