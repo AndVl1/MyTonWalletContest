@@ -2,6 +2,11 @@ package ru.andvl.mytonwallet.contest.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val primaryLight = Color(0xFF1F8EFE)
+val onPrimaryLight = Color(0xFFFFFFFF)
+val primaryContainerLight = Color(0xFFFFFFFF)
+val onPrimaryContainerLight = Color(0xFF1F8EFE)
+
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)

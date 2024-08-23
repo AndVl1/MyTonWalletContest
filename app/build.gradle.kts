@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.decompose.compose)
     implementation(libs.koin)
     implementation(libs.koin.compose)
+    implementation(libs.androidx.ui.text.google.fonts)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
