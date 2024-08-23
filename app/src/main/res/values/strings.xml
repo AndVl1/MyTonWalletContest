@@ -6,4 +6,7 @@
     <string name="auth_import_existing_wallet">Import Existing Wallet</string>
     <string name="passcode_lock_screen_title">Unlock to use wallet</string>
     <string name="passcode_lock_screen_description">Enter passcode or use fingerprint</string>
+    <string name="wallet_created_start_screen_title">Wallet created</string>
+    <string name="wallet_created_start_screen_description">Create a passcode to protect it.</string>
+    <string name="wallet_created_set_up_passcode">Set Up Passcode</string>
 </resources>
