@@ -71,6 +71,9 @@ dependencies {
     implementation(libs.koin)
     implementation(libs.koin.compose)
     implementation(libs.androidx.ui.text.google.fonts)
+
+    implementation(libs.kotlinx.collections.immutable)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -38,7 +38,10 @@ class AuthDecomposeComponentImpl(
         componentContext: ComponentContext
     ): DecomposeComponent = when (config) {
         AuthNavigationConfig.NoWalletScreen -> NoCurrentWalletDecomposeComponentImpl(componentContext, navigation)
-        AuthNavigationConfig.PasscodeScreen -> TODO()
+        AuthNavigationConfig.PasscodeScreen -> PasscodeDecomposeComponentImpl(
+            componentContext,
+            navigation
+        )
     }
 
     private fun walletCreatedFlow(
@@ -61,8 +64,8 @@ class AuthDecomposeComponentImpl(
 
     private fun getInitialConfiguration(launchType: AuthLaunchType): AuthNavigationConfig {
         return when (launchType) {
-            AuthLaunchType.Passcode -> AuthNavigationConfig.NoWalletScreen
-            AuthLaunchType.Empty -> AuthNavigationConfig.PasscodeScreen
+            AuthLaunchType.Passcode -> AuthNavigationConfig.PasscodeScreen
+            AuthLaunchType.Empty -> AuthNavigationConfig.NoWalletScreen
         }
     }
 
