@@ -18,21 +18,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.andvl.mytonwallet.contest.auth.impl.passcode.utils.vibrateOnError
 
 @Composable
-fun AnimatedPasscodeErrorText(
+fun AnimatedPasscodeErrorTextWithVibration(
     triggerError: Boolean,
     onErrorHandled: () -> Unit
 ) {
-//    val context = LocalContext.current
+    val context = LocalContext.current
     val offsetX = remember { Animatable(0f) }
 
     LaunchedEffect(triggerError) {
         if (triggerError) {
-            // TODO vibrateOnError
-//            vibrateOnError(context)
+            vibrateOnError(context)
             offsetX.animateTo(
                 targetValue = 0f,
                 animationSpec = keyframes {
@@ -59,7 +60,7 @@ fun AnimatedPasscodeErrorTextWithButtonPreview() {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        AnimatedPasscodeErrorText(
+        AnimatedPasscodeErrorTextWithVibration(
             triggerError = triggerError,
             onErrorHandled = { triggerError = false }
         )
