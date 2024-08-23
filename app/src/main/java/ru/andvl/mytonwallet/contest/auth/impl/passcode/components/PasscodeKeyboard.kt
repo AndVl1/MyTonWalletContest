@@ -15,13 +15,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastForEach
+import kotlinx.collections.immutable.ImmutableList
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeButtonItem
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeState
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
 fun PasscodeKeyboard(
-    buttons: List<PasscodeButtonItem>,
+    buttons: ImmutableList<ImmutableList<PasscodeButtonItem>>,
     onClick: (PasscodeButtonItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -30,12 +32,12 @@ fun PasscodeKeyboard(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        buttons.chunked(3).forEach { rowButtons ->
+        buttons.fastForEach { rowButtons ->
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                rowButtons.forEach { button ->
+                rowButtons.fastForEach { button ->
                     when (button) {
                         is PasscodeButtonItem.DigitButton -> {
                             PasscodeButton(
