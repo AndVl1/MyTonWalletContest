@@ -30,7 +30,7 @@ fun NoWalletScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun NoWalletScreenPreview() {
+private fun NoWalletScreenPreview() {
     MyTonWalletContestTheme {
         NoWalletScreen(
             state = NoWalletState.Init,

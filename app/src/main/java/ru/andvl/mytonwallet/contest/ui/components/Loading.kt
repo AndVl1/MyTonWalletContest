@@ -65,7 +65,7 @@ fun LoadingBoxPreview() {
     showBackground = true
 )
 @Composable
-fun LoadingDialogPreview() {
+private fun LoadingDialogPreview() {
     MyTonWalletContestTheme {
         Loading(
             modifier = Modifier.fillMaxSize(),
