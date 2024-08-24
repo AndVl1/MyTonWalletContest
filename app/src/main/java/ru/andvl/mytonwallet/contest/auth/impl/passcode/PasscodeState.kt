@@ -4,6 +4,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.arch.State
+import ru.andvl.mytonwallet.contest.auth.impl.model.KeyboardDigitWithDescription
 
 data class PasscodeState(
     val correctPasscodeLength: Int = PasscodeLength.FOUR.value,

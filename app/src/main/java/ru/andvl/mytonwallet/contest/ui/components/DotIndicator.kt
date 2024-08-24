@@ -18,10 +18,11 @@ import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 @Composable
 fun DotIndicator(
     isSelected: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.onPrimary
 ) {
     val animatedColor by animateColorAsState(
-        if (isSelected) MaterialTheme.colorScheme.onPrimary else Color.Transparent,
+        if (isSelected) color else Color.Transparent,
         label = "color"
     )
 
@@ -33,7 +34,7 @@ fun DotIndicator(
             }
             .border(
                 width = 1.dp,
-                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.36f),
+                color = color.copy(alpha = 0.36f),
                 shape = CircleShape
             )
     )

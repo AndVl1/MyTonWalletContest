@@ -56,7 +56,7 @@ fun PasscodeButton(
     showBackground = true
 )
 @Composable
-fun PasscodeButtonPreview() {
+private fun PasscodeButtonPreview() {
     MyTonWalletContestTheme {
         Surface(
             color = MaterialTheme.colorScheme.primary
