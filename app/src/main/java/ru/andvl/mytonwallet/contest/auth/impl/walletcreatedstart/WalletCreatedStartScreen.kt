@@ -19,8 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
+import ru.andvl.mytonwallet.contest.ui.components.TonWalletButton
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
-import ru.andvl.mytonwallet.contest.ui.theme.components.TonWalletButton
 
 @Composable
 fun WalletCreatedStartScreen(

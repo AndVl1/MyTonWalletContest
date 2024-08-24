@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.ui.theme.components
+package ru.andvl.mytonwallet.contest.ui.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.border

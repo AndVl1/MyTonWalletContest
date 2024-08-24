@@ -59,7 +59,7 @@ class RootDecomposeComponentImpl(
 
     private fun getDefaultStack(): List<RootScreenConfig> {
         // todo check auth status
-        return listOf(RootScreenConfig.Login)
+        return listOf(RootScreenConfig.AddWallet)
     }
 
     private fun internalOnBack() {
