@@ -9,4 +9,6 @@
     <string name="auth_wallet_created_start_screen_title">Wallet created</string>
     <string name="auth_wallet_created_start_screen_description">Create a passcode to protect it.</string>
     <string name="auth_wallet_created_set_up_passcode">Set Up Passcode</string>
+    <string name="auth_set_passcode_screen_title">Set passcode</string>
+    <string name="auth_set_passcode_screen_description">Enter the %1$s digits in the passcode.</string>
 </resources>

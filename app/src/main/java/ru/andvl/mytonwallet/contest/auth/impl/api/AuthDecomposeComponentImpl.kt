@@ -55,7 +55,7 @@ class AuthDecomposeComponentImpl(
         is AuthNavigationConfig.BiometricLockScreen -> TODO()
         is AuthNavigationConfig.RecoveryListScreen -> TODO()
         is AuthNavigationConfig.RecoveryTestScreen -> TODO()
-        is AuthNavigationConfig.SetPasswordScreen -> TODO()
+        is AuthNavigationConfig.SetPasscodeScreen -> TODO()
         is AuthNavigationConfig.WalletCreatedStartScreen -> WalletCreatedStartDecomposeComponentImpl(
             componentContext,
             navigation

@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.auth.impl.passcode
+package ru.andvl.mytonwallet.contest.auth.impl.model
 
 enum class KeyboardDigitWithDescription(val digit: Int, val description: String) {
     ONE(1, ""),
@@ -10,5 +10,6 @@ enum class KeyboardDigitWithDescription(val digit: Int, val description: String)
     SEVEN(7, "PQRS"),
     EIGHT(8, "TUV"),
     NINE(9, "WXYZ"),
-    ZERO(0, "")
+    ZERO(0, ""),
+    ZERO_WITH_PLUS(0, "+")
 }

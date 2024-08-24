@@ -3,9 +3,11 @@ package ru.andvl.mytonwallet.contest.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
@@ -14,7 +16,8 @@ import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 fun DotIndicatorsRow(
     dotsNumber: Int,
     isSelected: (Int) -> Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    indicatorsColor: Color = MaterialTheme.colorScheme.onPrimary,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -22,7 +25,10 @@ fun DotIndicatorsRow(
         modifier = modifier
     ) {
         repeat(dotsNumber) {
-            DotIndicator(isSelected = isSelected(it))
+            DotIndicator(
+                isSelected = isSelected(it),
+                color = indicatorsColor
+            )
         }
     }
 }

@@ -1,15 +1,15 @@
-package ru.andvl.mytonwallet.contest.auth.impl.passcode
+package ru.andvl.mytonwallet.contest.auth.impl.setpasscode
 
 import androidx.annotation.DrawableRes
 import ru.andvl.mytonwallet.contest.auth.impl.model.KeyboardDigitWithDescription
 
-sealed class PasscodeButtonItem {
+sealed class NumberKeyboardButtonItem {
     data class DigitButton(
         val digitWithDescription: KeyboardDigitWithDescription
-    ) : PasscodeButtonItem()
+    ) : NumberKeyboardButtonItem()
 
     data class ActionButton(
-        val type: KeyboardActionType,
+        val type: NumberKeyboardActionType,
         @DrawableRes val icon: Int
-    ) : PasscodeButtonItem()
+    ) : NumberKeyboardButtonItem()
 }
