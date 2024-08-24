@@ -79,7 +79,7 @@ fun NoWalletContent(
 
 @Preview(showBackground = true)
 @Composable
-fun NoWalletContentPreview() {
+private fun NoWalletContentPreview() {
     MyTonWalletContestTheme {
         NoWalletContent(
             onCreateClicked = {},
