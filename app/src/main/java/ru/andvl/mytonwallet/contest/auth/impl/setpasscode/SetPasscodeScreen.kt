@@ -9,25 +9,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components.NumberKeyboard
+import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.utils.vibrateOnKeyboardButtonClick
 import ru.andvl.mytonwallet.contest.ui.components.ButtonStyle
 import ru.andvl.mytonwallet.contest.ui.components.DotIndicatorsRow
 import ru.andvl.mytonwallet.contest.ui.components.TonWalletButton
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SetPasscodeScreen(
     state: SetPasscodeState,
@@ -101,9 +101,13 @@ fun SetPasscodeScreen(
 
             Spacer(modifier = Modifier.height(48.dp))
 
+            val context = LocalContext.current
             NumberKeyboard(
                 buttons = state.keyboardButtons,
-                onClick = { onAction(SetPasscodeAction.OnNumberKeyboardButtonClicked(it)) },
+                onClick = {
+                    vibrateOnKeyboardButtonClick(context)
+                    onAction(SetPasscodeAction.OnNumberKeyboardButtonClicked(it))
+                },
                 modifier = Modifier.fillMaxWidth()
             )
         }
