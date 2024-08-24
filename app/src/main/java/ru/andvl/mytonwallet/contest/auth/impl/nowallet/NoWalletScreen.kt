@@ -14,22 +14,18 @@ fun NoWalletScreen(
     onAction: (NoWalletAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    when (state) {
-        is NoWalletState.Loading -> {
-            Loading(
-                modifier = modifier.fillMaxSize(),
-                style = LoadingStyle.DIALOG
-            )
-        }
-
-        is NoWalletState.Init -> {
-            NoWalletContent(
-                onCreateClicked = { onAction(NoWalletAction.OnCreateClicked) },
-                onImportClicked = { onAction(NoWalletAction.OnImportClicked) },
-                modifier = modifier
-            )
-        }
+    if (state is NoWalletState.Loading) {
+        Loading(
+            modifier = modifier.fillMaxSize(),
+            style = LoadingStyle.DIALOG
+        )
     }
+
+    NoWalletContent(
+        onCreateClicked = { onAction(NoWalletAction.OnCreateClicked) },
+        onImportClicked = { onAction(NoWalletAction.OnImportClicked) },
+        modifier = modifier
+    )
 }
 
 @Preview(showBackground = true)

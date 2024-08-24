@@ -25,7 +25,7 @@ class NoWalletViewModel : BaseViewModel<NoWalletAction, NoWalletState>() {
                 is NoWalletAction.OnCreateClicked -> {
                     _state.update { NoWalletState.Loading }
                     createNewWallet()
-                    _state.update { NoWalletState.Init }
+                    _state.update { NoWalletState.Loaded }
                     _navigationEvents.emit(NoWalletNavigationEvent.NavigateToCreate)
                 }
 
