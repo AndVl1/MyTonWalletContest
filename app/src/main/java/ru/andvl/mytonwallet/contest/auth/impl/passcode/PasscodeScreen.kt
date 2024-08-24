@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.components.AnimatedPasscodeErrorTextWithVibration
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.components.PasscodeKeyboard
+import ru.andvl.mytonwallet.contest.ui.components.DotIndicatorsRow
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
-import ru.andvl.mytonwallet.contest.ui.theme.components.DotIndicatorsRow
 
 @Composable
 fun PasscodeScreen(
