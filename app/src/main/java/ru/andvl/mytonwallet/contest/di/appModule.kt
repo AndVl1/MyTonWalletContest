@@ -6,6 +6,7 @@ import ru.andvl.mytonwallet.contest.auth.api.AuthDecomposeComponent
 import ru.andvl.mytonwallet.contest.auth.impl.api.AuthDecomposeComponentImpl
 import ru.andvl.mytonwallet.contest.auth.impl.nowallet.NoWalletViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeViewModel
+import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.SetPasscodeViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.walletimport.WalletImportViewModel
 import ru.andvl.mytonwallet.contest.root.api.RootDecomposeComponent
 import ru.andvl.mytonwallet.contest.root.impl.RootDecomposeComponentImpl
@@ -21,4 +22,5 @@ val appModule = module {
     viewModel { NoWalletViewModel() }
     viewModel { WalletImportViewModel() }
     viewModel { PasscodeViewModel() }
+    viewModel { SetPasscodeViewModel() }
 }

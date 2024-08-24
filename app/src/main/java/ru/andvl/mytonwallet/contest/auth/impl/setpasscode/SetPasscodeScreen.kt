@@ -10,23 +10,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
-import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components.NumberKeyboard
 import ru.andvl.mytonwallet.contest.ui.components.ButtonStyle
 import ru.andvl.mytonwallet.contest.ui.components.DotIndicatorsRow
@@ -41,17 +35,8 @@ fun SetPasscodeScreen(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {},
-                navigationIcon = {
-                    IconButton(onClick = { onAction(SetPasscodeAction.NavigateBack) }) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_back),
-                            tint = MaterialTheme.colorScheme.tertiary,
-                            contentDescription = null
-                        )
-                    }
-                }
+            SetPasscodeScreenTopBar(
+                onBackClicked = { onAction(SetPasscodeAction.NavigateBack) }
             )
         }
     ) { innerPadding ->
@@ -101,7 +86,10 @@ fun SetPasscodeScreen(
             }
 
             TonWalletButton(
-                text = "Use ${if (state.passcodeLength == PasscodeLength.FOUR) "6-Digit" else "4-Digit"} Passcode",
+                text = stringResource(
+                    R.string.auth_set_passcode_change_passcode_length,
+                    state.passcodeLength.value
+                ),
                 buttonStyle = ButtonStyle.SECONDARY,
                 onClick = {
                     onAction(SetPasscodeAction.TogglePasscodeLength)

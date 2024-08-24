@@ -55,7 +55,7 @@ fun NumberKeyboardButton(
                 style = MaterialTheme.typography.headlineSmall
             )
 
-            Spacer(modifier = Modifier.width(30.dp))
+            Spacer(modifier = Modifier.width(24.dp))
 
             Text(
                 text = letters,
