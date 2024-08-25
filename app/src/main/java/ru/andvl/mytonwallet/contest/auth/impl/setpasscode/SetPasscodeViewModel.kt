@@ -28,7 +28,6 @@ class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>(
                 )
 
                 is SetPasscodeAction.NavigateToConfirm -> {
-                    _state.update { SetPasscodeState() }
                     _state.value.let {
                         _navigationEvents.emit(
                             SetPasscodeNavigationEvent.NavigateToConfirm(
@@ -37,10 +36,12 @@ class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>(
                             )
                         )
                     }
+                    _state.update { SetPasscodeState() }
                 }
 
                 is SetPasscodeAction.NavigateBack -> {
                     _navigationEvents.emit(SetPasscodeNavigationEvent.NavigateBack)
+                    _state.update { SetPasscodeState() }
                 }
             }
         }
@@ -94,26 +95,4 @@ class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>(
             }
         }
     }
-
-//    private suspend fun onPasscodeCheck(state: SetPasscodeState.Confirm) {
-//        val isCorrect = state.inputPasscode == state.correctPasscode
-//        _state.update {
-//            state.copy(isPasscodeIncorrect = !isCorrect)
-//        }
-//
-//        if (isCorrect) {
-//            _navigationEvents.emit(
-//                SetPasscodeNavigationEvent.NavigateToConfirm
-//            )
-//        }
-//    }
-//
-//    private fun resetErrorState(state: SetPasscodeState.Confirm) {
-//        _state.update {
-//            state.copy(
-//                isPasscodeIncorrect = false,
-//                inputPasscode = ""
-//            )
-//        }
-//    }
 }
