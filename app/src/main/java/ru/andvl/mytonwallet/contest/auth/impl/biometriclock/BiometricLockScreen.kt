@@ -50,7 +50,8 @@ fun BiometricLockScreen(
         Text(
             text = stringResource(R.string.auth_biometric_lock_description),
             style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(horizontal = 40.dp)
         )
         Spacer(modifier = Modifier.height(24.dp))
         TonWalletButton(
@@ -74,7 +75,7 @@ fun BiometricLockScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun NoWalletScreenPreview() {
+private fun BiometricLockScreenPreview() {
     MyTonWalletContestTheme {
         BiometricLockScreen(
             onAction = {},

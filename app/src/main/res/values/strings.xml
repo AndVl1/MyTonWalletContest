@@ -15,7 +15,7 @@
     <string name="auth_confirm_passcode_screen_title">Confirm passcode</string>
     <string name="auth_confirm_passcode_screen_description">Re-enter the %1$s digits in the passcode.</string>
     <string name="auth_biometric_lock_title">Use Biometrics?</string>
-    <string name="auth_biometric_lock_description">MyTonWallet uses biometric\nauthentication to unlock and authorize\ntransactions.</string>
+    <string name="auth_biometric_lock_description">MyTonWallet uses biometric authentication to unlock and authorize transactions.</string>
     <string name="auth_biometric_lock_enable">Enable</string>
     <string name="auth_biometric_lock_skip">Skip</string>
 </resources>

@@ -5,12 +5,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CreateBiometricLockScreen(
     navigateToRecoveryList: () -> Unit,
-    viewModel: BiometricLockViewModel = koinViewModel()
+    viewModel: BiometricLockViewModel
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val navigationEvents = viewModel.navigationEvents
