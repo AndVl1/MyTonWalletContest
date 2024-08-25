@@ -15,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
@@ -38,13 +37,7 @@ fun NumberKeyboardButton(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface,
         ),
-        modifier = modifier.shadow(
-            elevation = 4.dp,
-            shape = RoundedCornerShape(10.dp),
-            clip = false,
-            ambientColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-            spotColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-        )
+        modifier = modifier.numberKeyboardButtonShadow()
     ) {
         Row(
             horizontalArrangement = Arrangement.Start,

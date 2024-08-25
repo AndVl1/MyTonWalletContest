@@ -8,7 +8,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
@@ -29,18 +28,7 @@ fun NumberKeyboardIconButton(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface,
         ),
-        modifier = modifier
-            .shadow(
-                elevation = 4.dp,
-                shape = RoundedCornerShape(10.dp),
-                clip = false,
-                ambientColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(
-                    alpha = 0.5f
-                ),
-                spotColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(
-                    alpha = 0.5f
-                )
-            )
+        modifier = modifier.numberKeyboardButtonShadow()
     ) {
         Icon(
             imageVector = icon,
