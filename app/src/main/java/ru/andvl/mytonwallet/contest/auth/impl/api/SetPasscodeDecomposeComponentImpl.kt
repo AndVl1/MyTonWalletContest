@@ -18,8 +18,13 @@ class SetPasscodeDecomposeComponentImpl(
     override fun Render() {
         CreateSetPasscodeScreen(
             navigateBack = { navigation.pop() },
-            navigateToConfirm = {
-                navigation.replaceCurrent(AuthNavigationConfig.ConfirmPasscodeScreen())
+            navigateToConfirm = { passcode, length ->
+                navigation.replaceCurrent(
+                    AuthNavigationConfig.ConfirmPasscodeScreen(
+                        correctPasscode = passcode,
+                        passcodeLength = length
+                    )
+                )
             }
         )
     }

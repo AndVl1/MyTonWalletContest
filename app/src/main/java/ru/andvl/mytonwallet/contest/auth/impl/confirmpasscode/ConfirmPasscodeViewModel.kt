@@ -12,11 +12,13 @@ import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.NumberKeyboardActionType
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.NumberKeyboardButtonItem
 
-class ConfirmPasscodeViewModel : BaseViewModel<ConfirmPasscodeAction, ConfirmPasscodeState>() {
+class ConfirmPasscodeViewModel(
+    private val correctPasscode: String,
+    passcodeLength: PasscodeLength,
+) : BaseViewModel<ConfirmPasscodeAction, ConfirmPasscodeState>() {
     private val _state = MutableStateFlow(
         ConfirmPasscodeState(
-            correctPasscode = "", // TODO получать из навигации
-            passcodeLength = PasscodeLength.FOUR
+            passcodeLength = passcodeLength
         )
     )
 
@@ -80,7 +82,7 @@ class ConfirmPasscodeViewModel : BaseViewModel<ConfirmPasscodeAction, ConfirmPas
     }
 
     private suspend fun onPasscodeCheck() {
-        val isCorrect = _state.value.let { it.inputPasscode == it.correctPasscode }
+        val isCorrect = _state.value.inputPasscode == correctPasscode
         _state.update { it.copy(isPasscodeIncorrect = !isCorrect) }
 
         if (isCorrect) {

@@ -42,10 +42,7 @@ fun ConfirmPasscodeScreen(
 private fun SetPasswordScreenPreview() {
     MyTonWalletContestTheme {
         ConfirmPasscodeScreen(
-            state = ConfirmPasscodeState(
-                "",
-                PasscodeLength.FOUR
-            ),
+            state = ConfirmPasscodeState(PasscodeLength.FOUR),
             onAction = {}
         )
     }

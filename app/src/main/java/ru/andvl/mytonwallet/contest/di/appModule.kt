@@ -6,6 +6,7 @@ import ru.andvl.mytonwallet.contest.auth.api.AuthDecomposeComponent
 import ru.andvl.mytonwallet.contest.auth.impl.api.AuthDecomposeComponentImpl
 import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.ConfirmPasscodeViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.nowallet.NoWalletViewModel
+import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.SetPasscodeViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.walletimport.WalletImportViewModel
@@ -24,5 +25,7 @@ val appModule = module {
     viewModel { WalletImportViewModel() }
     viewModel { PasscodeViewModel() }
     viewModel { SetPasscodeViewModel() }
-    viewModel { ConfirmPasscodeViewModel() }
+    viewModel { (passcode: String, length: PasscodeLength) ->
+        ConfirmPasscodeViewModel(passcode, length)
+    }
 }
