@@ -41,7 +41,7 @@ sealed interface SetPasscodeState : State {
                 NumberKeyboardButtonItem.DigitButton(KeyboardDigitWithDescription.NINE)
             ),
             persistentListOf(
-                NumberKeyboardButtonItem.DigitButton(KeyboardDigitWithDescription.ZERO),
+                NumberKeyboardButtonItem.DigitButton(KeyboardDigitWithDescription.ZERO_WITH_PLUS),
                 NumberKeyboardButtonItem.ActionButton(
                     type = NumberKeyboardActionType.DELETE,
                     icon = R.drawable.ic_outline_del
