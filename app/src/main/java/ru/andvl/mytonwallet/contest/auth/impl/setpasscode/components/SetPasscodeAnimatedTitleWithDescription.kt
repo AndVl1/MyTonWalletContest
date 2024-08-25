@@ -21,40 +21,46 @@ import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.SetPasscodeState
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
-fun SetPasscodeTitleWithDescription(
+fun SetPasscodeAnimatedTitleWithDescription(
     state: SetPasscodeState,
     modifier: Modifier = Modifier
 ) {
-    AnimatedContent(
-        targetState = state,
-        transitionSpec = {
-            fadeIn() togetherWith fadeOut() using SizeTransform(clip = false)
-        },
-        modifier = modifier,
-        label = ""
-    ) { targetState ->
-        val titleRes = when (targetState) {
-            is SetPasscodeState.SetUp -> R.string.auth_set_passcode_screen_title
-            is SetPasscodeState.Confirm -> R.string.auth_set_passcode_screen_confirm_title
-        }
+    val titleRes = when (state) {
+        is SetPasscodeState.SetUp -> R.string.auth_set_passcode_screen_title
+        is SetPasscodeState.Confirm -> R.string.auth_set_passcode_screen_confirm_title
+    }
 
-        val descriptionRes = when (targetState) {
-            is SetPasscodeState.SetUp -> R.string.auth_set_passcode_screen_description
-            is SetPasscodeState.Confirm -> R.string.auth_set_passcode_screen_confirm_description
-        }
+    val descriptionRes = when (state) {
+        is SetPasscodeState.SetUp -> R.string.auth_set_passcode_screen_description
+        is SetPasscodeState.Confirm -> R.string.auth_set_passcode_screen_confirm_description
+    }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
+        AnimatedContent(
+            targetState = titleRes,
+            transitionSpec = {
+                fadeIn() togetherWith fadeOut() using SizeTransform(clip = false)
+            }, label = ""
+        ) { targetTitleRes ->
             Text(
-                text = stringResource(titleRes),
+                text = stringResource(targetTitleRes),
                 style = MaterialTheme.typography.headlineMedium
             )
-            Spacer(modifier = Modifier.height(12.dp))
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+        AnimatedContent(
+            targetState = descriptionRes,
+            transitionSpec = {
+                fadeIn() togetherWith fadeOut() using SizeTransform(clip = false)
+            }, label = ""
+        ) { targetDescriptionRes ->
             Text(
                 text = stringResource(
-                    descriptionRes,
-                    targetState.passcodeLength.value
+                    targetDescriptionRes,
+                    state.passcodeLength.value
                 ),
                 style = MaterialTheme.typography.bodyLarge
             )
@@ -68,6 +74,6 @@ fun SetPasscodeTitleWithDescription(
 @Composable
 private fun SetPasscodeTitleWithDescriptionPreview() {
     MyTonWalletContestTheme {
-        SetPasscodeTitleWithDescription(state = SetPasscodeState.SetUp())
+        SetPasscodeAnimatedTitleWithDescription(state = SetPasscodeState.SetUp())
     }
 }
