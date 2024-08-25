@@ -10,8 +10,7 @@ import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.NumberKeyboardActionTy
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.NumberKeyboardButtonItem
 
 data class ConfirmPasscodeState(
-    val correctPasscode: String = "", // TODO
-    val passcodeLength: PasscodeLength = PasscodeLength.FOUR, // TODO
+    val passcodeLength: PasscodeLength,
     val inputPasscode: String = "",
     val isPasscodeIncorrect: Boolean = false,
 ) : State {

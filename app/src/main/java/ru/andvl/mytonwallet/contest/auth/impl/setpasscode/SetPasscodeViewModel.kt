@@ -28,7 +28,14 @@ class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>(
                 )
 
                 is SetPasscodeAction.NavigateToConfirm -> {
-                    _navigationEvents.emit(SetPasscodeNavigationEvent.NavigateToConfirm)
+                    _state.value.let {
+                        _navigationEvents.emit(
+                            SetPasscodeNavigationEvent.NavigateToConfirm(
+                                passcode = it.inputPasscode,
+                                passcodeLength = it.passcodeLength
+                            )
+                        )
+                    }
                 }
 
                 is SetPasscodeAction.NavigateBack -> {
