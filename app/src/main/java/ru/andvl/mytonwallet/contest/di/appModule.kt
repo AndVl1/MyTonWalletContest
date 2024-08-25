@@ -21,13 +21,4 @@ val appModule = module {
     single<RootDecomposeComponent.Factory> {
         RootDecomposeComponentImpl.Factory(get())
     }
-
-    viewModel { NoWalletViewModel() }
-    viewModel { WalletImportViewModel() }
-    viewModel { PasscodeViewModel() }
-    viewModel { SetPasscodeViewModel() }
-    viewModel { (passcode: String, length: PasscodeLength) ->
-        ConfirmPasscodeViewModel(passcode, length)
-    }
-    viewModel { BiometricLockViewModel() }
 }

@@ -1,6 +1,5 @@
 package ru.andvl.mytonwallet.contest.auth.impl.setpasscode
 
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -36,12 +35,10 @@ class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>(
                             )
                         )
                     }
-                    _state.update { SetPasscodeState() }
                 }
 
                 is SetPasscodeAction.NavigateBack -> {
                     _navigationEvents.emit(SetPasscodeNavigationEvent.NavigateBack)
-                    _state.update { SetPasscodeState() }
                 }
             }
         }

@@ -5,6 +5,8 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushToFront
+import ru.andvl.mytonwallet.contest.arch.core.viewModelWithFactory
+import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.ConfirmPasscodeViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.CreateConfirmPasscodeScreen
 import ru.andvl.mytonwallet.contest.auth.impl.model.AuthNavigationConfig
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
@@ -18,13 +20,15 @@ class ConfirmPasscodeDecomposeComponentImpl(
 ) : ScreenDecomposeComponent(componentContext) {
     @Composable
     override fun Render() {
+        val viewModel = viewModelWithFactory(null) {
+            ConfirmPasscodeViewModel(correctPasscode, passcodeLength)
+        }
         CreateConfirmPasscodeScreen(
-            correctPasscode = correctPasscode,
-            passcodeLength = passcodeLength,
             navigateBack = { navigation.pop() },
             navigateToBiometricLock = {
                 navigation.pushToFront(AuthNavigationConfig.BiometricLockScreen())
-            }
+            },
+            viewModel = viewModel
         )
     }
 }

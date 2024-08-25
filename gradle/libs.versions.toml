@@ -13,6 +13,7 @@ koin = "4.0.0-RC1"
 decompose = "3.1.0"
 vkompose = "0.6-k2"
 uiTextGoogleFonts = "1.6.8"
+essenty = "2.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +36,8 @@ decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref
 decompose-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
+essenty-lifecycle = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" }
+essenty-lifecycle-coroutines = { module = "com.arkivanov.essenty:lifecycle-coroutines", version.ref = "essenty" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -45,5 +48,7 @@ vkompose-highlighter = { id = "com.vk.recompose-highlighter", version.ref = "vko
 vkompose-logger = { id = "com.vk.recompose-logger", version.ref = "vkompose" }
 vkompose-skip_checker = { id = "com.vk.composable-skippability-checker", version.ref = "vkompose" }
 vkompose-source_cleaner = { id = "com.vk.compose-source-information-cleaner", version.ref = "vkompose" }
-
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+[bundles]
+essenty = ["essenty-lifecycle", "essenty-lifecycle-coroutines"]

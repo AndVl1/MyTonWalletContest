@@ -13,7 +13,7 @@ import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 fun CreateSetPasscodeScreen(
     navigateBack: () -> Unit,
     navigateToConfirm: (String, PasscodeLength) -> Unit,
-    viewModel: SetPasscodeViewModel = koinViewModel()
+    viewModel: SetPasscodeViewModel,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val navigationEvents = viewModel.navigationEvents
