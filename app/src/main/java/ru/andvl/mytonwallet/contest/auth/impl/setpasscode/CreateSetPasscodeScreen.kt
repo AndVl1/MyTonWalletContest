@@ -11,7 +11,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CreateSetPasscodeScreen(
     navigateBack: () -> Unit,
-    navigateToConfirmPasscode: () -> Unit,
+    navigateToBiometricLock: () -> Unit,
     viewModel: SetPasscodeViewModel = koinViewModel()
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -22,7 +22,7 @@ fun CreateSetPasscodeScreen(
             navigationEvents.collect { navigationEvent ->
                 when (navigationEvent) {
                     is SetPasscodeNavigationEvent.NavigateBack -> navigateBack()
-                    is SetPasscodeNavigationEvent.NavigateToConfirmPasscode -> navigateToConfirmPasscode()
+                    is SetPasscodeNavigationEvent.NavigateToBiometricLock -> navigateToBiometricLock()
                 }
             }
         }
