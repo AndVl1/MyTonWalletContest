@@ -12,7 +12,7 @@ import org.koin.androidx.compose.koinViewModel
 fun CreateNoWalletScreen(
     navigateToCreate: () -> Unit,
     navigateToImport: () -> Unit,
-    viewModel: NoWalletViewModel = koinViewModel()
+    viewModel: NoWalletViewModel
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val navigationEvents = viewModel.navigationEvents
