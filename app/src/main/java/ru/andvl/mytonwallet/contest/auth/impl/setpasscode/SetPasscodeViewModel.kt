@@ -28,6 +28,7 @@ class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>(
                 )
 
                 is SetPasscodeAction.NavigateToConfirm -> {
+                    _state.update { SetPasscodeState() }
                     _state.value.let {
                         _navigationEvents.emit(
                             SetPasscodeNavigationEvent.NavigateToConfirm(
