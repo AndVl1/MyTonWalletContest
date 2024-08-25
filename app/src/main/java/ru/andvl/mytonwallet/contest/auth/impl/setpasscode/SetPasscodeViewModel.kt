@@ -33,6 +33,7 @@ class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>(
                 is SetPasscodeAction.Confirm -> onConfirm(currentState)
 
                 is SetPasscodeAction.NavigateBack -> {
+                    _state.update { SetPasscodeState.SetUp() }
                     _navigationEvents.emit(SetPasscodeNavigationEvent.NavigateBack)
                 }
             }

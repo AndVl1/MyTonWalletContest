@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components.NumberKeyboard
-import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components.SetPasscodeTitleWithDescription
+import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components.SetPasscodeAnimatedTitleWithDescription
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.utils.vibrateOnKeyboardButtonClick
 import ru.andvl.mytonwallet.contest.ui.components.ButtonStyle
 import ru.andvl.mytonwallet.contest.ui.components.DotIndicatorsRow
@@ -61,7 +61,7 @@ fun SetPasscodeScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                SetPasscodeTitleWithDescription(state)
+                SetPasscodeAnimatedTitleWithDescription(state)
 
                 Spacer(modifier = Modifier.height(24.dp))
 
@@ -87,8 +87,11 @@ fun SetPasscodeScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp)
                 )
-                Spacer(modifier = Modifier.height(48.dp))
+            } else {
+                Spacer(modifier = Modifier.height(50.dp))
             }
+
+            Spacer(modifier = Modifier.height(48.dp))
 
             val context = LocalContext.current
             NumberKeyboard(
