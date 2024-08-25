@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.pushToFront
 import ru.andvl.mytonwallet.contest.auth.impl.model.AuthNavigationConfig
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.CreateSetPasscodeScreen
 import ru.andvl.mytonwallet.contest.decompose.ScreenDecomposeComponent
@@ -16,10 +17,10 @@ class SetPasscodeDecomposeComponentImpl(
     @Composable
     override fun Render() {
         CreateSetPasscodeScreen(
-            navigateBack = {
-                navigation.pop()
-            },
-            navigateToConfirmPasscode = { /*TODO*/ }
+            navigateBack = { navigation.pop() },
+            navigateToBiometricLock = {
+                navigation.pushToFront(AuthNavigationConfig.BiometricLockScreen())
+            }
         )
     }
 }

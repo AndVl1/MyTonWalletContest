@@ -9,5 +9,5 @@ sealed interface SetPasscodeAction : Action {
 
     data object TogglePasscodeLength : SetPasscodeAction
     data object NavigateBack : SetPasscodeAction
-    data object NavigateNext : SetPasscodeAction
+    data object Confirm : SetPasscodeAction
 }

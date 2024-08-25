@@ -11,7 +11,7 @@ import ru.andvl.mytonwallet.contest.arch.BaseViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 
 class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>() {
-    private val _state = MutableStateFlow(SetPasscodeState())
+    private val _state = MutableStateFlow<SetPasscodeState>(SetPasscodeState.SetUp())
 
     override val state = _state.asStateFlow()
 
@@ -20,36 +20,17 @@ class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>(
 
     override fun obtainEvent(event: SetPasscodeAction) {
         viewModelScope.launch {
+            val currentState = _state.value
+
             when (event) {
-                is SetPasscodeAction.TogglePasscodeLength -> {
-                    val newLength = if (_state.value.passcodeLength == PasscodeLength.FOUR)
-                        PasscodeLength.SIX else PasscodeLength.FOUR
-                    _state.value = _state.value.copy(passcodeLength = newLength, inputPasscode = "")
-                }
+                is SetPasscodeAction.TogglePasscodeLength -> togglePasscodeLength(currentState)
 
-                is SetPasscodeAction.OnNumberKeyboardButtonClicked -> {
-                    event.button.let { button ->
-                        when (button) {
-                            is NumberKeyboardButtonItem.DigitButton -> {
-                                updateInputPasscode(button.digitWithDescription.digit)
-                            }
+                is SetPasscodeAction.OnNumberKeyboardButtonClicked -> onNumberKeyboardButtonClicked(
+                    state = currentState,
+                    button = event.button
+                )
 
-                            is NumberKeyboardButtonItem.ActionButton -> {
-                                when (button.type) {
-                                    NumberKeyboardActionType.DELETE -> {
-                                        _state.update {
-                                            it.copy(inputPasscode = it.inputPasscode.dropLast(1))
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                is SetPasscodeAction.NavigateNext -> {
-                    _navigationEvents.emit(SetPasscodeNavigationEvent.NavigateToConfirmPasscode)
-                }
+                is SetPasscodeAction.Confirm -> onConfirm(currentState)
 
                 is SetPasscodeAction.NavigateBack -> {
                     _navigationEvents.emit(SetPasscodeNavigationEvent.NavigateBack)
@@ -58,18 +39,83 @@ class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>(
         }
     }
 
-    private fun updateInputPasscode(digit: Int) {
-        if (_state.value.inputPasscode.length < _state.value.passcodeLength.value) {
+    private fun togglePasscodeLength(state: SetPasscodeState) {
+        if (state is SetPasscodeState.SetUp) {
+            val newLength = if (state.passcodeLength == PasscodeLength.FOUR)
+                PasscodeLength.SIX else PasscodeLength.FOUR
+
             _state.update {
-                it.copy(
-                    inputPasscode = it.inputPasscode + digit
+                state.copy(
+                    passcodeLength = newLength,
+                    inputPasscode = ""
                 )
             }
+        }
+    }
 
-            _state.value.let {
-                if (it.inputPasscode.length == it.passcodeLength.value) {
-                    obtainEvent(SetPasscodeAction.NavigateNext)
+
+    private fun updateInputPasscode(state: SetPasscodeState, digit: Int) {
+        if (state.inputPasscode.length < state.passcodeLength.value) {
+            val resultString = state.inputPasscode + digit
+
+            _state.update {
+                when (state) {
+                    is SetPasscodeState.SetUp -> state.copy(inputPasscode = resultString)
+                    is SetPasscodeState.Confirm -> state.copy(inputPasscode = resultString)
                 }
+            }
+
+            if (state.inputPasscode.length + 1 == state.passcodeLength.value) {
+                obtainEvent(SetPasscodeAction.Confirm)
+            }
+        }
+    }
+
+    private fun deleteLastDigit(state: SetPasscodeState) {
+        val resultString = state.inputPasscode.dropLast(1)
+
+        _state.update {
+            when (state) {
+                is SetPasscodeState.SetUp -> state.copy(inputPasscode = resultString)
+                is SetPasscodeState.Confirm -> state.copy(inputPasscode = resultString)
+            }
+        }
+    }
+
+    private fun onNumberKeyboardButtonClicked(
+        state: SetPasscodeState,
+        button: NumberKeyboardButtonItem
+    ) {
+        when (button) {
+            is NumberKeyboardButtonItem.DigitButton -> {
+                updateInputPasscode(state, button.digitWithDescription.digit)
+            }
+
+            is NumberKeyboardButtonItem.ActionButton -> {
+                when (button.type) {
+                    NumberKeyboardActionType.DELETE -> {
+                        deleteLastDigit(state)
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun onConfirm(state: SetPasscodeState) {
+        when (state) {
+            is SetPasscodeState.SetUp -> {
+                _state.update {
+                    SetPasscodeState.Confirm(
+                        passcodeLength = state.passcodeLength,
+                        correctPasscode = state.inputPasscode
+                    )
+                }
+            }
+
+            is SetPasscodeState.Confirm -> {
+                _navigationEvents.emit(
+                    SetPasscodeNavigationEvent.NavigateToBiometricLock
+                )
             }
         }
     }
