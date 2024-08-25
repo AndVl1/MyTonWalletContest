@@ -80,7 +80,7 @@ fun NumberKeyboard(
 private fun PasscodeKeyboardPreview() {
     MyTonWalletContestTheme {
         NumberKeyboard(
-            buttons = SetPasscodeState.SetUp().keyboardButtons,
+            buttons = SetPasscodeState().keyboardButtons,
             onClick = {},
             modifier = Modifier.fillMaxWidth()
         )

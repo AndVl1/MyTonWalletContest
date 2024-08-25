@@ -4,6 +4,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import ru.andvl.mytonwallet.contest.auth.api.AuthDecomposeComponent
 import ru.andvl.mytonwallet.contest.auth.impl.api.AuthDecomposeComponentImpl
+import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.ConfirmPasscodeViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.nowallet.NoWalletViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.SetPasscodeViewModel
@@ -23,4 +24,5 @@ val appModule = module {
     viewModel { WalletImportViewModel() }
     viewModel { PasscodeViewModel() }
     viewModel { SetPasscodeViewModel() }
+    viewModel { ConfirmPasscodeViewModel() }
 }

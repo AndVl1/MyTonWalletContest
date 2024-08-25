@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components
+package ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,22 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.andvl.mytonwallet.contest.R
-import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.SetPasscodeAction
-import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.SetPasscodeState
-import ru.andvl.mytonwallet.contest.ui.components.ButtonStyle
+import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.ConfirmPasscodeAction
+import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.ConfirmPasscodeState
+import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
+import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components.NumberKeyboard
 import ru.andvl.mytonwallet.contest.ui.components.DotIndicatorsRow
-import ru.andvl.mytonwallet.contest.ui.components.TonWalletButton
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 import ru.andvl.mytonwallet.contest.utils.vibrateOnKeyboardButtonClick
 
 @Composable
-fun SetPasscodeScreenContent(
-    state: SetPasscodeState,
-    onAction: (SetPasscodeAction) -> Unit,
+fun ConfirmPasscodeScreenContent(
+    state: ConfirmPasscodeState,
+    onAction: (ConfirmPasscodeAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -38,7 +36,11 @@ fun SetPasscodeScreenContent(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            SetPasscodeScreenHeader(state.passcodeLength.value)
+            ConfirmPasscodeScreenHeader(
+                passcodeLength = state.passcodeLength.value,
+                triggerError = state.isPasscodeIncorrect,
+                resetErrorState = { onAction(ConfirmPasscodeAction.ResetErrorState) }
+            )
             Spacer(modifier = Modifier.height(24.dp))
             DotIndicatorsRow(
                 dotsNumber = state.passcodeLength.value,
@@ -48,28 +50,14 @@ fun SetPasscodeScreenContent(
             )
         }
 
-        TonWalletButton(
-            text = stringResource(
-                R.string.auth_set_passcode_change_passcode_length,
-                state.passcodeLength.value
-            ),
-            buttonStyle = ButtonStyle.SECONDARY,
-            onClick = {
-                onAction(SetPasscodeAction.TogglePasscodeLength)
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-        )
-
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(98.dp))
 
         val context = LocalContext.current
         NumberKeyboard(
             buttons = state.keyboardButtons,
             onClick = {
                 vibrateOnKeyboardButtonClick(context)
-                onAction(SetPasscodeAction.OnNumberKeyboardButtonClicked(it))
+                onAction(ConfirmPasscodeAction.OnNumberKeyboardButtonClicked(it))
             },
             modifier = Modifier.fillMaxWidth()
         )
@@ -78,10 +66,13 @@ fun SetPasscodeScreenContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun SetPasscodeScreenContentPreview() {
+private fun ConfirmPasscodeScreenContentPreview() {
     MyTonWalletContestTheme {
-        SetPasscodeScreenContent(
-            state = SetPasscodeState(),
+        ConfirmPasscodeScreenContent(
+            state = ConfirmPasscodeState(
+                "",
+                PasscodeLength.FOUR
+            ),
             onAction = {},
             modifier = Modifier.fillMaxSize()
         )

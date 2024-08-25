@@ -7,22 +7,10 @@ import ru.andvl.mytonwallet.contest.arch.State
 import ru.andvl.mytonwallet.contest.auth.impl.model.KeyboardDigitWithDescription
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 
-sealed interface SetPasscodeState : State {
-    val passcodeLength: PasscodeLength
-    val inputPasscode: String
-
-    data class SetUp(
-        override val passcodeLength: PasscodeLength = PasscodeLength.FOUR,
-        override val inputPasscode: String = ""
-    ) : SetPasscodeState
-
-    data class Confirm(
-        val correctPasscode: String,
-        override val passcodeLength: PasscodeLength,
-        override val inputPasscode: String = "",
-        val isPasscodeIncorrect: Boolean = false,
-    ) : SetPasscodeState
-
+data class SetPasscodeState(
+    val passcodeLength: PasscodeLength = PasscodeLength.FOUR,
+    val inputPasscode: String = ""
+) : State {
     val keyboardButtons: ImmutableList<ImmutableList<NumberKeyboardButtonItem>>
         get() = persistentListOf(
             persistentListOf(

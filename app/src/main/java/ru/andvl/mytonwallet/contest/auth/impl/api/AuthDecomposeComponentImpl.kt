@@ -59,6 +59,10 @@ class AuthDecomposeComponentImpl(
             componentContext,
             navigation
         )
+        is AuthNavigationConfig.ConfirmPasscodeScreen -> ConfirmPasscodeDecomposeComponentImpl(
+            componentContext,
+            navigation
+        )
         is AuthNavigationConfig.WalletCreatedStartScreen -> WalletCreatedStartDecomposeComponentImpl(
             componentContext,
             navigation

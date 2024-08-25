@@ -11,7 +11,7 @@ import ru.andvl.mytonwallet.contest.arch.BaseViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 
 class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>() {
-    private val _state = MutableStateFlow<SetPasscodeState>(SetPasscodeState.SetUp())
+    private val _state = MutableStateFlow(SetPasscodeState())
 
     override val state = _state.asStateFlow()
 
@@ -20,126 +20,92 @@ class SetPasscodeViewModel : BaseViewModel<SetPasscodeAction, SetPasscodeState>(
 
     override fun obtainEvent(event: SetPasscodeAction) {
         viewModelScope.launch {
-            val currentState = _state.value
-
             when (event) {
-                is SetPasscodeAction.TogglePasscodeLength -> togglePasscodeLength(currentState)
+                is SetPasscodeAction.TogglePasscodeLength -> togglePasscodeLength()
 
                 is SetPasscodeAction.OnNumberKeyboardButtonClicked -> onNumberKeyboardButtonClicked(
-                    state = currentState,
                     button = event.button
                 )
 
-                is SetPasscodeAction.Confirm -> onConfirm(currentState)
+                is SetPasscodeAction.NavigateToConfirm -> {
+                    _navigationEvents.emit(SetPasscodeNavigationEvent.NavigateToConfirm)
+                }
 
                 is SetPasscodeAction.NavigateBack -> {
-                    _state.update { SetPasscodeState.SetUp() }
                     _navigationEvents.emit(SetPasscodeNavigationEvent.NavigateBack)
                 }
-
-                is SetPasscodeAction.ResetErrorState -> {
-                    if (currentState is SetPasscodeState.Confirm) resetErrorState(currentState)
-                }
             }
         }
     }
 
-    private fun togglePasscodeLength(state: SetPasscodeState) {
-        if (state is SetPasscodeState.SetUp) {
-            val newLength = if (state.passcodeLength == PasscodeLength.FOUR)
-                PasscodeLength.SIX else PasscodeLength.FOUR
-
-            _state.update {
-                state.copy(
-                    passcodeLength = newLength,
-                    inputPasscode = ""
-                )
-            }
-        }
-    }
-
-
-    private fun updateInputPasscode(state: SetPasscodeState, digit: Int) {
-        if (state.inputPasscode.length < state.passcodeLength.value) {
-            val resultString = state.inputPasscode + digit
-
-            _state.update {
-                when (state) {
-                    is SetPasscodeState.SetUp -> state.copy(inputPasscode = resultString)
-                    is SetPasscodeState.Confirm -> state.copy(inputPasscode = resultString)
-                }
-            }
-
-            if (state.inputPasscode.length + 1 == state.passcodeLength.value) {
-                obtainEvent(SetPasscodeAction.Confirm)
-            }
-        }
-    }
-
-    private fun deleteLastDigit(state: SetPasscodeState) {
-        val resultString = state.inputPasscode.dropLast(1)
+    private fun togglePasscodeLength() {
+        val newLength = if (_state.value.passcodeLength == PasscodeLength.FOUR)
+            PasscodeLength.SIX else PasscodeLength.FOUR
 
         _state.update {
-            when (state) {
-                is SetPasscodeState.SetUp -> state.copy(inputPasscode = resultString)
-                is SetPasscodeState.Confirm -> state.copy(inputPasscode = resultString)
+            it.copy(
+                passcodeLength = newLength,
+                inputPasscode = ""
+            )
+        }
+    }
+
+
+    private fun updateInputPasscode(digit: Int) {
+        if (_state.value.inputPasscode.length < _state.value.passcodeLength.value) {
+            _state.update {
+                it.copy(
+                    inputPasscode = it.inputPasscode + digit
+                )
+            }
+
+            _state.value.let {
+                if (it.inputPasscode.length == it.passcodeLength.value) {
+                    obtainEvent(SetPasscodeAction.NavigateToConfirm)
+                }
             }
         }
     }
 
-    private fun onNumberKeyboardButtonClicked(
-        state: SetPasscodeState,
-        button: NumberKeyboardButtonItem
-    ) {
+    private fun deleteLastDigit() {
+        _state.update { it.copy(inputPasscode = it.inputPasscode.dropLast(1)) }
+    }
+
+    private fun onNumberKeyboardButtonClicked(button: NumberKeyboardButtonItem) {
         when (button) {
             is NumberKeyboardButtonItem.DigitButton -> {
-                updateInputPasscode(state, button.digitWithDescription.digit)
+                updateInputPasscode(button.digitWithDescription.digit)
             }
 
             is NumberKeyboardButtonItem.ActionButton -> {
                 when (button.type) {
                     NumberKeyboardActionType.DELETE -> {
-                        deleteLastDigit(state)
+                        deleteLastDigit()
                     }
                 }
             }
         }
     }
 
-    private suspend fun onConfirm(state: SetPasscodeState) {
-        when (state) {
-            is SetPasscodeState.SetUp -> {
-                _state.update {
-                    SetPasscodeState.Confirm(
-                        passcodeLength = state.passcodeLength,
-                        correctPasscode = state.inputPasscode
-                    )
-                }
-            }
-
-            is SetPasscodeState.Confirm -> onPasscodeCheck(state)
-        }
-    }
-
-    private suspend fun onPasscodeCheck(state: SetPasscodeState.Confirm) {
-        val isCorrect = state.inputPasscode == state.correctPasscode
-        _state.update {
-            state.copy(isPasscodeIncorrect = !isCorrect)
-        }
-
-        if (isCorrect) {
-            _navigationEvents.emit(
-                SetPasscodeNavigationEvent.NavigateToBiometricLock
-            )
-        }
-    }
-
-    private fun resetErrorState(state: SetPasscodeState.Confirm) {
-        _state.update {
-            state.copy(
-                isPasscodeIncorrect = false,
-                inputPasscode = ""
-            )
-        }
-    }
+//    private suspend fun onPasscodeCheck(state: SetPasscodeState.Confirm) {
+//        val isCorrect = state.inputPasscode == state.correctPasscode
+//        _state.update {
+//            state.copy(isPasscodeIncorrect = !isCorrect)
+//        }
+//
+//        if (isCorrect) {
+//            _navigationEvents.emit(
+//                SetPasscodeNavigationEvent.NavigateToConfirm
+//            )
+//        }
+//    }
+//
+//    private fun resetErrorState(state: SetPasscodeState.Confirm) {
+//        _state.update {
+//            state.copy(
+//                isPasscodeIncorrect = false,
+//                inputPasscode = ""
+//            )
+//        }
+//    }
 }

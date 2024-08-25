@@ -17,6 +17,7 @@ sealed interface AuthNavigationConfig {
 
     @Serializable
     class SetPasscodeScreen : WalletCreatedFlow
+    class ConfirmPasscodeScreen : WalletCreatedFlow
 
     @Serializable
     class BiometricLockScreen : WalletCreatedFlow

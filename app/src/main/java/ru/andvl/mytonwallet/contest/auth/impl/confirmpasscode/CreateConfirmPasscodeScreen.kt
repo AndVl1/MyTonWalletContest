@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.auth.impl.setpasscode
+package ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,10 +9,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CreateSetPasscodeScreen(
+fun CreateConfirmPasscodeScreen(
     navigateBack: () -> Unit,
-    navigateToConfirm: () -> Unit,
-    viewModel: SetPasscodeViewModel = koinViewModel()
+    navigateToBiometricLock: () -> Unit,
+    viewModel: ConfirmPasscodeViewModel = koinViewModel()
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val navigationEvents = viewModel.navigationEvents
@@ -21,14 +21,14 @@ fun CreateSetPasscodeScreen(
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             navigationEvents.collect { navigationEvent ->
                 when (navigationEvent) {
-                    is SetPasscodeNavigationEvent.NavigateBack -> navigateBack()
-                    is SetPasscodeNavigationEvent.NavigateToConfirm -> navigateToConfirm()
+                    is ConfirmPasscodeNavigationEvent.NavigateBack -> navigateBack()
+                    is ConfirmPasscodeNavigationEvent.NavigateToBiometricLock -> navigateToBiometricLock()
                 }
             }
         }
     }
 
-    SetPasscodeScreen(
+    ConfirmPasscodeScreen(
         state = viewModel.state.collectAsState().value,
         onAction = viewModel::obtainEvent
     )
