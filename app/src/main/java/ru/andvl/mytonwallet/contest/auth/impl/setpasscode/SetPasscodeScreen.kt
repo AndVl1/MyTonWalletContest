@@ -23,11 +23,12 @@ import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components.NumberKeyboard
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components.SetPasscodeAnimatedTitleWithDescription
-import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.utils.vibrateOnKeyboardButtonClick
 import ru.andvl.mytonwallet.contest.ui.components.ButtonStyle
 import ru.andvl.mytonwallet.contest.ui.components.DotIndicatorsRow
+import ru.andvl.mytonwallet.contest.ui.components.ErrorShakeBox
 import ru.andvl.mytonwallet.contest.ui.components.TonWalletButton
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
+import ru.andvl.mytonwallet.contest.utils.vibrateOnKeyboardButtonClick
 
 @Composable
 fun SetPasscodeScreen(
@@ -61,7 +62,14 @@ fun SetPasscodeScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                SetPasscodeAnimatedTitleWithDescription(state)
+                val triggerError =
+                    if (state is SetPasscodeState.Confirm) state.isPasscodeIncorrect else false
+                ErrorShakeBox(
+                    triggerError = triggerError,
+                    onErrorHandled = { onAction(SetPasscodeAction.ResetErrorState) }
+                ) {
+                    SetPasscodeAnimatedTitleWithDescription(state)
+                }
 
                 Spacer(modifier = Modifier.height(24.dp))
 
