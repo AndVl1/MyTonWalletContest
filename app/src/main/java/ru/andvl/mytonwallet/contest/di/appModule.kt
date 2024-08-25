@@ -4,6 +4,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import ru.andvl.mytonwallet.contest.auth.api.AuthDecomposeComponent
 import ru.andvl.mytonwallet.contest.auth.impl.api.AuthDecomposeComponentImpl
+import ru.andvl.mytonwallet.contest.auth.impl.biometriclock.BiometricLockViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.ConfirmPasscodeViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.nowallet.NoWalletViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
@@ -28,4 +29,5 @@ val appModule = module {
     viewModel { (passcode: String, length: PasscodeLength) ->
         ConfirmPasscodeViewModel(passcode, length)
     }
+    viewModel { BiometricLockViewModel() }
 }
