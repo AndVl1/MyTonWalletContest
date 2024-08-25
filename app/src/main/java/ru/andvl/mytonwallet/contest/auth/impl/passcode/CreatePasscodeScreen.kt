@@ -11,7 +11,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CreatePasscodeScreen(
     navigateToWallet: () -> Unit,
-    viewModel: PasscodeViewModel = koinViewModel()
+    viewModel: PasscodeViewModel,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val navigationEvents = viewModel.navigationEvents

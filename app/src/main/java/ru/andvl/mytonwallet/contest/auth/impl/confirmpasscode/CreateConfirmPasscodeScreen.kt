@@ -6,19 +6,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.parametersOf
-import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 
 @Composable
 fun CreateConfirmPasscodeScreen(
-    correctPasscode: String,
-    passcodeLength: PasscodeLength,
     navigateBack: () -> Unit,
     navigateToBiometricLock: () -> Unit,
-    viewModel: ConfirmPasscodeViewModel = koinViewModel(
-        parameters = { parametersOf(correctPasscode, passcodeLength) }
-    )
+    viewModel: ConfirmPasscodeViewModel,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val navigationEvents = viewModel.navigationEvents

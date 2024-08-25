@@ -12,7 +12,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun WalletImportScreen(
     modifier: Modifier = Modifier,
-    viewModel: WalletImportViewModel = koinViewModel()
+    viewModel: WalletImportViewModel,
 ) {
     Box(modifier.fillMaxSize()) {
         Text("WALLET IMPORT", fontSize = 48.sp, color = Color.Black)
