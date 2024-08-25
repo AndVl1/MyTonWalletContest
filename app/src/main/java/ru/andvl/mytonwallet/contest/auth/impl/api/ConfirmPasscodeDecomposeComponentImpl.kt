@@ -4,22 +4,22 @@ import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.replaceCurrent
+import com.arkivanov.decompose.router.stack.pushToFront
+import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.CreateConfirmPasscodeScreen
 import ru.andvl.mytonwallet.contest.auth.impl.model.AuthNavigationConfig
-import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.CreateSetPasscodeScreen
 import ru.andvl.mytonwallet.contest.decompose.ScreenDecomposeComponent
 
-class SetPasscodeDecomposeComponentImpl(
+class ConfirmPasscodeDecomposeComponentImpl(
     componentContext: ComponentContext,
     private val navigation: StackNavigation<AuthNavigationConfig>
 ) : ScreenDecomposeComponent(componentContext) {
 
     @Composable
     override fun Render() {
-        CreateSetPasscodeScreen(
+        CreateConfirmPasscodeScreen(
             navigateBack = { navigation.pop() },
-            navigateToConfirm = {
-                navigation.replaceCurrent(AuthNavigationConfig.ConfirmPasscodeScreen())
+            navigateToBiometricLock = {
+                navigation.pushToFront(AuthNavigationConfig.BiometricLockScreen())
             }
         )
     }

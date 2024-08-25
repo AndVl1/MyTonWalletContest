@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components
+package ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -14,11 +14,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
+import ru.andvl.mytonwallet.contest.ui.components.ErrorShakeBox
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
-fun SetPasscodeScreenHeader(
+fun ConfirmPasscodeScreenHeader(
     passcodeLength: Int,
+    triggerError: Boolean,
+    resetErrorState: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -32,7 +35,12 @@ fun SetPasscodeScreenHeader(
             modifier = Modifier.size(124.dp)
         )
         Spacer(modifier = Modifier.height(24.dp))
-        SetPasscodeTitleWithDescription(passcodeLength)
+        ErrorShakeBox(
+            triggerError = triggerError,
+            onErrorHandled = resetErrorState
+        ) {
+            ConfirmPasscodeTitleWithDescription(passcodeLength)
+        }
     }
 }
 
@@ -40,8 +48,10 @@ fun SetPasscodeScreenHeader(
 @Composable
 private fun SetPasscodeScreenHeaderPreview() {
     MyTonWalletContestTheme {
-        SetPasscodeScreenHeader(
+        ConfirmPasscodeScreenHeader(
             passcodeLength = 4,
+            triggerError = false,
+            resetErrorState = {},
             modifier = Modifier.padding(16.dp)
         )
     }
