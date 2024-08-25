@@ -18,9 +18,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
-import ru.andvl.mytonwallet.contest.auth.impl.passcode.components.AnimatedPasscodeErrorTextWithVibration
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.components.PasscodeKeyboard
+import ru.andvl.mytonwallet.contest.auth.impl.passcode.components.PasscodeLockTitleWithDescription
 import ru.andvl.mytonwallet.contest.ui.components.DotIndicatorsRow
+import ru.andvl.mytonwallet.contest.ui.components.ErrorShakeBox
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
@@ -52,10 +53,12 @@ fun PasscodeScreen(
                 modifier = Modifier.padding(8.dp)
             )
             Spacer(modifier = Modifier.height(72.dp))
-            AnimatedPasscodeErrorTextWithVibration(
+            ErrorShakeBox(
                 triggerError = state.isPasswordIncorrect,
                 onErrorHandled = { onAction(PasscodeAction.ResetErrorState) }
-            )
+            ) {
+                PasscodeLockTitleWithDescription()
+            }
             Spacer(modifier = Modifier.height(40.dp))
             PasscodeKeyboard(
                 buttons = state.keyboardButtons,

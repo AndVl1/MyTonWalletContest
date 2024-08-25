@@ -19,7 +19,8 @@ sealed interface SetPasscodeState : State {
     data class Confirm(
         val correctPasscode: String,
         override val passcodeLength: PasscodeLength,
-        override val inputPasscode: String = ""
+        override val inputPasscode: String = "",
+        val isPasscodeIncorrect: Boolean = false,
     ) : SetPasscodeState
 
     val keyboardButtons: ImmutableList<ImmutableList<NumberKeyboardButtonItem>>

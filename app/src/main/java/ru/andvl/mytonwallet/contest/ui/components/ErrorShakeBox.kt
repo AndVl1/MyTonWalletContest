@@ -1,7 +1,9 @@
-package ru.andvl.mytonwallet.contest.auth.impl.passcode.components
+package ru.andvl.mytonwallet.contest.ui.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.keyframes
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,12 +23,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.andvl.mytonwallet.contest.auth.impl.passcode.utils.vibrateOnError
+import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
+import ru.andvl.mytonwallet.contest.utils.vibrateOnError
 
 @Composable
-fun AnimatedPasscodeErrorTextWithVibration(
+fun ErrorShakeBox(
     triggerError: Boolean,
-    onErrorHandled: () -> Unit
+    onErrorHandled: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable (BoxScope.() -> Unit)
 ) {
     val context = LocalContext.current
     val offsetX = remember { Animatable(0f) }
@@ -46,27 +51,34 @@ fun AnimatedPasscodeErrorTextWithVibration(
         }
     }
 
-    PasscodeLockTitleWithDescription(modifier = Modifier.offset(x = offsetX.value.dp))
+    Box(
+        modifier = modifier.offset(x = offsetX.value.dp),
+        content = content
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun AnimatedPasscodeErrorTextWithButtonPreview() {
-    var triggerError by remember { mutableStateOf(false) }
+private fun ErrorShakeBoxPreview() {
+    MyTonWalletContestTheme {
+        var triggerError by remember { mutableStateOf(false) }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        AnimatedPasscodeErrorTextWithVibration(
-            triggerError = triggerError,
-            onErrorHandled = { triggerError = false }
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-        Button(onClick = { triggerError = true }) {
-            Text("trigger")
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            ErrorShakeBox(
+                triggerError = triggerError,
+                onErrorHandled = { triggerError = false }
+            ) {
+                Text("blablabla")
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(onClick = { triggerError = true }) {
+                Text("trigger")
+            }
         }
     }
 }
