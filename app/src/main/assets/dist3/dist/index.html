@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test callApi</title>
+</head>
+<body>
+<h1>Test callApi</h1>
+<script src="bundle.js"></script>
+<script>
+    async function run() {
+        // Подготовьте значение для network
+        const network = 'testnet'; // Или 'mainnet', в зависимости от ваших условий
+        console.log(network);
+
+        // Проверьте доступность API
+        try {
+            const checkResult = await callApi('checkApiAvailability', {
+                blockchainKey: 'ton',
+                network: network,
+            });
+            console.log(checkResult); // Вывод результата
+        } catch (error) {
+            console.error('Error calling API:', error);
+        }
+    }
+
+    run();
+</script>
+</body>
+</html>
