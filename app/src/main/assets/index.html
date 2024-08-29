@@ -1,31 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test callApi</title>
+    <title>Test</title>
 </head>
-<body>
-<h1>Test callApi</h1>
-<script src="main.0c309beaa478f25f8156.js"></script>
-<script>
-    async function run() {
-        // Подготовьте значение для network
-        const network = 'testnet'; // Или 'mainnet', в зависимости от ваших условий
 
-        // Проверьте доступность API
+<body>
+<script src="./bundle.js"></script>
+<script>
+    // Глобальный обработчик ошибок
+    window.onerror = function (message, source, lineno, colno, error) {
+        console.error("Error message: " + message);
+        console.error("Source: " + source);
+        console.error("Line: " + lineno);
+        console.error("Column: " + colno);
+        console.error("Error object: ", error);
+    };
+
+    function onUpdate(update) {
         try {
-            const checkResult = await window.callApi('checkApiAvailability', {
-                blockchainKey: 'ton',
-                network: network,
-            });
-            console.log(checkResult); // Вывод результата
+            const { type } = update;
+
+            // Логирование события для отладки
+            console.log('Received update:', type);
+
+            switch (type) {
+                case 'disconnectSite':
+                    console.log('Site disconnected');
+                    break;
+                default:
+                    break;
+            }
         } catch (error) {
-            console.error('Error calling API:', error);
+            console.error('Error in onUpdate:', error);
         }
     }
 
-    run();
+    // Проверка доступности функций
+    if (typeof api !== 'undefined' &&
+        typeof api.initApi === 'function' &&
+        typeof api.callApi === 'function') {
+        console.log('Functions are available.');
+
+        try {
+            api.initApi(onUpdate, {
+                isElectron: false,
+                isNativeBottomSheet: false,
+                isIosApp: false,
+                isAndroidApp: true
+            });
+
+            // Задержка для инициализации API
+            const checkApiInitialization = () => {
+                setTimeout(async () => {
+                    try {
+                        const network = 'testnet'
+                        const response = await api.callApi('getMnemonicWordList');
+                        // const response = await api.callApi('checkApiAvailability', {
+                        //     blockchainKey: 'ton',
+                        //     network: network
+                        // });
+                        // console.log(network);
+                        console.log('SUCCESS!');
+                        console.log(response);
+                    } catch (error) {
+                        console.error('Error calling API:', error);
+                    }
+                }, 1000);
+            };
+
+            checkApiInitialization();
+        } catch (error) {
+            console.error('Error during API initialization:', error);
+        }
+
+        // try {
+        //   await api.callApi('getMnemonicWordList');
+        //   console.log('SUCCESS!');
+        //   console.log(words);
+        // } catch (error) {
+        //     console.error('Error during callApi:', error);
+        // }
+    } else {
+        console.log('Functions are not available.');
+    }
 </script>
 </body>
+
 </html>

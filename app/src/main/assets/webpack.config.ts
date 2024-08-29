@@ -82,8 +82,9 @@ export default function createConfig(
     target: 'web',
 
     optimization: {
-      minimize: false, // Отключает минификацию
-      minimizer: [], // Убедитесь, что minimizer пуст
+      minimize: false,
+      minimizer: [],
+
       usedExports: true,
       ...(APP_ENV === 'staging' && {
         chunkIds: 'named',
@@ -97,10 +98,7 @@ export default function createConfig(
     },
 
     entry: {
-      main: './src/index.tsx',
-      extensionServiceWorker: './src/extension/serviceWorker.ts',
-      extensionContentScript: './src/extension/contentScript.ts',
-      extensionPageScript: './src/extension/pageScript/index.ts',
+      api: './src/api/index.ts',
     },
 
     devServer: {
@@ -127,10 +125,15 @@ export default function createConfig(
     watchOptions: { ignored: defaultI18nFilename },
 
     output: {
-      filename: (pathData) => (pathData.chunk?.name?.startsWith('extension') ? '[name].js' : '[name].[contenthash].js'),
-      chunkFilename: '[id].[chunkhash].js',
+      filename: 'bundle.js', // Имя итогового файла
+      path: path.resolve(__dirname, 'dist'), // Директория, куда будет помещён бандл
+      library: {
+        name: 'api',
+        type: 'umd', // Универсальный модуль для поддержки различных окружений
+      },
+      globalObject: 'this', // Обеспечивает доступ к глобальному объекту
+      chunkFilename: '[name].js',
       assetModuleFilename: '[name].[contenthash][ext]',
-      path: path.resolve(__dirname, 'dist'),
       clean: true,
     },
 
