@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
 
     implementation(libs.kotlinx.collections.immutable)
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

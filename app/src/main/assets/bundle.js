@@ -10,158 +10,285 @@
 })(this, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+/******/ 	var __webpack_modules__ = ({});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/ensure chunk */
+/******/ 	(() => {
+/******/ 		__webpack_require__.f = {};
+/******/ 		// This file contains only the entry chunk.
+/******/ 		// The chunk loading function for additional chunks
+/******/ 		__webpack_require__.e = (chunkId) => {
+/******/ 			return Promise.all(Object.keys(__webpack_require__.f).reduce((promises, key) => {
+/******/ 				__webpack_require__.f[key](chunkId, promises);
+/******/ 				return promises;
+/******/ 			}, []));
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/get javascript chunk filename */
+/******/ 	(() => {
+/******/ 		// This function allow to reference async chunks
+/******/ 		__webpack_require__.u = (chunkId) => {
+/******/ 			// return url for filenames based on template
+/******/ 			return "" + ({"348":"worker","512":"capacitorSecureStorage"}[chunkId] || chunkId) + ".js";
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/load script */
+/******/ 	(() => {
+/******/ 		var inProgress = {};
+/******/ 		var dataWebpackPrefix = "api:";
+/******/ 		// loadScript function to load a script via script tag
+/******/ 		__webpack_require__.l = (url, done, key, chunkId) => {
+/******/ 			if(inProgress[url]) { inProgress[url].push(done); return; }
+/******/ 			var script, needAttach;
+/******/ 			if(key !== undefined) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				for(var i = 0; i < scripts.length; i++) {
+/******/ 					var s = scripts[i];
+/******/ 					if(s.getAttribute("src") == url || s.getAttribute("data-webpack") == dataWebpackPrefix + key) { script = s; break; }
+/******/ 				}
+/******/ 			}
+/******/ 			if(!script) {
+/******/ 				needAttach = true;
+/******/ 				script = document.createElement('script');
+/******/ 		
+/******/ 				script.charset = 'utf-8';
+/******/ 				script.timeout = 120;
+/******/ 				if (__webpack_require__.nc) {
+/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 				}
+/******/ 				script.setAttribute("data-webpack", dataWebpackPrefix + key);
+/******/ 				script.src = url;
+/******/ 			}
+/******/ 			inProgress[url] = [done];
+/******/ 			var onScriptComplete = (prev, event) => {
+/******/ 				// avoid mem leaks in IE.
+/******/ 				script.onerror = script.onload = null;
+/******/ 				clearTimeout(timeout);
+/******/ 				var doneFns = inProgress[url];
+/******/ 				delete inProgress[url];
+/******/ 				script.parentNode && script.parentNode.removeChild(script);
+/******/ 				doneFns && doneFns.forEach((fn) => (fn(event)));
+/******/ 				if(prev) return prev(event);
+/******/ 			}
+/******/ 			var timeout = setTimeout(onScriptComplete.bind(null, undefined, { type: 'timeout', target: script }), 120000);
+/******/ 			script.onerror = onScriptComplete.bind(null, script.onerror);
+/******/ 			script.onload = onScriptComplete.bind(null, script.onload);
+/******/ 			needAttach && document.head.appendChild(script);
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		__webpack_require__.p = "";
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		__webpack_require__.b = document.baseURI || self.location.href;
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			335: 0
+/******/ 		};
+/******/ 		
+/******/ 		__webpack_require__.f.j = (chunkId, promises) => {
+/******/ 				// JSONP chunk loading for javascript
+/******/ 				var installedChunkData = __webpack_require__.o(installedChunks, chunkId) ? installedChunks[chunkId] : undefined;
+/******/ 				if(installedChunkData !== 0) { // 0 means "already installed".
+/******/ 		
+/******/ 					// a Promise means "currently loading".
+/******/ 					if(installedChunkData) {
+/******/ 						promises.push(installedChunkData[2]);
+/******/ 					} else {
+/******/ 						if(true) { // all chunks have JS
+/******/ 							// setup Promise in chunk cache
+/******/ 							var promise = new Promise((resolve, reject) => (installedChunkData = installedChunks[chunkId] = [resolve, reject]));
+/******/ 							promises.push(installedChunkData[2] = promise);
+/******/ 		
+/******/ 							// start chunk loading
+/******/ 							var url = __webpack_require__.p + __webpack_require__.u(chunkId);
+/******/ 							// create error before stack unwound to get useful stacktrace later
+/******/ 							var error = new Error();
+/******/ 							var loadingEnded = (event) => {
+/******/ 								if(__webpack_require__.o(installedChunks, chunkId)) {
+/******/ 									installedChunkData = installedChunks[chunkId];
+/******/ 									if(installedChunkData !== 0) installedChunks[chunkId] = undefined;
+/******/ 									if(installedChunkData) {
+/******/ 										var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 										var realSrc = event && event.target && event.target.src;
+/******/ 										error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+/******/ 										error.name = 'ChunkLoadError';
+/******/ 										error.type = errorType;
+/******/ 										error.request = realSrc;
+/******/ 										installedChunkData[1](error);
+/******/ 									}
+/******/ 								}
+/******/ 							};
+/******/ 							__webpack_require__.l(url, loadingEnded, "chunk-" + chunkId, chunkId);
+/******/ 						}
+/******/ 					}
+/******/ 				}
+/******/ 		};
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		// no on chunks loaded
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 		
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = this["webpackChunkapi"] = this["webpackChunkapi"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
 
-/***/ "./src/api/providers/worker/connector.ts":
-/*!***********************************************!*\
-  !*** ./src/api/providers/worker/connector.ts ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  callApi: () => (/* reexport */ callApi),
+  initApi: () => (/* reexport */ initApi)
+});
 
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   callApi: () => (/* binding */ callApi),
-/* harmony export */   initApi: () => (/* binding */ initApi)
-/* harmony export */ });
-/* unused harmony export callApiWithThrow */
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../config */ "./src/config.ts");
-/* harmony import */ var _util_capacitorStorageProxy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../util/capacitorStorageProxy */ "./src/util/capacitorStorageProxy/index.ts");
-/* harmony import */ var _util_logs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../util/logs */ "./src/util/logs.ts");
-/* harmony import */ var _util_PostMessageConnector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../util/PostMessageConnector */ "./src/util/PostMessageConnector.ts");
-/* harmony import */ var _util_schedulers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../util/schedulers */ "./src/util/schedulers.ts");
-/* harmony import */ var _util_windowEnvironment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../util/windowEnvironment */ "./src/util/windowEnvironment.ts");
+// NAMESPACE OBJECT: ./src/util/capacitorStorageProxy/methods.ts
+var methods_namespaceObject = {};
+__webpack_require__.r(methods_namespaceObject);
+__webpack_require__.d(methods_namespaceObject, {
+  clear: () => (clear),
+  getItem: () => (getItem),
+  init: () => (init),
+  keys: () => (keys),
+  removeItem: () => (removeItem),
+  setItem: () => (setItem)
+});
 
-
-
-
-
-
-const HEALTH_CHECK_TIMEOUT = 150;
-const HEALTH_CHECK_MIN_DELAY = 5000; // 5 sec
-
-let updateCallback;
-let worker;
-let connector;
-let isInitialized = false;
-function initApi(onUpdate, initArgs) {
-  updateCallback = onUpdate;
-  if (!connector) {
-    worker = new Worker( /* webpackChunkName: "worker" */new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u("worker"), __webpack_require__.b));
-    connector = (0,_util_PostMessageConnector__WEBPACK_IMPORTED_MODULE_3__.createConnector)(worker, onUpdate);
-    if (_config__WEBPACK_IMPORTED_MODULE_0__.IS_CAPACITOR) {
-      (0,_util_capacitorStorageProxy__WEBPACK_IMPORTED_MODULE_1__.createWindowProvider)(worker);
-    }
-  }
-  if (!isInitialized) {
-    if (_util_windowEnvironment__WEBPACK_IMPORTED_MODULE_5__.IS_IOS) {
-      setupIosHealthCheck();
-    }
-    isInitialized = true;
-  }
-  const args = typeof initArgs === 'function' ? initArgs() : initArgs;
-  return connector.init(args);
-}
-async function callApi(fnName) {
-  if (!connector) {
-    (0,_util_logs__WEBPACK_IMPORTED_MODULE_2__.logDebugError)('API is not initialized');
-    return undefined;
-  }
-  try {
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-    return await connector.request({
-      name: fnName,
-      args
-    });
-  } catch (err) {
-    return undefined;
-  }
-}
-function callApiWithThrow(fnName) {
-  for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-    args[_key2 - 1] = arguments[_key2];
-  }
-  return connector.request({
-    name: fnName,
-    args
-  });
-}
-const startedAt = Date.now();
-
-// Workaround for iOS sometimes stops interacting with worker
-function setupIosHealthCheck() {
-  window.addEventListener('focus', () => {
-    void ensureWorkerPing();
-    // Sometimes a single check is not enough
-    setTimeout(() => ensureWorkerPing(), 1000);
-  });
-}
-async function ensureWorkerPing() {
-  let isResolved = false;
-  try {
-    await Promise.race([callApiWithThrow('ping'), (0,_util_schedulers__WEBPACK_IMPORTED_MODULE_4__.pause)(HEALTH_CHECK_TIMEOUT).then(() => isResolved ? undefined : Promise.reject(new Error('HEALTH_CHECK_TIMEOUT')))]);
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err);
-    if (Date.now() - startedAt >= HEALTH_CHECK_MIN_DELAY) {
-      var _worker;
-      (_worker = worker) === null || _worker === void 0 ? void 0 : _worker.terminate();
-      worker = undefined;
-      connector = undefined;
-      updateCallback({
-        type: 'requestReconnectApi'
-      });
-    }
-  } finally {
-    isResolved = true;
-  }
-}
-
-/***/ }),
-
-/***/ "./src/config.ts":
-/*!***********************!*\
-  !*** ./src/config.ts ***!
-  \***********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   APP_ENV: () => (/* binding */ APP_ENV),
-/* harmony export */   DEBUG: () => (/* binding */ DEBUG),
-/* harmony export */   DEBUG_ALERT_MSG: () => (/* binding */ DEBUG_ALERT_MSG),
-/* harmony export */   DEBUG_MORE: () => (/* binding */ DEBUG_MORE),
-/* harmony export */   DEFAULT_DECIMAL_PLACES: () => (/* binding */ DEFAULT_DECIMAL_PLACES),
-/* harmony export */   IS_CAPACITOR: () => (/* binding */ IS_CAPACITOR),
-/* harmony export */   IS_EXTENSION: () => (/* binding */ IS_EXTENSION),
-/* harmony export */   IS_FIREFOX_EXTENSION: () => (/* binding */ IS_FIREFOX_EXTENSION),
-/* harmony export */   LANG_LIST: () => (/* binding */ LANG_LIST),
-/* harmony export */   ONE_TON: () => (/* binding */ ONE_TON),
-/* harmony export */   WINDOW_PROVIDER_CHANNEL: () => (/* binding */ WINDOW_PROVIDER_CHANNEL)
-/* harmony export */ });
-/* unused harmony exports APP_NAME, APP_VERSION, APP_ENV_MARKER, IS_PRODUCTION, IS_TEST, IS_PERF, IS_PACKAGED_ELECTRON, IS_ANDROID_DIRECT, ELECTRON_HOST_URL, INACTIVE_MARKER, PRODUCTION_URL, BETA_URL, APP_REPO_URL, BASE_URL, BOT_USERNAME, SWAP_FEE_ADDRESS, STRICTERDOM_ENABLED, PIN_LENGTH, NATIVE_BIOMETRICS_USERNAME, NATIVE_BIOMETRICS_SERVER, MNEMONIC_COUNT, PRIVATE_KEY_HEX_LENGTH, MNEMONIC_CHECK_COUNT, MOBILE_SCREEN_MAX_WIDTH, ANIMATION_END_DELAY, ANIMATED_STICKER_TINY_SIZE_PX, ANIMATED_STICKER_SMALL_SIZE_PX, ANIMATED_STICKER_MIDDLE_SIZE_PX, ANIMATED_STICKER_DEFAULT_PX, ANIMATED_STICKER_BIG_SIZE_PX, ANIMATED_STICKER_HUGE_SIZE_PX, TON_SYMBOL, DEFAULT_LANDSCAPE_ACTION_TAB_ID, WHOLE_PART_DELIMITER, DEFAULT_SLIPPAGE_VALUE, GLOBAL_STATE_CACHE_DISABLED, GLOBAL_STATE_CACHE_KEY, ANIMATION_LEVEL_MIN, ANIMATION_LEVEL_MED, ANIMATION_LEVEL_MAX, ANIMATION_LEVEL_DEFAULT, THEME_DEFAULT, MAIN_ACCOUNT_ID, TONHTTPAPI_MAINNET_URL, TONHTTPAPI_MAINNET_API_KEY, ELECTRON_TONHTTPAPI_MAINNET_API_KEY, TONHTTPAPI_V3_MAINNET_API_URL, TONAPIIO_MAINNET_URL, TONHTTPAPI_TESTNET_URL, TONHTTPAPI_TESTNET_API_KEY, ELECTRON_TONHTTPAPI_TESTNET_API_KEY, TONHTTPAPI_V3_TESTNET_API_URL, TONAPIIO_TESTNET_URL, BRILLIANT_API_BASE_URL, FRACTION_DIGITS, SHORT_FRACTION_DIGITS, SUPPORT_USERNAME, MY_TON_WALLET_PROMO_URL, TELEGRAM_WEB_URL, TON_EXPLORER_BASE_MAINNET_URL, TON_EXPLORER_BASE_TESTNET_URL, TON_EXPLORER_NAME, TOKEN_EXPLORER_MAINNET_URL, TOKEN_EXPLORER_TESTNET_URL, TOKEN_EXPLORER_NAME, GETGEMS_BASE_MAINNET_URL, GETGEMS_BASE_TESTNET_URL, EMPTY_HASH_VALUE, CHANGELLY_SUPPORT_EMAIL, CHANGELLY_LIVE_CHAT_URL, CHANGELLY_SECURITY_EMAIL, CHANGELLY_TERMS_OF_USE, CHANGELLY_PRIVACY_POLICY, CHANGELLY_AML_KYC, CHANGELLY_WAITING_DEADLINE, TONCOIN_SLUG, DEFAULT_SWAP_SECOND_TOKEN_SLUG, DEFAULT_CEX_SWAP_SECOND_TOKEN_SLUG, PROXY_HOSTS, TINY_TRANSFER_MAX_COST, LANG_CACHE_NAME, STAKING_CYCLE_DURATION_MS, VALIDATION_PERIOD_MS, MIN_BALANCE_FOR_UNSTAKE, STAKING_FORWARD_AMOUNT, DEFAULT_FEE, STAKING_POOLS, LIQUID_POOL, LIQUID_JETTON, STAKING_MIN_AMOUNT, NOMINATORS_STAKING_MIN_AMOUNT, TONCONNECT_PROTOCOL_VERSION, TONCONNECT_WALLET_JSBRIDGE_KEY, NFT_FRAGMENT_COLLECTIONS, TON_DNS_COLLECTION, MYCOIN_TOKEN, MYCOIN_SLUG, MYCOIN_TOKEN_TESTNET, MYCOIN_SLUG_TESTNET, TOKEN_INFO, TON_BLOCKCHAIN, INIT_SWAP_ASSETS, MULTITAB_DATA_CHANNEL_NAME, ACTIVE_TAB_STORAGE_KEY, INDEXED_DB_NAME, INDEXED_DB_STORE_NAME, MIN_ASSETS_TAB_VIEW, DEFAULT_PRICE_CURRENCY, SHORT_CURRENCY_SYMBOL_MAP, CURRENCY_LIST, BURN_ADDRESS, DEFAULT_WALLET_VERSION, POPULAR_WALLET_VERSIONS, DEFAULT_TIMEOUT, DEFAULT_RETRIES, DEFAULT_ERROR_PAUSE, HISTORY_PERIODS, BROWSER_HISTORY_LIMIT, NFT_BATCH_SIZE, NOTCOIN_VOUCHERS_ADDRESS, BURN_CHUNK_DURATION_APPROX_SEC, NOTCOIN_FORWARD_TON_AMOUNT, NOTCOIN_EXCHANGERS, CLAIM_ADDRESS, CLAIM_AMOUNT, CLAIM_COMMENT, RE_LINK_TEMPLATE, RE_TG_BOT_MENTION, DIESEL_ADDRESS, DIESEL_TOKENS */
-const APP_ENV = "development";
-const APP_NAME =  false || 'MyTonWallet';
-const APP_VERSION = "3.0.10";
+;// CONCATENATED MODULE: ./src/config.ts
+const APP_ENV = "production";
+const APP_NAME = (/* unused pure expression or super */ null && ( false || 'MyTonWallet'));
+const APP_VERSION = (/* unused pure expression or super */ null && ("3.0.10"));
 const APP_ENV_MARKER = APP_ENV === 'staging' ? 'Beta' : APP_ENV === 'development' ? 'Dev' : undefined;
-const DEBUG = APP_ENV !== 'production' && APP_ENV !== 'perf' && APP_ENV !== 'test';
+const config_DEBUG = APP_ENV !== 'production' && APP_ENV !== 'perf' && APP_ENV !== 'test';
 const DEBUG_MORE = false;
 const IS_PRODUCTION = APP_ENV === 'production';
 const IS_TEST = APP_ENV === 'test';
 const IS_PERF = APP_ENV === 'perf';
-const IS_EXTENSION = false === '1';
+const config_IS_EXTENSION = false === '1';
 const IS_FIREFOX_EXTENSION = false === '1';
 const IS_PACKAGED_ELECTRON = false === '1';
-const IS_CAPACITOR = false === '1';
-const IS_ANDROID_DIRECT = false === '1';
+const config_IS_CAPACITOR = false === '1';
+const IS_ANDROID_DIRECT = (/* unused pure expression or super */ null && (false === '1'));
 const ELECTRON_HOST_URL = 'https://dumb-host';
 const INACTIVE_MARKER = '[Inactive]';
 const PRODUCTION_URL = 'https://mytonwallet.app';
 const BETA_URL = 'https://beta.mytonwallet.app';
 const APP_REPO_URL = 'https://github.com/mytonwalletorg/mytonwallet';
-const BASE_URL = "https://mytonwallet.app";
-const BOT_USERNAME =  false || 'MyTonWalletBot';
-const SWAP_FEE_ADDRESS =  false || 'UQDUkQbpTVIgt7v66-JTFR-3-eXRFz_4V66F-Ufn6vOg0GOp';
-const STRICTERDOM_ENABLED = DEBUG && !IS_PACKAGED_ELECTRON;
+const BASE_URL = (/* unused pure expression or super */ null && ("https://mytonwallet.app"));
+const BOT_USERNAME = (/* unused pure expression or super */ null && ( false || 'MyTonWalletBot'));
+const SWAP_FEE_ADDRESS = (/* unused pure expression or super */ null && ( false || 'UQDUkQbpTVIgt7v66-JTFR-3-eXRFz_4V66F-Ufn6vOg0GOp'));
+const STRICTERDOM_ENABLED = config_DEBUG && !IS_PACKAGED_ELECTRON;
 const DEBUG_ALERT_MSG = 'Shoot!\nSomething went wrong, please see the error details in Dev Tools Console.';
 const PIN_LENGTH = 4;
 const NATIVE_BIOMETRICS_USERNAME = 'MyTonWallet';
@@ -180,7 +307,7 @@ const ANIMATED_STICKER_BIG_SIZE_PX = 156;
 const ANIMATED_STICKER_HUGE_SIZE_PX = 192;
 const TON_SYMBOL = 'TON';
 const DEFAULT_LANDSCAPE_ACTION_TAB_ID = 0;
-const DEFAULT_DECIMAL_PLACES = 9;
+const config_DEFAULT_DECIMAL_PLACES = 9;
 const WHOLE_PART_DELIMITER = ' '; // https://www.compart.com/en/unicode/U+202F
 
 const DEFAULT_SLIPPAGE_VALUE = 5;
@@ -189,20 +316,20 @@ const GLOBAL_STATE_CACHE_KEY = 'mytonwallet-global-state';
 const ANIMATION_LEVEL_MIN = 0;
 const ANIMATION_LEVEL_MED = 1;
 const ANIMATION_LEVEL_MAX = 2;
-const ANIMATION_LEVEL_DEFAULT = ANIMATION_LEVEL_MAX;
+const ANIMATION_LEVEL_DEFAULT = (/* unused pure expression or super */ null && (ANIMATION_LEVEL_MAX));
 const THEME_DEFAULT = 'system';
 const MAIN_ACCOUNT_ID = '0-ton-mainnet';
-const TONHTTPAPI_MAINNET_URL =  false || 'https://tonhttpapi.mytonwallet.org/api/v2/jsonRPC';
-const TONHTTPAPI_MAINNET_API_KEY = null;
-const ELECTRON_TONHTTPAPI_MAINNET_API_KEY = null;
-const TONHTTPAPI_V3_MAINNET_API_URL =  false || 'https://tonhttpapi-v3.mytonwallet.org/api/v3';
-const TONAPIIO_MAINNET_URL =  false || 'https://tonapiio.mytonwallet.org';
-const TONHTTPAPI_TESTNET_URL =  false || 'https://tonhttpapi-testnet.mytonwallet.org/api/v2/jsonRPC';
-const TONHTTPAPI_TESTNET_API_KEY = null;
-const ELECTRON_TONHTTPAPI_TESTNET_API_KEY = null;
-const TONHTTPAPI_V3_TESTNET_API_URL =  false || 'https://tonhttpapi-v3-testnet.mytonwallet.org/api/v3';
-const TONAPIIO_TESTNET_URL =  false || 'https://tonapiio-testnet.mytonwallet.org';
-const BRILLIANT_API_BASE_URL =  false || 'https://api.mytonwallet.org';
+const TONHTTPAPI_MAINNET_URL = (/* unused pure expression or super */ null && ( false || 'https://tonhttpapi.mytonwallet.org/api/v2/jsonRPC'));
+const TONHTTPAPI_MAINNET_API_KEY = (/* unused pure expression or super */ null && (null));
+const ELECTRON_TONHTTPAPI_MAINNET_API_KEY = (/* unused pure expression or super */ null && (null));
+const TONHTTPAPI_V3_MAINNET_API_URL = (/* unused pure expression or super */ null && ( false || 'https://tonhttpapi-v3.mytonwallet.org/api/v3'));
+const TONAPIIO_MAINNET_URL = (/* unused pure expression or super */ null && ( false || 'https://tonapiio.mytonwallet.org'));
+const TONHTTPAPI_TESTNET_URL = (/* unused pure expression or super */ null && ( false || 'https://tonhttpapi-testnet.mytonwallet.org/api/v2/jsonRPC'));
+const TONHTTPAPI_TESTNET_API_KEY = (/* unused pure expression or super */ null && (null));
+const ELECTRON_TONHTTPAPI_TESTNET_API_KEY = (/* unused pure expression or super */ null && (null));
+const TONHTTPAPI_V3_TESTNET_API_URL = (/* unused pure expression or super */ null && ( false || 'https://tonhttpapi-v3-testnet.mytonwallet.org/api/v3'));
+const TONAPIIO_TESTNET_URL = (/* unused pure expression or super */ null && ( false || 'https://tonapiio-testnet.mytonwallet.org'));
+const BRILLIANT_API_BASE_URL = (/* unused pure expression or super */ null && ( false || 'https://api.mytonwallet.org'));
 const FRACTION_DIGITS = 9;
 const SHORT_FRACTION_DIGITS = 2;
 const SUPPORT_USERNAME = 'MyTonWalletSupport';
@@ -223,12 +350,12 @@ const CHANGELLY_SECURITY_EMAIL = 'security@changelly.com';
 const CHANGELLY_TERMS_OF_USE = 'https://changelly.com/terms-of-use';
 const CHANGELLY_PRIVACY_POLICY = 'https://changelly.com/privacy-policy';
 const CHANGELLY_AML_KYC = 'https://changelly.com/aml-kyc';
-const CHANGELLY_WAITING_DEADLINE = 3 * 60 * 60 * 1000; // 3 hour
+const CHANGELLY_WAITING_DEADLINE = (/* unused pure expression or super */ null && (3 * 60 * 60 * 1000)); // 3 hour
 
 const TONCOIN_SLUG = 'toncoin';
 const DEFAULT_SWAP_SECOND_TOKEN_SLUG = 'ton-eqcxe6mutq'; // USD₮
 const DEFAULT_CEX_SWAP_SECOND_TOKEN_SLUG = 'usdtrx';
-const PROXY_HOSTS = null;
+const PROXY_HOSTS = (/* unused pure expression or super */ null && (null));
 const TINY_TRANSFER_MAX_COST = 0.01;
 const LANG_CACHE_NAME = 'mtw-lang-125';
 const LANG_LIST = [{
@@ -284,16 +411,16 @@ const LANG_LIST = [{
 }];
 const STAKING_CYCLE_DURATION_MS = 131072000; // 36.4 hours
 const VALIDATION_PERIOD_MS = 65536000; // 18.2 h.
-const ONE_TON = 1000000000n;
+const config_ONE_TON = 1000000000n;
 const MIN_BALANCE_FOR_UNSTAKE = 1020000000n; // 1.02 TON
-const STAKING_FORWARD_AMOUNT = ONE_TON;
+const STAKING_FORWARD_AMOUNT = (/* unused pure expression or super */ null && (config_ONE_TON));
 const DEFAULT_FEE = 15000000n; // 0.015 TON
 
 const STAKING_POOLS =  false ? 0 : [];
-const LIQUID_POOL =  false || 'EQD2_4d91M4TVbEBVyBF8J1UwpMJc361LKVCz6bBlffMW05o';
-const LIQUID_JETTON =  false || 'EQCqC6EhRJ_tpWngKxL6dV0k6DSnRUrs9GSVkLbfdCqsj6TE';
-const STAKING_MIN_AMOUNT = ONE_TON;
-const NOMINATORS_STAKING_MIN_AMOUNT = ONE_TON * 10001n;
+const LIQUID_POOL = (/* unused pure expression or super */ null && ( false || 'EQD2_4d91M4TVbEBVyBF8J1UwpMJc361LKVCz6bBlffMW05o'));
+const LIQUID_JETTON = (/* unused pure expression or super */ null && ( false || 'EQCqC6EhRJ_tpWngKxL6dV0k6DSnRUrs9GSVkLbfdCqsj6TE'));
+const STAKING_MIN_AMOUNT = (/* unused pure expression or super */ null && (config_ONE_TON));
+const NOMINATORS_STAKING_MIN_AMOUNT = config_ONE_TON * 10001n;
 const TONCONNECT_PROTOCOL_VERSION = 2;
 const TONCONNECT_WALLET_JSBRIDGE_KEY = 'mytonwallet';
 const NFT_FRAGMENT_COLLECTIONS = new Set(['0:0e41dc1dc3c9067ed24248580e12b3359818d83dee0304fabcf80845eafafdb2',
@@ -318,7 +445,7 @@ const TOKEN_INFO = {
       priceUsd: 1.95,
       percentChange24h: 0
     },
-    decimals: DEFAULT_DECIMAL_PLACES
+    decimals: config_DEFAULT_DECIMAL_PLACES
   }
 };
 const TON_BLOCKCHAIN = 'ton';
@@ -328,7 +455,7 @@ const INIT_SWAP_ASSETS = {
     symbol: TON_SYMBOL,
     blockchain: TON_BLOCKCHAIN,
     slug: TONCOIN_SLUG,
-    decimals: DEFAULT_DECIMAL_PLACES,
+    decimals: config_DEFAULT_DECIMAL_PLACES,
     price: 0,
     priceUsd: 0,
     isPopular: true
@@ -381,17 +508,17 @@ const CURRENCY_LIST = [{
 }];
 const BURN_ADDRESS = 'UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ';
 const DEFAULT_WALLET_VERSION = 'W5';
-const POPULAR_WALLET_VERSIONS = ['v3R1', 'v3R2', 'v4R2', 'W5'];
+const POPULAR_WALLET_VERSIONS = (/* unused pure expression or super */ null && (['v3R1', 'v3R2', 'v4R2', 'W5']));
 const DEFAULT_TIMEOUT = 10000;
 const DEFAULT_RETRIES = 3;
 const DEFAULT_ERROR_PAUSE = 500;
-const HISTORY_PERIODS = ['1D', '7D', '1M', '3M', '1Y', 'ALL'];
+const HISTORY_PERIODS = (/* unused pure expression or super */ null && (['1D', '7D', '1M', '3M', '1Y', 'ALL']));
 const BROWSER_HISTORY_LIMIT = 10;
 const NFT_BATCH_SIZE = 4;
 const NOTCOIN_VOUCHERS_ADDRESS = 'EQDmkj65Ab_m0aZaW8IpKw4kYqIgITw_HRstYEkVQ6NIYCyW';
 const BURN_CHUNK_DURATION_APPROX_SEC = 30;
 const NOTCOIN_FORWARD_TON_AMOUNT = 30000000n; // 0.03 TON
-const NOTCOIN_EXCHANGERS = ['EQAPZauWVPUcm2hUJT9n36pxznEhl46rEn1bzBXN0RY_yiy2', 'EQASgm0Qv3h2H2mF0W06ikPqYq2ctT3dyXMJH_svbEKKB3iZ', 'EQArlmP-RhVIG2yAFGZyPZfM3m0YccxmpvoRi6sgRzWnAA0s', 'EQA6pL-spYqZp1Ck6o3rpY45Cl-bvLMW_j3qdVejOkUWpLnm', 'EQBJ_ehYjumQKbXfWUue1KHKXdTm1GuYJB0Fj2ST_DwORvpd', 'EQBRmYSjxh9xlZpUqEmGjF5UjukI9v_Cm2kCTu4CoBn3XkOD', 'EQBkiqncd7AFT5_23H-RoA2Vynk-Nzq_dLoeMVRthAU9RF0p', 'EQB_OzTHXbztABe0QHgr4PtAV8T64LR6aDunXgaAoihOdxwO', 'EQCL-x5kLg6tKVNGryItTuj6tG3FH5mhUEu0xRqQc-kbEmbe', 'EQCZh2yJ46RaQH3AYmjEA8SMMXi77Oein4-3lvqkHseIAhD-', 'EQChKo5IK3iNqUHUGDB9gtzjCjMTPtmsFqekuCA2MdreVEyu', 'EQC6DNCBv076TIliRMfOt20RpbS7rNKDfSky3WrFEapFt8AH', 'EQDE_XFZOYae_rl3ZMsgBCtRSmYhl8B4y2BZEP7oiGBDhlgy', 'EQDddqpGA2ePXQF47A2DSL3GF6ZzIVmimfM2d16cdymy2noT', 'EQDv0hNNAamhYltCh3pTJrq3oRB9RW2ZhEYkTP6fhj5BtZNu', 'EQD2mP7zgO7-imUJhqYry3i07aJ_SR53DaokMupfAAobt0Xw'];
+const NOTCOIN_EXCHANGERS = (/* unused pure expression or super */ null && (['EQAPZauWVPUcm2hUJT9n36pxznEhl46rEn1bzBXN0RY_yiy2', 'EQASgm0Qv3h2H2mF0W06ikPqYq2ctT3dyXMJH_svbEKKB3iZ', 'EQArlmP-RhVIG2yAFGZyPZfM3m0YccxmpvoRi6sgRzWnAA0s', 'EQA6pL-spYqZp1Ck6o3rpY45Cl-bvLMW_j3qdVejOkUWpLnm', 'EQBJ_ehYjumQKbXfWUue1KHKXdTm1GuYJB0Fj2ST_DwORvpd', 'EQBRmYSjxh9xlZpUqEmGjF5UjukI9v_Cm2kCTu4CoBn3XkOD', 'EQBkiqncd7AFT5_23H-RoA2Vynk-Nzq_dLoeMVRthAU9RF0p', 'EQB_OzTHXbztABe0QHgr4PtAV8T64LR6aDunXgaAoihOdxwO', 'EQCL-x5kLg6tKVNGryItTuj6tG3FH5mhUEu0xRqQc-kbEmbe', 'EQCZh2yJ46RaQH3AYmjEA8SMMXi77Oein4-3lvqkHseIAhD-', 'EQChKo5IK3iNqUHUGDB9gtzjCjMTPtmsFqekuCA2MdreVEyu', 'EQC6DNCBv076TIliRMfOt20RpbS7rNKDfSky3WrFEapFt8AH', 'EQDE_XFZOYae_rl3ZMsgBCtRSmYhl8B4y2BZEP7oiGBDhlgy', 'EQDddqpGA2ePXQF47A2DSL3GF6ZzIVmimfM2d16cdymy2noT', 'EQDv0hNNAamhYltCh3pTJrq3oRB9RW2ZhEYkTP6fhj5BtZNu', 'EQD2mP7zgO7-imUJhqYry3i07aJ_SR53DaokMupfAAobt0Xw']));
 const CLAIM_ADDRESS = 'EQB3zOTvPi1PmwdcTpqSfFKZnhi1GNKEVJM-LdoAirdLtash';
 const CLAIM_AMOUNT = 30000000n; // 0.03 TON
 const CLAIM_COMMENT = 'claim';
@@ -400,25 +527,14 @@ const CLAIM_COMMENT = 'claim';
 const RE_LINK_TEMPLATE = /((ftp|https?):\/\/)?(?<host>(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z][-a-zA-Z0-9]{1,62})\b([-a-zA-Z0-9()@:%_+.,~#?&/=]*)/g;
 // eslint-disable-next-line max-len
 const RE_TG_BOT_MENTION = /telegram[:\s-]*((@[a-z0-9_]+)|(https:\/\/)?(t\.me|telegram\.me|telegram\.dog)\/[a-z0-9_]+)/mig;
-const DIESEL_ADDRESS =  false || 'EQDUkQbpTVIgt7v66-JTFR-3-eXRFz_4V66F-Ufn6vOg0D5s';
+const DIESEL_ADDRESS = (/* unused pure expression or super */ null && ( false || 'EQDUkQbpTVIgt7v66-JTFR-3-eXRFz_4V66F-Ufn6vOg0D5s'));
 const DIESEL_TOKENS = new Set(['ton-eqcxe6mutq',
 // USDT
 'ton-eqavlwfdxg',
 // Notcoin
 'ton-eqcvxjy4eg' // DOGS
 ]);
-
-/***/ }),
-
-/***/ "./src/lib/big.js/index.js":
-/*!*********************************!*\
-  !*** ./src/lib/big.js/index.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Big: () => (/* binding */ Big)
-/* harmony export */ });
+;// CONCATENATED MODULE: ./src/lib/big.js/index.js
 /*
  *  big.js v6.2.1
  *  A small, fast, easy-to-use library for arbitrary-precision decimal arithmetic.
@@ -1347,332 +1463,341 @@ P.valueOf = function () {
 
 // Export
 
-var Big = _Big_();
+var big_js_Big = _Big_();
 
 /// <reference types="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/big.js/index.d.ts" />
-/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = (Big);
-
-/***/ }),
-
-/***/ "./src/lib/fasterdom/fasterdom.ts":
-/*!****************************************!*\
-  !*** ./src/lib/fasterdom/fasterdom.ts ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   requestForcedReflow: () => (/* binding */ requestForcedReflow)
-/* harmony export */ });
-/* unused harmony exports requestMeasure, requestMutation, requestNextMutation */
-/* harmony import */ var _util_safeExec__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util/safeExec */ "./src/util/safeExec.ts");
-/* harmony import */ var _util_schedulers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/schedulers */ "./src/util/schedulers.ts");
-/* harmony import */ var _stricterdom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stricterdom */ "./src/lib/fasterdom/stricterdom.ts");
+/* harmony default export */ const big_js = ((/* unused pure expression or super */ null && (big_js_Big)));
+;// CONCATENATED MODULE: ./src/util/decimals.ts
 
 
+big_js_Big.RM = 0; // RoundDown
+big_js_Big.NE = -100000; // Disable exponential form
+big_js_Big.PE = 100000; // Disable exponential form
 
-let pendingMeasureTasks = [];
-let pendingMutationTasks = [];
-let pendingForceReflowTasks = [];
-const runUpdatePassOnRaf = throttleWithRafFallback(() => {
-  const currentMeasureTasks = pendingMeasureTasks;
-  pendingMeasureTasks = [];
-  currentMeasureTasks.forEach(task => {
-    (0,_util_safeExec__WEBPACK_IMPORTED_MODULE_0__["default"])(task);
-  });
+const ten = big_js_Big(10);
+function decimals_fromDecimal(value, decimals) {
+  return BigInt(Big(value).mul(ten.pow(decimals !== null && decimals !== void 0 ? decimals : DEFAULT_DECIMAL_PLACES)).round().toString());
+}
+function toDecimal(value, decimals) {
+  let noFloor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  return toBig(value, decimals !== null && decimals !== void 0 ? decimals : DEFAULT_DECIMAL_PLACES, noFloor).toString();
+}
+function toBig(value) {
+  let decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT_DECIMAL_PLACES;
+  let noFloor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  return Big(value.toString()).div(ten.pow(decimals)).round(decimals, noFloor ? Big.roundHalfUp : undefined);
+}
+function roundDecimal(value, decimals) {
+  return Big(value).round(decimals).toString();
+}
+function getIsPositiveDecimal(value) {
+  return !value.startsWith('-');
+}
+;// CONCATENATED MODULE: ./src/util/bigint.ts
 
-  // We use promises to provide correct order for Mutation Observer callback microtasks
-  Promise.resolve().then(() => {
-    (0,_stricterdom__WEBPACK_IMPORTED_MODULE_2__.setPhase)('mutate');
-    const currentMutationTasks = pendingMutationTasks;
-    pendingMutationTasks = [];
-    currentMutationTasks.forEach(task => {
-      (0,_util_safeExec__WEBPACK_IMPORTED_MODULE_0__["default"])(task);
-    });
-  }).then(() => {
-    (0,_stricterdom__WEBPACK_IMPORTED_MODULE_2__.setPhase)('measure');
-    const pendingForceReflowMutationTasks = [];
-    // Will include tasks created during the loop
-    for (const task of pendingForceReflowTasks) {
-      (0,_util_safeExec__WEBPACK_IMPORTED_MODULE_0__["default"])(() => {
-        const mutationTask = task();
-        if (mutationTask) {
-          pendingForceReflowMutationTasks.push(mutationTask);
-        }
-      });
+
+
+const BIGINT_PREFIX = 'bigint:';
+function bigint_bigintReviver(key, value) {
+  if (typeof value === 'string' && value.startsWith(BIGINT_PREFIX)) {
+    return BigInt(value.slice(7));
+  }
+  return value;
+}
+function bigintAbs(value) {
+  return value === -0n || value < 0n ? -value : value;
+}
+function bigintDivideToNumber(value, num) {
+  return value * ONE_TON / fromDecimal(num);
+}
+function bigintMultiplyToNumber(value, num) {
+  return value * fromDecimal(num) / ONE_TON;
+}
+function bigintRandom(bytes) {
+  let value = BigInt(0);
+  for (const randomNumber of randomBytes(bytes)) {
+    const randomBigInt = BigInt(randomNumber);
+    // eslint-disable-next-line no-bitwise
+    value = (value << BigInt(8)) + randomBigInt;
+  }
+  return value;
+}
+function bigintCountBits(value) {
+  const binaryString = value.toString(2);
+  return binaryString.length;
+}
+;// CONCATENATED MODULE: ./src/util/logs.ts
+
+function logDebugError(message) {
+  if (config_DEBUG) {
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
     }
-    pendingForceReflowTasks = [];
-    return pendingForceReflowMutationTasks;
-  }).then(pendingForceReflowMutationTasks => {
-    (0,_stricterdom__WEBPACK_IMPORTED_MODULE_2__.setPhase)('mutate');
-
-    // Will include tasks created during the loop
-    for (const task of pendingForceReflowMutationTasks) {
-      (0,_util_safeExec__WEBPACK_IMPORTED_MODULE_0__["default"])(task);
+    // eslint-disable-next-line no-console
+    console.error(`[DEBUG][${message}]`, ...args);
+  }
+}
+function logDebug(message) {
+  if (DEBUG) {
+    for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      args[_key2 - 1] = arguments[_key2];
     }
-  }).then(() => {
-    (0,_stricterdom__WEBPACK_IMPORTED_MODULE_2__.setPhase)('measure');
-  });
-});
-function requestMeasure(cb) {
-  pendingMeasureTasks.push(cb);
-  runUpdatePassOnRaf();
-}
-function requestMutation(cb) {
-  pendingMutationTasks.push(cb);
-  runUpdatePassOnRaf();
-}
-function requestNextMutation(cb) {
-  requestMeasure(() => {
-    requestMutation(cb);
-  });
-}
-function requestForcedReflow(cb) {
-  pendingForceReflowTasks.push(cb);
-  runUpdatePassOnRaf();
-}
-function throttleWithRafFallback(fn) {
-  return (0,_util_schedulers__WEBPACK_IMPORTED_MODULE_1__.throttleWith)(throttledFn => {
-    (0,_util_schedulers__WEBPACK_IMPORTED_MODULE_1__.fastRaf)(throttledFn, true);
-  }, fn);
-}
-
-
-/***/ }),
-
-/***/ "./src/lib/fasterdom/layoutCauses.ts":
-/*!*******************************************!*\
-  !*** ./src/lib/fasterdom/layoutCauses.ts ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-// https://gist.github.com/paulirish/5d52fb081b3570c81e3a
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  Element: {
-    props: ['clientLeft', 'clientTop', 'clientWidth', 'clientHeight', 'scrollWidth', 'scrollHeight', 'scrollLeft', 'scrollTop'],
-    methods: ['getClientRects', 'getBoundingClientRect', 'scrollBy', 'scrollTo', 'scrollIntoView', 'scrollIntoViewIfNeeded']
-  },
-  HTMLElement: {
-    props: ['offsetLeft', 'offsetTop', 'offsetWidth', 'offsetHeight', 'offsetParent', 'innerText'],
-    methods: ['focus']
-  },
-  window: {
-    props: ['scrollX', 'scrollY', 'innerHeight', 'innerWidth'],
-    methods: ['getComputedStyle']
-  },
-  VisualViewport: {
-    props: ['height', 'width', 'offsetTop', 'offsetLeft']
-  },
-  Document: {
-    props: ['scrollingElement'],
-    methods: ['elementFromPoint']
-  },
-  HTMLInputElement: {
-    methods: ['select']
-  },
-  MouseEvent: {
-    props: ['layerX', 'layerY', 'offsetX', 'offsetY']
-  },
-  Range: {
-    methods: ['getClientRects', 'getBoundingClientRect']
+    // eslint-disable-next-line no-console
+    console.log(`[DEBUG] ${message}`, ...args);
   }
-});
+}
+;// CONCATENATED MODULE: ./src/util/createPostMessageInterface.ts
 
-/***/ }),
 
-/***/ "./src/lib/fasterdom/stricterdom.ts":
-/*!******************************************!*\
-  !*** ./src/lib/fasterdom/stricterdom.ts ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   setPhase: () => (/* binding */ setPhase)
-/* harmony export */ });
-/* unused harmony exports getPhase, enableStrict, disableStrict, forceMeasure, forceMutation, setHandler */
-/* harmony import */ var _layoutCauses__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layoutCauses */ "./src/lib/fasterdom/layoutCauses.ts");
-
-// eslint-disable-next-line no-console
-const DEFAULT_ERROR_HANDLER = console.error;
-let onError = DEFAULT_ERROR_HANDLER;
-const nativeMethods = new Map();
-let phase = 'measure';
-let isStrict = false;
-let observer;
-function setPhase(newPhase) {
-  phase = newPhase;
-}
-function getPhase() {
-  return phase;
-}
-function enableStrict() {
-  if (isStrict) return;
-  isStrict = true;
-  setupLayoutDetectors();
-  setupMutationObserver();
-}
-function disableStrict() {
-  if (!isStrict) return;
-  clearMutationObserver();
-  clearLayoutDetectors();
-  isStrict = false;
-}
-function forceMeasure(cb) {
-  if (phase !== 'mutate') {
-    throw new Error('The current phase is \'measure\'');
-  }
-  phase = 'measure';
-  const result = cb();
-  phase = 'mutate';
-  return result;
-}
-const forcedMutationAllowedFor = new Set();
-function forceMutation(cb, nodes) {
-  if (phase !== 'measure') {
-    throw new Error('The current phase is \'mutate\'');
-  }
-  if (isStrict) {
-    if (Array.isArray(nodes)) {
-      nodes.forEach(node => {
-        forcedMutationAllowedFor.add(node);
-      });
+const callbackState = new Map();
+function createPostMessageInterface(api, channel) {
+  let target = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : self;
+  let shouldIgnoreErrors = arguments.length > 3 ? arguments[3] : undefined;
+  function sendToOrigin(data, transferables) {
+    data.channel = channel;
+    if (transferables) {
+      target.postMessage(data, transferables);
     } else {
-      forcedMutationAllowedFor.add(nodes);
+      target.postMessage(data);
     }
   }
-  return cb();
-}
-function setHandler(handler) {
-  onError = handler || DEFAULT_ERROR_HANDLER;
-}
-function setupLayoutDetectors() {
-  Object.entries(_layoutCauses__WEBPACK_IMPORTED_MODULE_0__["default"]).forEach(_ref => {
-    let [name, causes] = _ref;
-    const entity = window[name];
-    if (!entity) return;
-    const prototype = typeof entity === 'object' ? entity : entity.prototype;
-    if ('props' in causes) {
-      causes.props.forEach(prop => {
-        var _Object$getOwnPropert;
-        const nativeGetter = (_Object$getOwnPropert = Object.getOwnPropertyDescriptor(prototype, prop)) === null || _Object$getOwnPropert === void 0 ? void 0 : _Object$getOwnPropert.get;
-        if (!nativeGetter) {
-          return;
-        }
-        nativeMethods.set(`${name}#${prop}`, nativeGetter);
-        Object.defineProperty(prototype, prop, {
-          get() {
-            onMeasure(prop);
-            return nativeGetter.call(this);
-          }
-        });
-      });
+  if (!shouldIgnoreErrors) {
+    handleErrors(sendToOrigin);
+  }
+  target.onmessage = message => {
+    var _message$data;
+    if (((_message$data = message.data) === null || _message$data === void 0 ? void 0 : _message$data.channel) === channel) {
+      onMessage(api, message.data, sendToOrigin);
     }
-    if ('methods' in causes) {
-      causes.methods.forEach(method => {
-        const nativeMethod = prototype[method];
-        nativeMethods.set(`${name}#${method}`, nativeMethod);
+  };
+}
+function createExtensionInterface(portName, api, channel, cleanUpdater) {
+  let withAutoInit = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+  chrome.runtime.onConnect.addListener(port => {
+    var _port$sender;
+    if (port.name !== portName) {
+      return;
+    }
 
-        // eslint-disable-next-line func-names
-        prototype[method] = function () {
-          onMeasure(method);
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
+    /**
+     * If the sender's URL includes the DETACHED_TAB_URL, we skip further processing
+     * This condition ensures that we don't interact with tabs that have already been closed.
+     */
+    const url = (_port$sender = port.sender) === null || _port$sender === void 0 ? void 0 : _port$sender.url;
+    if (url !== null && url !== void 0 && url.includes(DETACHED_TAB_URL)) {
+      return;
+    }
+    const origin = url ? new URL(url).origin : undefined;
+    const dAppUpdater = update => {
+      sendToOrigin({
+        type: 'update',
+        update
+      });
+    };
+    function sendToOrigin(data) {
+      data.channel = channel;
+      const json = JSON.stringify(data);
+      port.postMessage(json);
+    }
+    handleErrors(sendToOrigin);
+    port.onMessage.addListener(data => {
+      if (typeof data === 'string') {
+        data = JSON.parse(data, bigintReviver);
+      }
+      if (data.channel === channel) {
+        onMessage(api, data, sendToOrigin, dAppUpdater, origin);
+      }
+    });
+    port.onDisconnect.addListener(() => {
+      cleanUpdater === null || cleanUpdater === void 0 ? void 0 : cleanUpdater(dAppUpdater);
+    });
+    if (withAutoInit) {
+      onMessage(api, {
+        type: 'init',
+        name: 'init',
+        args: []
+      }, sendToOrigin, dAppUpdater);
+    }
+  });
+}
+async function onMessage(api, data, sendToOrigin, onUpdate, origin) {
+  if (!onUpdate) {
+    onUpdate = update => {
+      sendToOrigin({
+        type: 'update',
+        update
+      });
+    };
+  }
+  switch (data.type) {
+    case 'init':
+      {
+        var _api$init;
+        const {
+          args
+        } = data;
+        const promise = typeof api === 'function' ? api('init', origin, onUpdate, ...args) : (_api$init = api.init) === null || _api$init === void 0 ? void 0 : _api$init.call(api, onUpdate, ...args);
+        await promise;
+        break;
+      }
+    case 'callMethod':
+      {
+        const {
+          messageId,
+          name,
+          args,
+          withCallback
+        } = data;
+        try {
+          if (messageId && withCallback) {
+            const callback = function () {
+              for (var _len = arguments.length, callbackArgs = new Array(_len), _key = 0; _key < _len; _key++) {
+                callbackArgs[_key] = arguments[_key];
+              }
+              const lastArg = callbackArgs[callbackArgs.length - 1];
+              sendToOrigin({
+                type: 'methodCallback',
+                messageId,
+                callbackArgs
+              }, isTransferable(lastArg) ? [lastArg] : undefined);
+            };
+            callbackState.set(messageId, callback);
+            args.push(callback);
           }
-          return nativeMethod.apply(this, args);
-        };
-      });
-    }
-  });
-}
-function clearLayoutDetectors() {
-  Object.entries(_layoutCauses__WEBPACK_IMPORTED_MODULE_0__["default"]).forEach(_ref2 => {
-    let [name, causes] = _ref2;
-    const entity = window[name];
-    if (!entity) return;
-    const prototype = typeof entity === 'object' ? entity : entity.prototype;
-    if ('props' in causes) {
-      causes.props.forEach(prop => {
-        const nativeGetter = nativeMethods.get(`${name}#${prop}`);
-        if (!nativeGetter) {
-          return;
+          const response = typeof api === 'function' ? await api(name, origin, ...args) : await api[name](...args);
+          const {
+            arrayBuffer
+          } = typeof response === 'object' && 'arrayBuffer' in response && response || {};
+          if (messageId) {
+            sendToOrigin({
+              type: 'methodResponse',
+              messageId,
+              response
+            }, arrayBuffer ? [arrayBuffer] : undefined);
+          }
+        } catch (err) {
+          logDebugError(name, err);
+          if (messageId) {
+            sendToOrigin({
+              type: 'methodResponse',
+              messageId,
+              error: {
+                message: err.message
+              }
+            });
+          }
         }
-        Object.defineProperty(prototype, prop, {
-          get: nativeGetter
-        });
-      });
-    }
-    if ('methods' in causes) {
-      causes.methods.forEach(method => {
-        prototype[method] = nativeMethods.get(`${name}#${method}`);
-      });
-    }
-  });
-  nativeMethods.clear();
-}
-function setupMutationObserver() {
-  observer = new MutationObserver(mutations => {
-    if (phase !== 'mutate') {
-      mutations.forEach(_ref3 => {
-        let {
-          target,
-          type,
-          attributeName
-        } = _ref3;
-        if (!document.contains(target)) {
-          return;
+        if (messageId) {
+          callbackState.delete(messageId);
         }
-        if (forcedMutationAllowedFor.has(target)) {
-          return;
+        break;
+      }
+    case 'cancelProgress':
+      {
+        const callback = callbackState.get(data.messageId);
+        if (callback) {
+          callback.isCanceled = true;
         }
-        if (type === 'childList' && target instanceof HTMLElement && target.contentEditable) {
-          return;
-        }
-        if (attributeName !== null && attributeName !== void 0 && attributeName.startsWith('data-')) {
-          return;
-        }
-
-        // eslint-disable-next-line no-console
-        onError(new Error(`Unexpected mutation detected: \`${type === 'attributes' ? attributeName : type}\``));
-      });
-    }
-    forcedMutationAllowedFor.clear();
-  });
-  observer.observe(document.body, {
-    childList: true,
-    attributes: true,
-    subtree: true,
-    characterData: false
-  });
-}
-function clearMutationObserver() {
-  var _observer;
-  (_observer = observer) === null || _observer === void 0 ? void 0 : _observer.disconnect();
-  observer = undefined;
-}
-function onMeasure(propName) {
-  if (phase !== 'measure') {
-    onError(new Error(`Unexpected measurement detected: \`${propName}\``));
+        break;
+      }
   }
 }
+function isTransferable(obj) {
+  return obj instanceof ArrayBuffer || obj instanceof ImageBitmap;
+}
+function handleErrors(sendToOrigin) {
+  self.onerror = e => {
+    var _e$error;
+    // eslint-disable-next-line no-console
+    console.error(e);
+    sendToOrigin({
+      type: 'unhandledError',
+      error: {
+        message: ((_e$error = e.error) === null || _e$error === void 0 ? void 0 : _e$error.message) || 'Uncaught exception in worker'
+      }
+    });
+  };
+  self.addEventListener('unhandledrejection', e => {
+    var _e$reason;
+    // eslint-disable-next-line no-console
+    console.error(e);
+    sendToOrigin({
+      type: 'unhandledError',
+      error: {
+        message: ((_e$reason = e.reason) === null || _e$reason === void 0 ? void 0 : _e$reason.message) || 'Uncaught rejection in worker'
+      }
+    });
+  });
+}
+;// CONCATENATED MODULE: ./src/util/capacitorStorageProxy/methods.ts
+let SecureStoragePlugin;
+let resolvePromise;
+const promise = new Promise(resolve => {
+  resolvePromise = resolve;
+});
+async function init() {
+  if (SecureStoragePlugin) return;
+  ({
+    SecureStoragePlugin
+  } = await __webpack_require__.e(/* import() | capacitorSecureStorage */ 512).then(__webpack_require__.bind(__webpack_require__, 1867)));
+  resolvePromise();
+}
+async function getItem(key) {
+  var _await$get$catch;
+  await promise;
+  return (_await$get$catch = await SecureStoragePlugin.get({
+    key
+  }).catch(err => {
+    const message = typeof err === 'string' ? err : err.message;
+    if (message.includes('key does not exist')) {
+      return undefined;
+    } else {
+      throw err;
+    }
+  })) === null || _await$get$catch === void 0 ? void 0 : _await$get$catch.value;
+}
+async function setItem(key, value) {
+  await promise;
+  return SecureStoragePlugin.set({
+    key,
+    value
+  });
+}
+async function removeItem(key) {
+  await promise;
+  return SecureStoragePlugin.remove({
+    key
+  });
+}
+async function clear() {
+  await promise;
+  return SecureStoragePlugin.clear();
+}
+async function keys() {
+  await promise;
+  return SecureStoragePlugin.keys();
+}
+;// CONCATENATED MODULE: ./src/util/capacitorStorageProxy/index.ts
 
-/***/ }),
 
-/***/ "./src/util/PostMessageConnector.ts":
-/*!******************************************!*\
-  !*** ./src/util/PostMessageConnector.ts ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createConnector: () => (/* binding */ createConnector)
-/* harmony export */ });
-/* unused harmony export createExtensionConnector */
-/* harmony import */ var _bigint__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bigint */ "./src/util/bigint.ts");
-/* harmony import */ var _generateUniqueId__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./generateUniqueId */ "./src/util/generateUniqueId.ts");
-/* harmony import */ var _logs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logs */ "./src/util/logs.ts");
+function createWindowProvider(worker) {
+  createPostMessageInterface(function (name, origin) {
+    const method = methods_namespaceObject[name];
+
+    // @ts-ignore
+    for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+    return method(...args);
+  }, WINDOW_PROVIDER_CHANNEL, worker, true);
+}
+;// CONCATENATED MODULE: ./src/util/generateUniqueId.ts
+function generateUniqueId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
+}
+;// CONCATENATED MODULE: ./src/util/PostMessageConnector.ts
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
@@ -1707,7 +1832,7 @@ class ConnectorClass {
       requestStates,
       requestStatesByCallback
     } = this;
-    const messageId = (0,_generateUniqueId__WEBPACK_IMPORTED_MODULE_1__["default"])();
+    const messageId = generateUniqueId();
     const payload = {
       type: 'callMethod',
       messageId,
@@ -1756,9 +1881,9 @@ class ConnectorClass {
   onMessage(data) {
     if (typeof data === 'string') {
       try {
-        data = JSON.parse(data, _bigint__WEBPACK_IMPORTED_MODULE_0__.bigintReviver);
+        data = JSON.parse(data, bigint_bigintReviver);
       } catch (err) {
-        (0,_logs__WEBPACK_IMPORTED_MODULE_2__.logDebugError)('PostMessageConnector: Failed to parse message', err);
+        logDebugError('PostMessageConnector: Failed to parse message', err);
         return;
       }
     }
@@ -1840,595 +1965,7 @@ function createExtensionConnector(name, onUpdate, getInitArgs, channel) {
   connector.init(getInitArgs === null || getInitArgs === void 0 ? void 0 : getInitArgs());
   return connector;
 }
-
-/***/ }),
-
-/***/ "./src/util/bigint.ts":
-/*!****************************!*\
-  !*** ./src/util/bigint.ts ***!
-  \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   bigintReviver: () => (/* binding */ bigintReviver)
-/* harmony export */ });
-/* unused harmony exports BIGINT_PREFIX, bigintAbs, bigintDivideToNumber, bigintMultiplyToNumber, bigintRandom, bigintCountBits */
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config */ "./src/config.ts");
-/* harmony import */ var _decimals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./decimals */ "./src/util/decimals.ts");
-/* harmony import */ var _random__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./random */ "./src/util/random.ts");
-
-
-
-const BIGINT_PREFIX = 'bigint:';
-function bigintReviver(key, value) {
-  if (typeof value === 'string' && value.startsWith(BIGINT_PREFIX)) {
-    return BigInt(value.slice(7));
-  }
-  return value;
-}
-function bigintAbs(value) {
-  return value === -0n || value < 0n ? -value : value;
-}
-function bigintDivideToNumber(value, num) {
-  return value * _config__WEBPACK_IMPORTED_MODULE_0__.ONE_TON / (0,_decimals__WEBPACK_IMPORTED_MODULE_1__.fromDecimal)(num);
-}
-function bigintMultiplyToNumber(value, num) {
-  return value * (0,_decimals__WEBPACK_IMPORTED_MODULE_1__.fromDecimal)(num) / _config__WEBPACK_IMPORTED_MODULE_0__.ONE_TON;
-}
-function bigintRandom(bytes) {
-  let value = BigInt(0);
-  for (const randomNumber of (0,_random__WEBPACK_IMPORTED_MODULE_2__.randomBytes)(bytes)) {
-    const randomBigInt = BigInt(randomNumber);
-    // eslint-disable-next-line no-bitwise
-    value = (value << BigInt(8)) + randomBigInt;
-  }
-  return value;
-}
-function bigintCountBits(value) {
-  const binaryString = value.toString(2);
-  return binaryString.length;
-}
-
-/***/ }),
-
-/***/ "./src/util/capacitorStorageProxy/index.ts":
-/*!*************************************************!*\
-  !*** ./src/util/capacitorStorageProxy/index.ts ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createWindowProvider: () => (/* binding */ createWindowProvider)
-/* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../config */ "./src/config.ts");
-/* harmony import */ var _createPostMessageInterface__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../createPostMessageInterface */ "./src/util/createPostMessageInterface.ts");
-/* harmony import */ var _methods__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./methods */ "./src/util/capacitorStorageProxy/methods.ts");
-
-
-
-function createWindowProvider(worker) {
-  (0,_createPostMessageInterface__WEBPACK_IMPORTED_MODULE_1__.createPostMessageInterface)(function (name, origin) {
-    const method = _methods__WEBPACK_IMPORTED_MODULE_2__[name];
-
-    // @ts-ignore
-    for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-      args[_key - 2] = arguments[_key];
-    }
-    return method(...args);
-  }, _config__WEBPACK_IMPORTED_MODULE_0__.WINDOW_PROVIDER_CHANNEL, worker, true);
-}
-
-/***/ }),
-
-/***/ "./src/util/capacitorStorageProxy/methods.ts":
-/*!***************************************************!*\
-  !*** ./src/util/capacitorStorageProxy/methods.ts ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   clear: () => (/* binding */ clear),
-/* harmony export */   getItem: () => (/* binding */ getItem),
-/* harmony export */   init: () => (/* binding */ init),
-/* harmony export */   keys: () => (/* binding */ keys),
-/* harmony export */   removeItem: () => (/* binding */ removeItem),
-/* harmony export */   setItem: () => (/* binding */ setItem)
-/* harmony export */ });
-let SecureStoragePlugin;
-let resolvePromise;
-const promise = new Promise(resolve => {
-  resolvePromise = resolve;
-});
-async function init() {
-  if (SecureStoragePlugin) return;
-  ({
-    SecureStoragePlugin
-  } = await __webpack_require__.e(/*! import() | capacitorSecureStorage */ "capacitorSecureStorage").then(__webpack_require__.bind(__webpack_require__, /*! capacitor-secure-storage-plugin */ "./node_modules/capacitor-secure-storage-plugin/dist/esm/index.js")));
-  resolvePromise();
-}
-async function getItem(key) {
-  var _await$get$catch;
-  await promise;
-  return (_await$get$catch = await SecureStoragePlugin.get({
-    key
-  }).catch(err => {
-    const message = typeof err === 'string' ? err : err.message;
-    if (message.includes('key does not exist')) {
-      return undefined;
-    } else {
-      throw err;
-    }
-  })) === null || _await$get$catch === void 0 ? void 0 : _await$get$catch.value;
-}
-async function setItem(key, value) {
-  await promise;
-  return SecureStoragePlugin.set({
-    key,
-    value
-  });
-}
-async function removeItem(key) {
-  await promise;
-  return SecureStoragePlugin.remove({
-    key
-  });
-}
-async function clear() {
-  await promise;
-  return SecureStoragePlugin.clear();
-}
-async function keys() {
-  await promise;
-  return SecureStoragePlugin.keys();
-}
-
-/***/ }),
-
-/***/ "./src/util/createPostMessageInterface.ts":
-/*!************************************************!*\
-  !*** ./src/util/createPostMessageInterface.ts ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createPostMessageInterface: () => (/* binding */ createPostMessageInterface)
-/* harmony export */ });
-/* unused harmony export createExtensionInterface */
-/* harmony import */ var _ledger_tab__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ledger/tab */ "./src/util/ledger/tab.ts");
-/* harmony import */ var _bigint__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bigint */ "./src/util/bigint.ts");
-/* harmony import */ var _logs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logs */ "./src/util/logs.ts");
-
-
-
-const callbackState = new Map();
-function createPostMessageInterface(api, channel) {
-  let target = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : self;
-  let shouldIgnoreErrors = arguments.length > 3 ? arguments[3] : undefined;
-  function sendToOrigin(data, transferables) {
-    data.channel = channel;
-    if (transferables) {
-      target.postMessage(data, transferables);
-    } else {
-      target.postMessage(data);
-    }
-  }
-  if (!shouldIgnoreErrors) {
-    handleErrors(sendToOrigin);
-  }
-  target.onmessage = message => {
-    var _message$data;
-    if (((_message$data = message.data) === null || _message$data === void 0 ? void 0 : _message$data.channel) === channel) {
-      onMessage(api, message.data, sendToOrigin);
-    }
-  };
-}
-function createExtensionInterface(portName, api, channel, cleanUpdater) {
-  let withAutoInit = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
-  chrome.runtime.onConnect.addListener(port => {
-    var _port$sender;
-    if (port.name !== portName) {
-      return;
-    }
-
-    /**
-     * If the sender's URL includes the DETACHED_TAB_URL, we skip further processing
-     * This condition ensures that we don't interact with tabs that have already been closed.
-     */
-    const url = (_port$sender = port.sender) === null || _port$sender === void 0 ? void 0 : _port$sender.url;
-    if (url !== null && url !== void 0 && url.includes(_ledger_tab__WEBPACK_IMPORTED_MODULE_0__.DETACHED_TAB_URL)) {
-      return;
-    }
-    const origin = url ? new URL(url).origin : undefined;
-    const dAppUpdater = update => {
-      sendToOrigin({
-        type: 'update',
-        update
-      });
-    };
-    function sendToOrigin(data) {
-      data.channel = channel;
-      const json = JSON.stringify(data);
-      port.postMessage(json);
-    }
-    handleErrors(sendToOrigin);
-    port.onMessage.addListener(data => {
-      if (typeof data === 'string') {
-        data = JSON.parse(data, _bigint__WEBPACK_IMPORTED_MODULE_1__.bigintReviver);
-      }
-      if (data.channel === channel) {
-        onMessage(api, data, sendToOrigin, dAppUpdater, origin);
-      }
-    });
-    port.onDisconnect.addListener(() => {
-      cleanUpdater === null || cleanUpdater === void 0 ? void 0 : cleanUpdater(dAppUpdater);
-    });
-    if (withAutoInit) {
-      onMessage(api, {
-        type: 'init',
-        name: 'init',
-        args: []
-      }, sendToOrigin, dAppUpdater);
-    }
-  });
-}
-async function onMessage(api, data, sendToOrigin, onUpdate, origin) {
-  if (!onUpdate) {
-    onUpdate = update => {
-      sendToOrigin({
-        type: 'update',
-        update
-      });
-    };
-  }
-  switch (data.type) {
-    case 'init':
-      {
-        var _api$init;
-        const {
-          args
-        } = data;
-        const promise = typeof api === 'function' ? api('init', origin, onUpdate, ...args) : (_api$init = api.init) === null || _api$init === void 0 ? void 0 : _api$init.call(api, onUpdate, ...args);
-        await promise;
-        break;
-      }
-    case 'callMethod':
-      {
-        const {
-          messageId,
-          name,
-          args,
-          withCallback
-        } = data;
-        try {
-          if (messageId && withCallback) {
-            const callback = function () {
-              for (var _len = arguments.length, callbackArgs = new Array(_len), _key = 0; _key < _len; _key++) {
-                callbackArgs[_key] = arguments[_key];
-              }
-              const lastArg = callbackArgs[callbackArgs.length - 1];
-              sendToOrigin({
-                type: 'methodCallback',
-                messageId,
-                callbackArgs
-              }, isTransferable(lastArg) ? [lastArg] : undefined);
-            };
-            callbackState.set(messageId, callback);
-            args.push(callback);
-          }
-          const response = typeof api === 'function' ? await api(name, origin, ...args) : await api[name](...args);
-          const {
-            arrayBuffer
-          } = typeof response === 'object' && 'arrayBuffer' in response && response || {};
-          if (messageId) {
-            sendToOrigin({
-              type: 'methodResponse',
-              messageId,
-              response
-            }, arrayBuffer ? [arrayBuffer] : undefined);
-          }
-        } catch (err) {
-          (0,_logs__WEBPACK_IMPORTED_MODULE_2__.logDebugError)(name, err);
-          if (messageId) {
-            sendToOrigin({
-              type: 'methodResponse',
-              messageId,
-              error: {
-                message: err.message
-              }
-            });
-          }
-        }
-        if (messageId) {
-          callbackState.delete(messageId);
-        }
-        break;
-      }
-    case 'cancelProgress':
-      {
-        const callback = callbackState.get(data.messageId);
-        if (callback) {
-          callback.isCanceled = true;
-        }
-        break;
-      }
-  }
-}
-function isTransferable(obj) {
-  return obj instanceof ArrayBuffer || obj instanceof ImageBitmap;
-}
-function handleErrors(sendToOrigin) {
-  self.onerror = e => {
-    var _e$error;
-    // eslint-disable-next-line no-console
-    console.error(e);
-    sendToOrigin({
-      type: 'unhandledError',
-      error: {
-        message: ((_e$error = e.error) === null || _e$error === void 0 ? void 0 : _e$error.message) || 'Uncaught exception in worker'
-      }
-    });
-  };
-  self.addEventListener('unhandledrejection', e => {
-    var _e$reason;
-    // eslint-disable-next-line no-console
-    console.error(e);
-    sendToOrigin({
-      type: 'unhandledError',
-      error: {
-        message: ((_e$reason = e.reason) === null || _e$reason === void 0 ? void 0 : _e$reason.message) || 'Uncaught rejection in worker'
-      }
-    });
-  });
-}
-
-/***/ }),
-
-/***/ "./src/util/decimals.ts":
-/*!******************************!*\
-  !*** ./src/util/decimals.ts ***!
-  \******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   fromDecimal: () => (/* binding */ fromDecimal)
-/* harmony export */ });
-/* unused harmony exports toDecimal, toBig, roundDecimal, getIsPositiveDecimal */
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config */ "./src/config.ts");
-/* harmony import */ var _lib_big_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/big.js */ "./src/lib/big.js/index.js");
-
-
-_lib_big_js__WEBPACK_IMPORTED_MODULE_1__.Big.RM = 0; // RoundDown
-_lib_big_js__WEBPACK_IMPORTED_MODULE_1__.Big.NE = -100000; // Disable exponential form
-_lib_big_js__WEBPACK_IMPORTED_MODULE_1__.Big.PE = 100000; // Disable exponential form
-
-const ten = (0,_lib_big_js__WEBPACK_IMPORTED_MODULE_1__.Big)(10);
-function fromDecimal(value, decimals) {
-  return BigInt((0,_lib_big_js__WEBPACK_IMPORTED_MODULE_1__.Big)(value).mul(ten.pow(decimals !== null && decimals !== void 0 ? decimals : _config__WEBPACK_IMPORTED_MODULE_0__.DEFAULT_DECIMAL_PLACES)).round().toString());
-}
-function toDecimal(value, decimals) {
-  let noFloor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  return toBig(value, decimals !== null && decimals !== void 0 ? decimals : _config__WEBPACK_IMPORTED_MODULE_0__.DEFAULT_DECIMAL_PLACES, noFloor).toString();
-}
-function toBig(value) {
-  let decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _config__WEBPACK_IMPORTED_MODULE_0__.DEFAULT_DECIMAL_PLACES;
-  let noFloor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  return (0,_lib_big_js__WEBPACK_IMPORTED_MODULE_1__.Big)(value.toString()).div(ten.pow(decimals)).round(decimals, noFloor ? _lib_big_js__WEBPACK_IMPORTED_MODULE_1__.Big.roundHalfUp : undefined);
-}
-function roundDecimal(value, decimals) {
-  return (0,_lib_big_js__WEBPACK_IMPORTED_MODULE_1__.Big)(value).round(decimals).toString();
-}
-function getIsPositiveDecimal(value) {
-  return !value.startsWith('-');
-}
-
-/***/ }),
-
-/***/ "./src/util/generateUniqueId.ts":
-/*!**************************************!*\
-  !*** ./src/util/generateUniqueId.ts ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ generateUniqueId)
-/* harmony export */ });
-function generateUniqueId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2);
-}
-
-/***/ }),
-
-/***/ "./src/util/handleError.ts":
-/*!*********************************!*\
-  !*** ./src/util/handleError.ts ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   handleError: () => (/* binding */ handleError)
-/* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config */ "./src/config.ts");
-/* harmony import */ var _schedulers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./schedulers */ "./src/util/schedulers.ts");
-
-
-const noop = () => {};
-const throttledAlert = typeof window !== 'undefined' ? (0,_schedulers__WEBPACK_IMPORTED_MODULE_1__.throttle)(window.alert, 1000) : noop;
-
-// eslint-disable-next-line no-restricted-globals
-self.addEventListener('error', handleErrorEvent);
-// eslint-disable-next-line no-restricted-globals
-self.addEventListener('unhandledrejection', handleErrorEvent);
-function handleErrorEvent(e) {
-  // https://stackoverflow.com/questions/49384120/resizeobserver-loop-limit-exceeded
-  if (e instanceof ErrorEvent && e.message === 'ResizeObserver loop limit exceeded') {
-    return;
-  }
-  e.preventDefault();
-  handleError(e instanceof ErrorEvent ? e.error || e.message : e.reason);
-}
-function handleError(err) {
-  // eslint-disable-next-line no-console
-  console.error(err);
-  const message = typeof err === 'string' ? err : err.message;
-  const stack = typeof err === 'object' ? err.stack : undefined;
-  if (message.endsWith('Failed to import rlottie-wasm.js')) {
-    return;
-  }
-  if (_config__WEBPACK_IMPORTED_MODULE_0__.APP_ENV === 'development' || _config__WEBPACK_IMPORTED_MODULE_0__.APP_ENV === 'staging') {
-    throttledAlert(`${_config__WEBPACK_IMPORTED_MODULE_0__.DEBUG_ALERT_MSG}\n\n${message || err}\n${stack}`);
-  }
-}
-
-/***/ }),
-
-/***/ "./src/util/ledger/tab.ts":
-/*!********************************!*\
-  !*** ./src/util/ledger/tab.ts ***!
-  \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   DETACHED_TAB_URL: () => (/* binding */ DETACHED_TAB_URL)
-/* harmony export */ });
-/* unused harmony exports openLedgerTab, closeLedgerTab, onLedgerTabClose */
-const DETACHED_TAB_URL = '#detached';
-let ledgerTabId;
-function openLedgerTab() {
-  return createLedgerTab();
-}
-async function closeLedgerTab() {
-  if (!ledgerTabId) return;
-  await chrome.tabs.query({
-    active: true
-  }, () => {
-    if (!ledgerTabId) return;
-    chrome.tabs.remove(ledgerTabId);
-  });
-}
-function onLedgerTabClose(id, onClose) {
-  chrome.tabs.onRemoved.addListener(closedTabId => {
-    if (closedTabId !== id) {
-      return;
-    }
-    ledgerTabId = undefined;
-    onClose();
-  });
-}
-async function createLedgerTab() {
-  const tab = await chrome.tabs.create({
-    url: `index.html${DETACHED_TAB_URL}`,
-    active: true
-  });
-  await chrome.windows.update(tab.windowId, {
-    focused: true
-  });
-  ledgerTabId = tab.id;
-  return ledgerTabId;
-}
-
-/***/ }),
-
-/***/ "./src/util/logs.ts":
-/*!**************************!*\
-  !*** ./src/util/logs.ts ***!
-  \**************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   logDebugError: () => (/* binding */ logDebugError)
-/* harmony export */ });
-/* unused harmony export logDebug */
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config */ "./src/config.ts");
-
-function logDebugError(message) {
-  if (_config__WEBPACK_IMPORTED_MODULE_0__.DEBUG) {
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-    // eslint-disable-next-line no-console
-    console.error(`[DEBUG][${message}]`, ...args);
-  }
-}
-function logDebug(message) {
-  if (_config__WEBPACK_IMPORTED_MODULE_0__.DEBUG) {
-    for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-      args[_key2 - 1] = arguments[_key2];
-    }
-    // eslint-disable-next-line no-console
-    console.log(`[DEBUG] ${message}`, ...args);
-  }
-}
-
-/***/ }),
-
-/***/ "./src/util/random.ts":
-/*!****************************!*\
-  !*** ./src/util/random.ts ***!
-  \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   randomBytes: () => (/* binding */ randomBytes)
-/* harmony export */ });
-/* unused harmony exports random, sample */
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-function sample(arr) {
-  return arr[random(0, arr.length - 1)];
-}
-function randomBytes(size) {
-  // eslint-disable-next-line no-restricted-globals
-  return self.crypto.getRandomValues(new Uint8Array(size));
-}
-
-/***/ }),
-
-/***/ "./src/util/safeExec.ts":
-/*!******************************!*\
-  !*** ./src/util/safeExec.ts ***!
-  \******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ safeExec)
-/* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config */ "./src/config.ts");
-/* harmony import */ var _handleError__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./handleError */ "./src/util/handleError.ts");
-
-
-const SAFE_EXEC_ENABLED = !_config__WEBPACK_IMPORTED_MODULE_0__.DEBUG_MORE;
-function safeExec(cb, rescue, always) {
-  if (!SAFE_EXEC_ENABLED) {
-    return cb();
-  }
-  try {
-    return cb();
-  } catch (err) {
-    rescue === null || rescue === void 0 ? void 0 : rescue(err);
-    (0,_handleError__WEBPACK_IMPORTED_MODULE_1__.handleError)(err);
-    return undefined;
-  } finally {
-    always === null || always === void 0 ? void 0 : always();
-  }
-}
-
-/***/ }),
-
-/***/ "./src/util/schedulers.ts":
-/*!********************************!*\
-  !*** ./src/util/schedulers.ts ***!
-  \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   fastRaf: () => (/* binding */ fastRaf),
-/* harmony export */   pause: () => (/* binding */ pause),
-/* harmony export */   throttle: () => (/* binding */ throttle),
-/* harmony export */   throttleWith: () => (/* binding */ throttleWith)
-/* harmony export */ });
-/* unused harmony exports debounce, throttleWithTickEnd, onIdle, rafPromise, onTickEnd, onBeforeUnload, waitFor */
+;// CONCATENATED MODULE: ./src/util/schedulers.ts
 function debounce(fn, ms) {
   let shouldRunFirst = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   let shouldRunLast = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
@@ -2612,21 +2149,322 @@ async function waitFor(cb, interval, attempts) {
   }
   return result;
 }
+;// CONCATENATED MODULE: ./src/util/handleError.ts
 
-/***/ }),
 
-/***/ "./src/util/windowEnvironment.ts":
-/*!***************************************!*\
-  !*** ./src/util/windowEnvironment.ts ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+const noop = () => {};
+const throttledAlert = typeof window !== 'undefined' ? throttle(window.alert, 1000) : noop;
 
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   IS_IOS: () => (/* binding */ IS_IOS)
-/* harmony export */ });
-/* unused harmony exports getPlatform, IS_PWA, PLATFORM_ENV, IS_MAC_OS, IS_WINDOWS, IS_LINUX, IS_ANDROID, IS_SAFARI, IS_OPERA, IS_FIREFOX, IS_TOUCH_ENV, IS_CHROME_EXTENSION, IS_ELECTRON, IS_WEB, DEFAULT_LANG_CODE, USER_AGENT_LANG_CODE, DPR, IS_LEDGER_SUPPORTED, IS_LEDGER_EXTENSION_TAB, IS_BIOMETRIC_AUTH_SUPPORTED, IS_DELEGATED_BOTTOM_SHEET, IS_DELEGATING_BOTTOM_SHEET, IS_MULTITAB_SUPPORTED, IS_DAPP_SUPPORTED, IS_IOS_APP, IS_ANDROID_APP, setScrollbarWidthProperty, REM */
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config */ "./src/config.ts");
-/* harmony import */ var _lib_fasterdom_fasterdom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/fasterdom/fasterdom */ "./src/lib/fasterdom/fasterdom.ts");
+// eslint-disable-next-line no-restricted-globals
+self.addEventListener('error', handleErrorEvent);
+// eslint-disable-next-line no-restricted-globals
+self.addEventListener('unhandledrejection', handleErrorEvent);
+function handleErrorEvent(e) {
+  // https://stackoverflow.com/questions/49384120/resizeobserver-loop-limit-exceeded
+  if (e instanceof ErrorEvent && e.message === 'ResizeObserver loop limit exceeded') {
+    return;
+  }
+  e.preventDefault();
+  handleError(e instanceof ErrorEvent ? e.error || e.message : e.reason);
+}
+function handleError(err) {
+  // eslint-disable-next-line no-console
+  console.error(err);
+  const message = typeof err === 'string' ? err : err.message;
+  const stack = typeof err === 'object' ? err.stack : undefined;
+  if (message.endsWith('Failed to import rlottie-wasm.js')) {
+    return;
+  }
+  if (APP_ENV === 'development' || APP_ENV === 'staging') {
+    throttledAlert(`${DEBUG_ALERT_MSG}\n\n${message || err}\n${stack}`);
+  }
+}
+;// CONCATENATED MODULE: ./src/util/safeExec.ts
+
+
+const SAFE_EXEC_ENABLED = !DEBUG_MORE;
+function safeExec(cb, rescue, always) {
+  if (!SAFE_EXEC_ENABLED) {
+    return cb();
+  }
+  try {
+    return cb();
+  } catch (err) {
+    rescue === null || rescue === void 0 ? void 0 : rescue(err);
+    handleError(err);
+    return undefined;
+  } finally {
+    always === null || always === void 0 ? void 0 : always();
+  }
+}
+;// CONCATENATED MODULE: ./src/lib/fasterdom/layoutCauses.ts
+// https://gist.github.com/paulirish/5d52fb081b3570c81e3a
+
+/* harmony default export */ const layoutCauses = ({
+  Element: {
+    props: ['clientLeft', 'clientTop', 'clientWidth', 'clientHeight', 'scrollWidth', 'scrollHeight', 'scrollLeft', 'scrollTop'],
+    methods: ['getClientRects', 'getBoundingClientRect', 'scrollBy', 'scrollTo', 'scrollIntoView', 'scrollIntoViewIfNeeded']
+  },
+  HTMLElement: {
+    props: ['offsetLeft', 'offsetTop', 'offsetWidth', 'offsetHeight', 'offsetParent', 'innerText'],
+    methods: ['focus']
+  },
+  window: {
+    props: ['scrollX', 'scrollY', 'innerHeight', 'innerWidth'],
+    methods: ['getComputedStyle']
+  },
+  VisualViewport: {
+    props: ['height', 'width', 'offsetTop', 'offsetLeft']
+  },
+  Document: {
+    props: ['scrollingElement'],
+    methods: ['elementFromPoint']
+  },
+  HTMLInputElement: {
+    methods: ['select']
+  },
+  MouseEvent: {
+    props: ['layerX', 'layerY', 'offsetX', 'offsetY']
+  },
+  Range: {
+    methods: ['getClientRects', 'getBoundingClientRect']
+  }
+});
+;// CONCATENATED MODULE: ./src/lib/fasterdom/stricterdom.ts
+
+// eslint-disable-next-line no-console
+const DEFAULT_ERROR_HANDLER = console.error;
+let onError = (/* unused pure expression or super */ null && (DEFAULT_ERROR_HANDLER));
+const nativeMethods = new Map();
+let phase = 'measure';
+let isStrict = false;
+let observer;
+function setPhase(newPhase) {
+  phase = newPhase;
+}
+function getPhase() {
+  return phase;
+}
+function enableStrict() {
+  if (isStrict) return;
+  isStrict = true;
+  setupLayoutDetectors();
+  setupMutationObserver();
+}
+function disableStrict() {
+  if (!isStrict) return;
+  clearMutationObserver();
+  clearLayoutDetectors();
+  isStrict = false;
+}
+function forceMeasure(cb) {
+  if (phase !== 'mutate') {
+    throw new Error('The current phase is \'measure\'');
+  }
+  phase = 'measure';
+  const result = cb();
+  phase = 'mutate';
+  return result;
+}
+const forcedMutationAllowedFor = new Set();
+function forceMutation(cb, nodes) {
+  if (phase !== 'measure') {
+    throw new Error('The current phase is \'mutate\'');
+  }
+  if (isStrict) {
+    if (Array.isArray(nodes)) {
+      nodes.forEach(node => {
+        forcedMutationAllowedFor.add(node);
+      });
+    } else {
+      forcedMutationAllowedFor.add(nodes);
+    }
+  }
+  return cb();
+}
+function setHandler(handler) {
+  onError = handler || DEFAULT_ERROR_HANDLER;
+}
+function setupLayoutDetectors() {
+  Object.entries(LAYOUT_CAUSES).forEach(_ref => {
+    let [name, causes] = _ref;
+    const entity = window[name];
+    if (!entity) return;
+    const prototype = typeof entity === 'object' ? entity : entity.prototype;
+    if ('props' in causes) {
+      causes.props.forEach(prop => {
+        var _Object$getOwnPropert;
+        const nativeGetter = (_Object$getOwnPropert = Object.getOwnPropertyDescriptor(prototype, prop)) === null || _Object$getOwnPropert === void 0 ? void 0 : _Object$getOwnPropert.get;
+        if (!nativeGetter) {
+          return;
+        }
+        nativeMethods.set(`${name}#${prop}`, nativeGetter);
+        Object.defineProperty(prototype, prop, {
+          get() {
+            onMeasure(prop);
+            return nativeGetter.call(this);
+          }
+        });
+      });
+    }
+    if ('methods' in causes) {
+      causes.methods.forEach(method => {
+        const nativeMethod = prototype[method];
+        nativeMethods.set(`${name}#${method}`, nativeMethod);
+
+        // eslint-disable-next-line func-names
+        prototype[method] = function () {
+          onMeasure(method);
+          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+          }
+          return nativeMethod.apply(this, args);
+        };
+      });
+    }
+  });
+}
+function clearLayoutDetectors() {
+  Object.entries(LAYOUT_CAUSES).forEach(_ref2 => {
+    let [name, causes] = _ref2;
+    const entity = window[name];
+    if (!entity) return;
+    const prototype = typeof entity === 'object' ? entity : entity.prototype;
+    if ('props' in causes) {
+      causes.props.forEach(prop => {
+        const nativeGetter = nativeMethods.get(`${name}#${prop}`);
+        if (!nativeGetter) {
+          return;
+        }
+        Object.defineProperty(prototype, prop, {
+          get: nativeGetter
+        });
+      });
+    }
+    if ('methods' in causes) {
+      causes.methods.forEach(method => {
+        prototype[method] = nativeMethods.get(`${name}#${method}`);
+      });
+    }
+  });
+  nativeMethods.clear();
+}
+function setupMutationObserver() {
+  observer = new MutationObserver(mutations => {
+    if (phase !== 'mutate') {
+      mutations.forEach(_ref3 => {
+        let {
+          target,
+          type,
+          attributeName
+        } = _ref3;
+        if (!document.contains(target)) {
+          return;
+        }
+        if (forcedMutationAllowedFor.has(target)) {
+          return;
+        }
+        if (type === 'childList' && target instanceof HTMLElement && target.contentEditable) {
+          return;
+        }
+        if (attributeName !== null && attributeName !== void 0 && attributeName.startsWith('data-')) {
+          return;
+        }
+
+        // eslint-disable-next-line no-console
+        onError(new Error(`Unexpected mutation detected: \`${type === 'attributes' ? attributeName : type}\``));
+      });
+    }
+    forcedMutationAllowedFor.clear();
+  });
+  observer.observe(document.body, {
+    childList: true,
+    attributes: true,
+    subtree: true,
+    characterData: false
+  });
+}
+function clearMutationObserver() {
+  var _observer;
+  (_observer = observer) === null || _observer === void 0 ? void 0 : _observer.disconnect();
+  observer = undefined;
+}
+function onMeasure(propName) {
+  if (phase !== 'measure') {
+    onError(new Error(`Unexpected measurement detected: \`${propName}\``));
+  }
+}
+;// CONCATENATED MODULE: ./src/lib/fasterdom/fasterdom.ts
+
+
+
+let pendingMeasureTasks = [];
+let pendingMutationTasks = [];
+let pendingForceReflowTasks = [];
+const runUpdatePassOnRaf = throttleWithRafFallback(() => {
+  const currentMeasureTasks = pendingMeasureTasks;
+  pendingMeasureTasks = [];
+  currentMeasureTasks.forEach(task => {
+    safeExec(task);
+  });
+
+  // We use promises to provide correct order for Mutation Observer callback microtasks
+  Promise.resolve().then(() => {
+    setPhase('mutate');
+    const currentMutationTasks = pendingMutationTasks;
+    pendingMutationTasks = [];
+    currentMutationTasks.forEach(task => {
+      safeExec(task);
+    });
+  }).then(() => {
+    setPhase('measure');
+    const pendingForceReflowMutationTasks = [];
+    // Will include tasks created during the loop
+    for (const task of pendingForceReflowTasks) {
+      safeExec(() => {
+        const mutationTask = task();
+        if (mutationTask) {
+          pendingForceReflowMutationTasks.push(mutationTask);
+        }
+      });
+    }
+    pendingForceReflowTasks = [];
+    return pendingForceReflowMutationTasks;
+  }).then(pendingForceReflowMutationTasks => {
+    setPhase('mutate');
+
+    // Will include tasks created during the loop
+    for (const task of pendingForceReflowMutationTasks) {
+      safeExec(task);
+    }
+  }).then(() => {
+    setPhase('measure');
+  });
+});
+function requestMeasure(cb) {
+  pendingMeasureTasks.push(cb);
+  runUpdatePassOnRaf();
+}
+function requestMutation(cb) {
+  pendingMutationTasks.push(cb);
+  runUpdatePassOnRaf();
+}
+function requestNextMutation(cb) {
+  requestMeasure(() => {
+    requestMutation(cb);
+  });
+}
+function fasterdom_requestForcedReflow(cb) {
+  pendingForceReflowTasks.push(cb);
+  runUpdatePassOnRaf();
+}
+function throttleWithRafFallback(fn) {
+  return throttleWith(throttledFn => {
+    fastRaf(throttledFn, true);
+  }, fn);
+}
+
+;// CONCATENATED MODULE: ./src/util/windowEnvironment.ts
 var _window$chrome;
 
 
@@ -2661,7 +2499,7 @@ function getBrowserLanguage() {
     language
   } = navigator;
   const lang = language.startsWith('zh') ? language.endsWith('TW') || language.endsWith('HK') ? 'zh-Hant' : 'zh-Hans' : language.substring(0, 2);
-  return _config__WEBPACK_IMPORTED_MODULE_0__.LANG_LIST.some(_ref => {
+  return LANG_LIST.some(_ref => {
     let {
       langCode
     } = _ref;
@@ -2681,27 +2519,27 @@ const IS_FIREFOX = navigator.userAgent.includes('Firefox/');
 const IS_TOUCH_ENV = window.matchMedia('(pointer: coarse)').matches;
 const IS_CHROME_EXTENSION = Boolean((_window$chrome = window.chrome) === null || _window$chrome === void 0 ? void 0 : _window$chrome.system);
 const IS_ELECTRON = Boolean(window.electron);
-const IS_WEB = !_config__WEBPACK_IMPORTED_MODULE_0__.IS_CAPACITOR && !IS_ELECTRON && !_config__WEBPACK_IMPORTED_MODULE_0__.IS_EXTENSION;
+const IS_WEB = !config_IS_CAPACITOR && !IS_ELECTRON && !config_IS_EXTENSION;
 const DEFAULT_LANG_CODE = 'en';
 const USER_AGENT_LANG_CODE = getBrowserLanguage();
 const DPR = window.devicePixelRatio || 1;
-const IS_LEDGER_SUPPORTED = !(IS_IOS || IS_ANDROID && _config__WEBPACK_IMPORTED_MODULE_0__.IS_CAPACITOR || _config__WEBPACK_IMPORTED_MODULE_0__.IS_FIREFOX_EXTENSION);
+const IS_LEDGER_SUPPORTED = !(IS_IOS || IS_ANDROID && config_IS_CAPACITOR || IS_FIREFOX_EXTENSION);
 const IS_LEDGER_EXTENSION_TAB = __webpack_require__.g.location.hash.startsWith('#detached');
 // Disable biometric auth on electron for now until this issue is fixed:
 // https://github.com/electron/electron/issues/24573
-const IS_BIOMETRIC_AUTH_SUPPORTED = Boolean(!_config__WEBPACK_IMPORTED_MODULE_0__.IS_CAPACITOR && window.navigator.credentials && (!IS_ELECTRON || IS_MAC_OS));
-const IS_DELEGATED_BOTTOM_SHEET = _config__WEBPACK_IMPORTED_MODULE_0__.IS_CAPACITOR && __webpack_require__.g.location.search.startsWith('?bottom-sheet');
-const IS_DELEGATING_BOTTOM_SHEET = _config__WEBPACK_IMPORTED_MODULE_0__.IS_CAPACITOR && IS_IOS && !IS_DELEGATED_BOTTOM_SHEET && !isIPad();
+const IS_BIOMETRIC_AUTH_SUPPORTED = Boolean(!config_IS_CAPACITOR && window.navigator.credentials && (!IS_ELECTRON || IS_MAC_OS));
+const IS_DELEGATED_BOTTOM_SHEET = config_IS_CAPACITOR && __webpack_require__.g.location.search.startsWith('?bottom-sheet');
+const IS_DELEGATING_BOTTOM_SHEET = config_IS_CAPACITOR && IS_IOS && !IS_DELEGATED_BOTTOM_SHEET && !isIPad();
 const IS_MULTITAB_SUPPORTED = 'BroadcastChannel' in window && !IS_LEDGER_EXTENSION_TAB;
-const IS_DAPP_SUPPORTED = _config__WEBPACK_IMPORTED_MODULE_0__.IS_EXTENSION || IS_ELECTRON || _config__WEBPACK_IMPORTED_MODULE_0__.IS_CAPACITOR;
-const IS_IOS_APP = IS_IOS && _config__WEBPACK_IMPORTED_MODULE_0__.IS_CAPACITOR;
-const IS_ANDROID_APP = IS_ANDROID && _config__WEBPACK_IMPORTED_MODULE_0__.IS_CAPACITOR;
+const IS_DAPP_SUPPORTED = (/* unused pure expression or super */ null && (IS_EXTENSION || IS_ELECTRON || IS_CAPACITOR));
+const IS_IOS_APP = (/* unused pure expression or super */ null && (IS_IOS && IS_CAPACITOR));
+const IS_ANDROID_APP = (/* unused pure expression or super */ null && (IS_ANDROID && IS_CAPACITOR));
 function setScrollbarWidthProperty() {
   const el = document.createElement('div');
   el.style.cssText = 'overflow-x: hidden; overflow-y: scroll; visibility:hidden; position:absolute;';
   el.classList.add('custom-scroll');
   document.body.appendChild(el);
-  (0,_lib_fasterdom_fasterdom__WEBPACK_IMPORTED_MODULE_1__.requestForcedReflow)(() => {
+  requestForcedReflow(() => {
     const width = el.offsetWidth - el.clientWidth;
     return () => {
       document.documentElement.style.setProperty('--scrollbar-width', `${width}px`);
@@ -2710,284 +2548,96 @@ function setScrollbarWidthProperty() {
   });
 }
 const REM = parseInt(getComputedStyle(document.documentElement).fontSize, 10);
+;// CONCATENATED MODULE: ./src/api/providers/worker/connector.ts
 
-/***/ })
 
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/ensure chunk */
-/******/ 	(() => {
-/******/ 		__webpack_require__.f = {};
-/******/ 		// This file contains only the entry chunk.
-/******/ 		// The chunk loading function for additional chunks
-/******/ 		__webpack_require__.e = (chunkId) => {
-/******/ 			return Promise.all(Object.keys(__webpack_require__.f).reduce((promises, key) => {
-/******/ 				__webpack_require__.f[key](chunkId, promises);
-/******/ 				return promises;
-/******/ 			}, []));
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/get javascript chunk filename */
-/******/ 	(() => {
-/******/ 		// This function allow to reference async chunks
-/******/ 		__webpack_require__.u = (chunkId) => {
-/******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + ".js";
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/get mini-css chunk filename */
-/******/ 	(() => {
-/******/ 		// This function allow to reference async chunks
-/******/ 		__webpack_require__.miniCssF = (chunkId) => {
-/******/ 			// return url for filenames based on template
-/******/ 			return undefined;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/load script */
-/******/ 	(() => {
-/******/ 		var inProgress = {};
-/******/ 		var dataWebpackPrefix = "api:";
-/******/ 		// loadScript function to load a script via script tag
-/******/ 		__webpack_require__.l = (url, done, key, chunkId) => {
-/******/ 			if(inProgress[url]) { inProgress[url].push(done); return; }
-/******/ 			var script, needAttach;
-/******/ 			if(key !== undefined) {
-/******/ 				var scripts = document.getElementsByTagName("script");
-/******/ 				for(var i = 0; i < scripts.length; i++) {
-/******/ 					var s = scripts[i];
-/******/ 					if(s.getAttribute("src") == url || s.getAttribute("data-webpack") == dataWebpackPrefix + key) { script = s; break; }
-/******/ 				}
-/******/ 			}
-/******/ 			if(!script) {
-/******/ 				needAttach = true;
-/******/ 				script = document.createElement('script');
-/******/ 		
-/******/ 				script.charset = 'utf-8';
-/******/ 				script.timeout = 120;
-/******/ 				if (__webpack_require__.nc) {
-/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 				}
-/******/ 				script.setAttribute("data-webpack", dataWebpackPrefix + key);
-/******/ 				script.src = url;
-/******/ 			}
-/******/ 			inProgress[url] = [done];
-/******/ 			var onScriptComplete = (prev, event) => {
-/******/ 				// avoid mem leaks in IE.
-/******/ 				script.onerror = script.onload = null;
-/******/ 				clearTimeout(timeout);
-/******/ 				var doneFns = inProgress[url];
-/******/ 				delete inProgress[url];
-/******/ 				script.parentNode && script.parentNode.removeChild(script);
-/******/ 				doneFns && doneFns.forEach((fn) => (fn(event)));
-/******/ 				if(prev) return prev(event);
-/******/ 			}
-/******/ 			var timeout = setTimeout(onScriptComplete.bind(null, undefined, { type: 'timeout', target: script }), 120000);
-/******/ 			script.onerror = onScriptComplete.bind(null, script.onerror);
-/******/ 			script.onload = onScriptComplete.bind(null, script.onload);
-/******/ 			needAttach && document.head.appendChild(script);
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/publicPath */
-/******/ 	(() => {
-/******/ 		var scriptUrl;
-/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
-/******/ 		var document = __webpack_require__.g.document;
-/******/ 		if (!scriptUrl && document) {
-/******/ 			if (document.currentScript)
-/******/ 				scriptUrl = document.currentScript.src;
-/******/ 			if (!scriptUrl) {
-/******/ 				var scripts = document.getElementsByTagName("script");
-/******/ 				if(scripts.length) {
-/******/ 					var i = scripts.length - 1;
-/******/ 					while (i > -1 && !scriptUrl) scriptUrl = scripts[i--].src;
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
-/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
-/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
-/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
-/******/ 		__webpack_require__.p = scriptUrl;
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/jsonp chunk loading */
-/******/ 	(() => {
-/******/ 		__webpack_require__.b = document.baseURI || self.location.href;
-/******/ 		
-/******/ 		// object to store loaded and loading chunks
-/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {
-/******/ 			"api": 0
-/******/ 		};
-/******/ 		
-/******/ 		__webpack_require__.f.j = (chunkId, promises) => {
-/******/ 				// JSONP chunk loading for javascript
-/******/ 				var installedChunkData = __webpack_require__.o(installedChunks, chunkId) ? installedChunks[chunkId] : undefined;
-/******/ 				if(installedChunkData !== 0) { // 0 means "already installed".
-/******/ 		
-/******/ 					// a Promise means "currently loading".
-/******/ 					if(installedChunkData) {
-/******/ 						promises.push(installedChunkData[2]);
-/******/ 					} else {
-/******/ 						if(true) { // all chunks have JS
-/******/ 							// setup Promise in chunk cache
-/******/ 							var promise = new Promise((resolve, reject) => (installedChunkData = installedChunks[chunkId] = [resolve, reject]));
-/******/ 							promises.push(installedChunkData[2] = promise);
-/******/ 		
-/******/ 							// start chunk loading
-/******/ 							var url = __webpack_require__.p + __webpack_require__.u(chunkId);
-/******/ 							// create error before stack unwound to get useful stacktrace later
-/******/ 							var error = new Error();
-/******/ 							var loadingEnded = (event) => {
-/******/ 								if(__webpack_require__.o(installedChunks, chunkId)) {
-/******/ 									installedChunkData = installedChunks[chunkId];
-/******/ 									if(installedChunkData !== 0) installedChunks[chunkId] = undefined;
-/******/ 									if(installedChunkData) {
-/******/ 										var errorType = event && (event.type === 'load' ? 'missing' : event.type);
-/******/ 										var realSrc = event && event.target && event.target.src;
-/******/ 										error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
-/******/ 										error.name = 'ChunkLoadError';
-/******/ 										error.type = errorType;
-/******/ 										error.request = realSrc;
-/******/ 										installedChunkData[1](error);
-/******/ 									}
-/******/ 								}
-/******/ 							};
-/******/ 							__webpack_require__.l(url, loadingEnded, "chunk-" + chunkId, chunkId);
-/******/ 						}
-/******/ 					}
-/******/ 				}
-/******/ 		};
-/******/ 		
-/******/ 		// no prefetching
-/******/ 		
-/******/ 		// no preloaded
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 		
-/******/ 		// no on chunks loaded
-/******/ 		
-/******/ 		// install a JSONP callback for chunk loading
-/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
-/******/ 			var [chunkIds, moreModules, runtime] = data;
-/******/ 			// add "moreModules" to the modules object,
-/******/ 			// then flag all "chunkIds" as loaded and fire callback
-/******/ 			var moduleId, chunkId, i = 0;
-/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
-/******/ 				for(moduleId in moreModules) {
-/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
-/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
-/******/ 					}
-/******/ 				}
-/******/ 				if(runtime) var result = runtime(__webpack_require__);
-/******/ 			}
-/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
-/******/ 			for(;i < chunkIds.length; i++) {
-/******/ 				chunkId = chunkIds[i];
-/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 					installedChunks[chunkId][0]();
-/******/ 				}
-/******/ 				installedChunks[chunkId] = 0;
-/******/ 			}
-/******/ 		
-/******/ 		}
-/******/ 		
-/******/ 		var chunkLoadingGlobal = this["webpackChunkapi"] = this["webpackChunkapi"] || [];
-/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
-/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/*!**************************!*\
-  !*** ./src/api/index.ts ***!
-  \**************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   callApi: () => (/* reexport safe */ _providers_worker_connector__WEBPACK_IMPORTED_MODULE_0__.callApi),
-/* harmony export */   initApi: () => (/* reexport safe */ _providers_worker_connector__WEBPACK_IMPORTED_MODULE_0__.initApi)
-/* harmony export */ });
-/* harmony import */ var _providers_worker_connector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./providers/worker/connector */ "./src/api/providers/worker/connector.ts");
+
+
+
+
+const HEALTH_CHECK_TIMEOUT = 150;
+const HEALTH_CHECK_MIN_DELAY = 5000; // 5 sec
+
+let updateCallback;
+let worker;
+let connector;
+let isInitialized = false;
+function initApi(onUpdate, initArgs) {
+  updateCallback = onUpdate;
+  if (!connector) {
+    worker = new Worker( /* webpackChunkName: "worker" */new URL(/* worker import */ __webpack_require__.p + __webpack_require__.u(348), __webpack_require__.b));
+    connector = createConnector(worker, onUpdate);
+    if (config_IS_CAPACITOR) {
+      createWindowProvider(worker);
+    }
+  }
+  if (!isInitialized) {
+    if (IS_IOS) {
+      setupIosHealthCheck();
+    }
+    isInitialized = true;
+  }
+  const args = typeof initArgs === 'function' ? initArgs() : initArgs;
+  return connector.init(args);
+}
+async function callApi(fnName) {
+  if (!connector) {
+    logDebugError('API is not initialized');
+    return undefined;
+  }
+  try {
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+    return await connector.request({
+      name: fnName,
+      args
+    });
+  } catch (err) {
+    return undefined;
+  }
+}
+function callApiWithThrow(fnName) {
+  for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    args[_key2 - 1] = arguments[_key2];
+  }
+  return connector.request({
+    name: fnName,
+    args
+  });
+}
+const startedAt = Date.now();
+
+// Workaround for iOS sometimes stops interacting with worker
+function setupIosHealthCheck() {
+  window.addEventListener('focus', () => {
+    void ensureWorkerPing();
+    // Sometimes a single check is not enough
+    setTimeout(() => ensureWorkerPing(), 1000);
+  });
+}
+async function ensureWorkerPing() {
+  let isResolved = false;
+  try {
+    await Promise.race([callApiWithThrow('ping'), pause(HEALTH_CHECK_TIMEOUT).then(() => isResolved ? undefined : Promise.reject(new Error('HEALTH_CHECK_TIMEOUT')))]);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err);
+    if (Date.now() - startedAt >= HEALTH_CHECK_MIN_DELAY) {
+      var _worker;
+      (_worker = worker) === null || _worker === void 0 ? void 0 : _worker.terminate();
+      worker = undefined;
+      connector = undefined;
+      updateCallback({
+        type: 'requestReconnectApi'
+      });
+    }
+  } finally {
+    isResolved = true;
+  }
+}
+;// CONCATENATED MODULE: ./src/api/index.ts
 // export { initApi, callApi } from './providers/direct/connector';
-
-})();
 
 /******/ 	return __webpack_exports__;
 /******/ })()

@@ -1,8 +1,8 @@
 package ru.andvl.mytonwallet.contest.di
 
-import android.webkit.WebView
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
+import ru.andvl.mytonwallet.contest.BlockchainViewModel
 import ru.andvl.mytonwallet.contest.auth.api.AuthDecomposeComponent
 import ru.andvl.mytonwallet.contest.auth.impl.api.AuthDecomposeComponentImpl
 import ru.andvl.mytonwallet.contest.auth.impl.nowallet.NoWalletViewModel
@@ -27,4 +27,5 @@ val appModule = module {
     viewModel { NoWalletViewModel() }
     viewModel { WalletImportViewModel() }
     viewModel { PasscodeViewModel() }
+    viewModel { BlockchainViewModel(BlockchainRepositoryWebViewImpl(get())) }
 }

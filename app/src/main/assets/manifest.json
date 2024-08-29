@@ -48,6 +48,6 @@
     }
   ],
   "content_security_policy": {
-    "extension_pages": "default-src 'none'; manifest-src 'self'; connect-src 'self' https: http://localhost:3000 undefined; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' https://fonts.googleapis.com/; img-src 'self' data: https:; media-src 'self' data:; object-src 'none'; base-uri 'none'; font-src 'self' https://fonts.gstatic.com/; form-action 'none'; frame-src 'self' https://widget.changelly.com/ https://dreamwalkers.io/ https://avanchange.com/ https://pay.wata.pro/ https://royalpay.cc/;"
+    "extension_pages": "default-src 'none'; manifest-src 'self'; connect-src 'self' https: ; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' https://fonts.googleapis.com/; img-src 'self' data: https:; media-src 'self' data:; object-src 'none'; base-uri 'none'; font-src 'self' https://fonts.gstatic.com/; form-action 'none'; frame-src 'self' https://widget.changelly.com/ https://dreamwalkers.io/ https://avanchange.com/ https://pay.wata.pro/ https://royalpay.cc/;"
   }
 }

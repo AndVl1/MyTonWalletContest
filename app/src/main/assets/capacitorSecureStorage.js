@@ -1,15 +1,12 @@
 "use strict";
-(this["webpackChunkapi"] = this["webpackChunkapi"] || []).push([["capacitorSecureStorage"],{
+(this["webpackChunkapi"] = this["webpackChunkapi"] || []).push([[512],{
 
-/***/ "./node_modules/@capacitor/core/dist/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/@capacitor/core/dist/index.js ***!
-  \****************************************************/
+/***/ 9895:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   WebPlugin: () => (/* binding */ WebPlugin),
-/* harmony export */   registerPlugin: () => (/* binding */ registerPlugin)
+/* harmony export */   Uw: () => (/* binding */ WebPlugin),
+/* harmony export */   fo: () => (/* binding */ registerPlugin)
 /* harmony export */ });
 /* unused harmony exports Capacitor, CapacitorCookies, CapacitorException, CapacitorHttp, CapacitorPlatforms, ExceptionCode, Plugins, WebView, addPlatform, buildRequestInit, registerWebPlugin, setPlatform */
 /*! Capacitor: https://capacitorjs.com/ - MIT License */
@@ -419,7 +416,7 @@ class WebPlugin {
     }
 }
 
-const WebView = /*#__PURE__*/ registerPlugin('WebView');
+const WebView = /*#__PURE__*/ (/* unused pure expression or super */ null && (registerPlugin('WebView')));
 /******** END WEB VIEW PLUGIN ********/
 /******** COOKIES PLUGIN ********/
 /**
@@ -698,31 +695,16 @@ const CapacitorHttp = registerPlugin('CapacitorHttp', {
 
 /***/ }),
 
-/***/ "./node_modules/capacitor-secure-storage-plugin/dist/esm/definitions.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/capacitor-secure-storage-plugin/dist/esm/definitions.js ***!
-  \******************************************************************************/
-/***/ (() => {
-
-
-//# sourceMappingURL=definitions.js.map
-
-/***/ }),
-
-/***/ "./node_modules/capacitor-secure-storage-plugin/dist/esm/index.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/capacitor-secure-storage-plugin/dist/esm/index.js ***!
-  \************************************************************************/
+/***/ 1867:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SecureStoragePlugin: () => (/* binding */ SecureStoragePlugin)
 /* harmony export */ });
-/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @capacitor/core */ "./node_modules/@capacitor/core/dist/index.js");
-/* harmony import */ var _definitions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./definitions */ "./node_modules/capacitor-secure-storage-plugin/dist/esm/definitions.js");
+/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9895);
 
-const SecureStoragePlugin = (0,_capacitor_core__WEBPACK_IMPORTED_MODULE_0__.registerPlugin)('SecureStoragePlugin', {
-    web: () => __webpack_require__.e(/*! import() */ "node_modules_capacitor-secure-storage-plugin_dist_esm_web_js").then(__webpack_require__.bind(__webpack_require__, /*! ./web */ "./node_modules/capacitor-secure-storage-plugin/dist/esm/web.js")).then(m => new m.SecureStoragePluginWeb()),
+const SecureStoragePlugin = (0,_capacitor_core__WEBPACK_IMPORTED_MODULE_0__/* .registerPlugin */ .fo)('SecureStoragePlugin', {
+    web: () => __webpack_require__.e(/* import() */ 855).then(__webpack_require__.bind(__webpack_require__, 855)).then(m => new m.SecureStoragePluginWeb()),
 });
 
 

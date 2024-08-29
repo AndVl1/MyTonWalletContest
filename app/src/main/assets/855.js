@@ -1,19 +1,16 @@
 "use strict";
-(this["webpackChunkapi"] = this["webpackChunkapi"] || []).push([["node_modules_capacitor-secure-storage-plugin_dist_esm_web_js"],{
+(this["webpackChunkapi"] = this["webpackChunkapi"] || []).push([[855],{
 
-/***/ "./node_modules/capacitor-secure-storage-plugin/dist/esm/web.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/capacitor-secure-storage-plugin/dist/esm/web.js ***!
-  \**********************************************************************/
+/***/ 855:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SecureStoragePluginWeb: () => (/* binding */ SecureStoragePluginWeb)
 /* harmony export */ });
-/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @capacitor/core */ "./node_modules/@capacitor/core/dist/index.js");
+/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9895);
 
-class SecureStoragePluginWeb extends _capacitor_core__WEBPACK_IMPORTED_MODULE_0__.WebPlugin {
+class SecureStoragePluginWeb extends _capacitor_core__WEBPACK_IMPORTED_MODULE_0__/* .WebPlugin */ .Uw {
     constructor() {
         super(...arguments);
         this.PREFIX = 'cap_sec_';
@@ -64,4 +61,4 @@ class SecureStoragePluginWeb extends _capacitor_core__WEBPACK_IMPORTED_MODULE_0_
 /***/ })
 
 }]);
-//# sourceMappingURL=node_modules_capacitor-secure-storage-plugin_dist_esm_web_js.js.map
+//# sourceMappingURL=855.js.map
