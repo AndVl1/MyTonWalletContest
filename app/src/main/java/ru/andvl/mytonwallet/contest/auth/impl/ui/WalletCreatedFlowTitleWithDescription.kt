@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components
+package ru.andvl.mytonwallet.contest.auth.impl.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,14 +9,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
-fun SetPasscodeTitleWithDescription(
-    passcodeLength: Int,
+fun WalletCreatedFlowTitleWithDescription(
+    title: String,
+    description: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -24,16 +26,14 @@ fun SetPasscodeTitleWithDescription(
         modifier = modifier
     ) {
         Text(
-            text = stringResource(R.string.auth_set_passcode_screen_title),
+            text = title,
             style = MaterialTheme.typography.headlineMedium
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = stringResource(
-                R.string.auth_set_passcode_screen_description,
-                passcodeLength
-            ),
-            style = MaterialTheme.typography.bodyLarge
+            text = description,
+            style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -44,8 +44,12 @@ fun SetPasscodeTitleWithDescription(
 @Composable
 private fun SetPasscodeTitleWithDescriptionPreview() {
     MyTonWalletContestTheme {
-        SetPasscodeTitleWithDescription(
-            passcodeLength = 4
+        WalletCreatedFlowTitleWithDescription(
+            title = stringResource(R.string.auth_set_passcode_screen_title),
+            description = stringResource(
+                R.string.auth_set_passcode_screen_description,
+                4
+            )
         )
     }
 }

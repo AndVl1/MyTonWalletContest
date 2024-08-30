@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.auth.impl.setpasscode
+package ru.andvl.mytonwallet.contest.auth.impl.ui
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -13,7 +13,7 @@ import ru.andvl.mytonwallet.contest.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SetPasscodeScreenTopBar(
+fun WalletCreatedFlowTopBar(
     onBackClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {

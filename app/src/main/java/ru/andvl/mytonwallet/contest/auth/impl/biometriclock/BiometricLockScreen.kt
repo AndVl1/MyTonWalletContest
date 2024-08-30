@@ -10,17 +10,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
+import ru.andvl.mytonwallet.contest.auth.impl.ui.WalletCreatedFlowTitleWithDescription
 import ru.andvl.mytonwallet.contest.ui.components.ButtonStyle
 import ru.andvl.mytonwallet.contest.ui.components.TonWalletButton
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
@@ -42,16 +41,10 @@ fun BiometricLockScreen(
             modifier = Modifier.size(124.dp)
         )
         Spacer(modifier = Modifier.height(24.dp))
-        Text(
-            text = stringResource(R.string.auth_biometric_lock_title),
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            text = stringResource(R.string.auth_biometric_lock_description),
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 40.dp)
+        WalletCreatedFlowTitleWithDescription(
+            title = stringResource(R.string.auth_biometric_lock_title),
+            description = stringResource(R.string.auth_biometric_lock_description),
+            modifier = Modifier.padding(horizontal = 48.dp)
         )
         Spacer(modifier = Modifier.height(24.dp))
         TonWalletButton(

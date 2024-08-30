@@ -18,4 +18,6 @@
     <string name="auth_biometric_lock_description">MyTonWallet uses biometric authentication to unlock and authorize transactions.</string>
     <string name="auth_biometric_lock_enable">Enable</string>
     <string name="auth_biometric_lock_skip">Skip</string>
+    <string name="auth_recovery_list_title">Your recovery phrase</string>
+    <string name="auth_recovery_list_description">Write down these 24 words in this exact order and keep them in a secure place. Do not share this list with anyone.</string>
 </resources>

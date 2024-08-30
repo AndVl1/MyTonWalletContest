@@ -11,9 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
+import ru.andvl.mytonwallet.contest.auth.impl.ui.WalletCreatedFlowTitleWithDescription
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
@@ -32,7 +34,13 @@ fun SetPasscodeScreenHeader(
             modifier = Modifier.size(124.dp)
         )
         Spacer(modifier = Modifier.height(24.dp))
-        SetPasscodeTitleWithDescription(passcodeLength)
+        WalletCreatedFlowTitleWithDescription(
+            title = stringResource(R.string.auth_set_passcode_screen_title),
+            description = stringResource(
+                R.string.auth_set_passcode_screen_description,
+                passcodeLength
+            )
+        )
     }
 }
 

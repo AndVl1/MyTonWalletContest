@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components.SetPasscodeScreenContent
+import ru.andvl.mytonwallet.contest.auth.impl.ui.WalletCreatedFlowTopBar
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
@@ -17,7 +18,7 @@ fun SetPasscodeScreen(
 ) {
     Scaffold(
         topBar = {
-            SetPasscodeScreenTopBar(
+            WalletCreatedFlowTopBar(
                 onBackClicked = { onAction(SetPasscodeAction.NavigateBack) }
             )
         },

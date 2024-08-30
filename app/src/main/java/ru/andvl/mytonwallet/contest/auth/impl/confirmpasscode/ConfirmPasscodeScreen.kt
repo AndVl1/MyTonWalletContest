@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.components.ConfirmPasscodeScreenContent
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
-import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.SetPasscodeScreenTopBar
+import ru.andvl.mytonwallet.contest.auth.impl.ui.WalletCreatedFlowTopBar
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
@@ -19,7 +19,7 @@ fun ConfirmPasscodeScreen(
 ) {
     Scaffold(
         topBar = {
-            SetPasscodeScreenTopBar(
+            WalletCreatedFlowTopBar(
                 onBackClicked = { onAction(ConfirmPasscodeAction.NavigateBack) }
             )
         },
