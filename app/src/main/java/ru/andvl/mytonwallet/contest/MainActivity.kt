@@ -1,21 +1,25 @@
 package ru.andvl.mytonwallet.contest
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arkivanov.decompose.defaultComponentContext
@@ -65,7 +69,7 @@ class MainActivity : ComponentActivity() {
 class BlockchainViewModel(
     private val blockchainRepository: BlockchainRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow(emptyList<String>())
+    private val _state = MutableStateFlow("empty")
     val state = _state.asStateFlow()
 
     fun onClicked() {
@@ -73,7 +77,7 @@ class BlockchainViewModel(
             val result = blockchainRepository.getMnemonicWordList()
             Log.e("BlockchainViewModel", "result: $result")
             if (result.isSuccess) {
-                _state.update { result.getOrDefault(emptyList()) }
+                _state.update { result.getOrDefault("no result") }
             }
         }
     }
@@ -90,56 +94,48 @@ fun Test(modifier: Modifier = Modifier) {
             onClick = viewModel::onClicked,
             text = "Click",
         )
-        LazyColumn {
-            items(state) {
-                Text(text = it)
-            }
-        }
+        Text(text = state)
     }
 }
 
 
-//@SuppressLint("SetJavaScriptEnabled")
-//@Composable
-//fun WebViewComponent() {
-//    val context = LocalContext.current
-//    val webView = remember { WebView(context) }
-//    Column(modifier = Modifier.fillMaxSize()) {
-//        TonWalletButton(
-//            onClick = { callJavaScriptFunction(webView, "callApi", "'getMnemonicWordList'") },
-//            text = "Click",
-//            modifier = Modifier.weight(1f)
-//        )
+@SuppressLint("SetJavaScriptEnabled")
+@Composable
+fun WebViewComponent() {
+    val context = LocalContext.current
+    val webView = remember { WebView(context) }
 
-//        AndroidView(
-//            factory = {
-//                webView.apply {
-//                    settings.javaScriptEnabled = true
-//                    settings.domStorageEnabled = true
-//                    settings.allowFileAccess = true
-//                    settings.allowContentAccess = true
-//                    settings.allowUniversalAccessFromFileURLs = true
-//                    settings.allowFileAccessFromFileURLs = true
-//
-////                addJavascriptInterface(WebAppInterface(context), "AndroidInterface")
-//
-//                    webViewClient = object : WebViewClient() {
-//                        override fun onPageFinished(view: WebView, url: String) {
-//                            super.onPageFinished(view, url)
-//                            // Call JavaScript function after page is loaded
-//                            callJavaScriptFunction(view, "initApi")
-////                        callJavaScriptFunction(view, "callApi", "'getMnemonicWordList'")
-//                        }
-//                    }
-//
-//                    webChromeClient = WebChromeClient()
-//                    loadUrl("file:///android_asset/index.html")
-//                }
-//            },
-//            modifier = Modifier
-//        )
-//}
-//}
+    AndroidView(
+        factory = {
+            webView.apply {
+                settings.javaScriptEnabled = true
+                settings.domStorageEnabled = true
+                settings.allowFileAccess = true
+                settings.allowContentAccess = true
+                settings.allowUniversalAccessFromFileURLs = true
+                settings.allowFileAccessFromFileURLs = true
+
+//                addJavascriptInterface(WebAppInterface(context), "AndroidInterface")
+
+                webViewClient = object : WebViewClient() {
+                    override fun onPageFinished(view: WebView, url: String) {
+                        super.onPageFinished(view, url)
+                        // Call JavaScript function after page is loaded
+                        view.evaluateJavascript("initApi()") {}
+                        view.evaluateJavascript("callApi('getMnemonicWordList').then(result => result)") { result ->
+                            println(result)
+                        }
+//                        view.evaluateJavascript()
+                    }
+                }
+
+                webChromeClient = WebChromeClient()
+                loadUrl("file:///android_asset/index.html")
+            }
+        },
+        modifier = Modifier
+    )
+}
 
 fun callJavaScriptFunction(
     webView: WebView,
@@ -153,43 +149,3 @@ fun callJavaScriptFunction(
         println(it)
     }
 }
-
-//class WebViewBlockchainRepository(
-//    private val webViewHolder: WebViewHolder
-//) {
-//    @OptIn(ExperimentalCoroutinesApi::class)
-//    private suspend fun executeScript(script: String): String? {
-//        return suspendCancellableCoroutine { continuation ->
-//            webViewHolder.evaluateJavascript(script) { result ->
-//                continuation.resume(result) {}
-//            }
-//        }
-//    }
-//
-//    suspend fun getMnemonicWordList(): Result<Double> {
-//        val script = "callApi('getMnemonicWordList')"
-//        return try {
-//            val result = executeScript(script)?.toDoubleOrNull()
-//            if (result != null) {
-//                Result.success(result)
-//            } else {
-//                Result.failure(Exception("Invalid result"))
-//            }
-//        } catch (e: Exception) {
-//            Result.failure(e)
-//        }
-//    }
-//}
-
-//class WebAppInterface(private val context: Context) {
-//    @JavascriptInterface
-//    fun showToast(message: String) {
-//        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-//    }
-//
-//    @JavascriptInterface
-//    fun onApiResult(result: String) {
-//        // Обработка результата из JavaScript
-//        println("Received API result from JavaScript: $result")
-//    }
-//}
