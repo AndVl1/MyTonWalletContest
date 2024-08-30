@@ -20,7 +20,7 @@ fun RecoveryWordsList(
     val halfWordsNumber = words.size / 2
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
