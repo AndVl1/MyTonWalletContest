@@ -65,7 +65,7 @@ fun RecoveryListScreenContent(
     showBackground = true
 )
 @Composable
-fun RecoveryListScreenContentPreview() {
+private fun RecoveryListScreenContentPreview() {
     MyTonWalletContestTheme {
         RecoveryListScreenContent(
             state = RecoveryListState(),

@@ -45,7 +45,7 @@ fun WalletCreatedFlowTopBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
-fun WalletCreatedFlowTopBarPreview() {
+private fun WalletCreatedFlowTopBarPreview() {
     MyTonWalletContestTheme {
         WalletCreatedFlowTopBar({})
     }

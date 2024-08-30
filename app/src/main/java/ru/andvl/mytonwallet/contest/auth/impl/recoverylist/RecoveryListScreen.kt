@@ -50,7 +50,7 @@ fun RecoveryListScreen(
     showSystemUi = true
 )
 @Composable
-fun RecoveryListScreenPreview() {
+private fun RecoveryListScreenPreview() {
     MyTonWalletContestTheme {
         RecoveryListScreen(
             state = RecoveryListState(),
