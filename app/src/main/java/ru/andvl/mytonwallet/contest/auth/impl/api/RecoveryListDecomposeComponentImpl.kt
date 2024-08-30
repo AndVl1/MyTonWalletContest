@@ -3,6 +3,7 @@ package ru.andvl.mytonwallet.contest.auth.impl.api
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushToFront
 import ru.andvl.mytonwallet.contest.arch.core.viewModelWithFactory
 import ru.andvl.mytonwallet.contest.auth.impl.model.AuthNavigationConfig
@@ -21,6 +22,7 @@ class RecoveryListDecomposeComponentImpl(
             RecoveryListViewModel()
         }
         CreateRecoveryListScreen(
+            navigateBack = { navigation.pop() },
             navigateToRecoveryTest = {
                 navigation.pushToFront(AuthNavigationConfig.RecoveryTestScreen())
             },

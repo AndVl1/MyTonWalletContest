@@ -10,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 @Composable
 fun CreateRecoveryListScreen(
     navigateToRecoveryTest: () -> Unit,
+    navigateBack: () -> Unit,
     viewModel: RecoveryListViewModel
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -19,6 +20,7 @@ fun CreateRecoveryListScreen(
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             navigationEvents.collect { navigationEvent ->
                 when (navigationEvent) {
+                    is RecoveryListNavigationEvent.NavigateBack -> navigateBack()
                     is RecoveryListNavigationEvent.NavigateToRecoveryTest -> navigateToRecoveryTest()
                 }
             }

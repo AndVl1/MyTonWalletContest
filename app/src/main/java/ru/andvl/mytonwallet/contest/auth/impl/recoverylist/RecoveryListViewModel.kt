@@ -23,7 +23,7 @@ class RecoveryListViewModel : BaseViewModel<RecoveryListAction, RecoveryListStat
                 }
 
                 RecoveryListAction.NavigateBack -> {
-                    TODO()
+                    _navigationEvents.emit(RecoveryListNavigationEvent.NavigateBack)
                 }
             }
         }

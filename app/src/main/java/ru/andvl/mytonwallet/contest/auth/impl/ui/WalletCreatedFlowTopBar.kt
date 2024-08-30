@@ -5,17 +5,23 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import ru.andvl.mytonwallet.contest.R
+import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WalletCreatedFlowTopBar(
     onBackClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
     TopAppBar(
         title = {},
@@ -28,6 +34,19 @@ fun WalletCreatedFlowTopBar(
                 )
             }
         },
+        colors = TopAppBarDefaults.topAppBarColors().copy(
+            containerColor = Color.Transparent
+        ),
+        scrollBehavior = scrollBehavior,
         modifier = modifier
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
+@Composable
+fun WalletCreatedFlowTopBarPreview() {
+    MyTonWalletContestTheme {
+        WalletCreatedFlowTopBar({})
+    }
 }
