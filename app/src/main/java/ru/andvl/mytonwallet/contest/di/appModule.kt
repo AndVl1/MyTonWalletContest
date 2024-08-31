@@ -2,11 +2,11 @@ package ru.andvl.mytonwallet.contest.di
 
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
-import ru.andvl.mytonwallet.contest.BlockchainViewModel
 import ru.andvl.mytonwallet.contest.auth.api.AuthDecomposeComponent
 import ru.andvl.mytonwallet.contest.auth.impl.api.AuthDecomposeComponentImpl
 import ru.andvl.mytonwallet.contest.auth.impl.nowallet.NoWalletViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeViewModel
+import ru.andvl.mytonwallet.contest.auth.impl.walletimport.BlockchainViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.walletimport.WalletImportViewModel
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
 import ru.andvl.mytonwallet.contest.blockchain.impl.BlockchainRepositoryWebViewImpl

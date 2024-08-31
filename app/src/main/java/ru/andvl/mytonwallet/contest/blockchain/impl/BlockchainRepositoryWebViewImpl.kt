@@ -14,8 +14,6 @@ import kotlin.coroutines.resume
 class BlockchainRepositoryWebViewImpl(
     private val webView: WebViewHolder
 ) : BlockchainRepository {
-    private var isApiInitialized = false
-
     init {
         webView.addJavascriptInterface(WebAppInterface())
     }
@@ -29,28 +27,12 @@ class BlockchainRepositoryWebViewImpl(
         return jsonElement.jsonArray.map { it.jsonPrimitive.content }
     }
 
-    override suspend fun initApi() {
-        webView.evaluateJavascript("initApi()", {})
-        isApiInitialized = true
-    }
-
-    override suspend fun createWallet(): Result<String> {
-        return evaluateJs("startCreatingWallet") // TODO idk how is correct :)
-    }
-
     private suspend fun evaluateJs(script: String): Result<String> {
         return suspendCancellableCoroutine { cont ->
             continuation = cont
             webView.evaluateJavascript(script, {})
         }
     }
-
-    private suspend fun ensureApiInitialized() {
-        if (!isApiInitialized) {
-            initApi()
-        }
-    }
-
 
     private inner class WebAppInterface {
         @JavascriptInterface
