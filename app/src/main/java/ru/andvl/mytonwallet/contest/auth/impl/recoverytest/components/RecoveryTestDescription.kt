@@ -10,35 +10,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.util.fastForEachIndexed
 import ru.andvl.mytonwallet.contest.R
 
 @Composable
 fun RecoveryTestDescription(
-    number1: Int,
-    number2: Int,
-    number3: Int
+    indexes: List<Int>
 ) {
-    val text = stringResource(R.string.auth_recovery_test_description, number1, number2, number3)
+    val startText = stringResource(R.string.auth_recovery_test_description_start)
+    val andText = stringResource(R.string.and)
 
     val annotatedString = buildAnnotatedString {
-        val parts = text.split(number1.toString(), number2.toString(), number3.toString())
+        append(startText)
+        append(" ")
 
-        append(parts[0])
-        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-            append(number1.toString())
+        indexes.fastForEachIndexed { i, index ->
+            if (i > 0 && i < indexes.size - 1) {
+                append(", ")
+            } else if (i == indexes.size - 1 && indexes.size > 1) {
+                append(" $andText ")
+            }
+
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append(index.toString())
+            }
         }
 
-        append(parts[1])
-        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-            append(number2.toString())
-        }
-
-        append(parts[2])
-        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-            append(number3.toString())
-        }
-
-        append(parts[3])
+        append(".")
     }
 
     Text(
@@ -51,5 +49,5 @@ fun RecoveryTestDescription(
 @Preview(showBackground = true)
 @Composable
 private fun RecoveryTestDescriptionPreview() {
-    RecoveryTestDescription(4, 12, 19)
+    RecoveryTestDescription(listOf(4, 12, 19))
 }

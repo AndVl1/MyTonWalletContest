@@ -8,7 +8,7 @@ import ru.andvl.mytonwallet.contest.arch.BaseViewModel
 class RecoveryTestViewModel(
     recoveryWords: List<String>
 ) : BaseViewModel<RecoveryTestAction, RecoveryTestState>() {
-    private val _state = MutableStateFlow(RecoveryTestState(recoveryWords))
+    private val _state = MutableStateFlow(RecoveryTestState())
 
     override val state: StateFlow<RecoveryTestState> = _state.asStateFlow()
 
@@ -23,7 +23,7 @@ class RecoveryTestViewModel(
         TODO()
 //        _state.update {
 //            it.copy(
-//                recoveryWords = it.recoveryWords.
+//                wordsWithIndexes = it.wordsWithIndexes[index]
 //            )
 //        }
     }

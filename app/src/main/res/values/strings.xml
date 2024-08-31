@@ -22,5 +22,7 @@
     <string name="auth_recovery_list_description">Write down these 24 words in this exact order and keep them in a secure place. Do not share this list with anyone.</string>
     <string name="auth_recovery_list_done">Done</string>
     <string name="auth_recovery_test_title">Let’s test</string>
-    <string name="auth_recovery_test_description">Let’s check that you wrote it down correctly. Please enter the words %1$d, %2$d and %3$d.</string>
+    <string name="auth_recovery_test_description_start">Let’s check that you wrote it down correctly. Please enter the words</string>
+    <string name="auth_recovery_test_continue">Continue</string>
+    <string name="and">and</string>
 </resources>

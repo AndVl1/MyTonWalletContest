@@ -20,7 +20,6 @@ import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
 fun RecoveryTestHeader(
-
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -36,7 +35,7 @@ fun RecoveryTestHeader(
         Spacer(modifier = Modifier.height(24.dp))
         WalletCreatedFlowTitle(stringResource(R.string.auth_recovery_test_title))
         Spacer(modifier = Modifier.height(12.dp))
-        RecoveryTestDescription(1, 2, 3)
+        RecoveryTestDescription(listOf(1, 2, 3))
     }
 }
 
