@@ -33,7 +33,9 @@ sealed interface AuthNavigationConfig {
     class RecoveryListScreen : WalletCreatedFlow
 
     @Serializable
-    class RecoveryTestScreen : WalletCreatedFlow
+    data class RecoveryTestScreen(
+        val recoveryWords: List<String>
+    ) : WalletCreatedFlow
 
     sealed interface WalletImportFlow : AuthNavigationConfig
 

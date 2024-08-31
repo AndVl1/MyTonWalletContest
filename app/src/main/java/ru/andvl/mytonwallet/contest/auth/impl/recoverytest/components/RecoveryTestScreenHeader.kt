@@ -19,7 +19,8 @@ import ru.andvl.mytonwallet.contest.auth.impl.ui.WalletCreatedFlowTitle
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
-fun RecoveryTestHeader(
+fun RecoveryTestScreenHeader(
+    checkIndexes: List<Int>,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -35,14 +36,17 @@ fun RecoveryTestHeader(
         Spacer(modifier = Modifier.height(24.dp))
         WalletCreatedFlowTitle(stringResource(R.string.auth_recovery_test_title))
         Spacer(modifier = Modifier.height(12.dp))
-        RecoveryTestDescription(listOf(1, 2, 3))
+        RecoveryTestDescription(checkIndexes)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun RecoveryTestHeaderPreview() {
+private fun RecoveryTestScreenHeaderPreview() {
     MyTonWalletContestTheme {
-        RecoveryTestHeader(modifier = Modifier.padding(16.dp))
+        RecoveryTestScreenHeader(
+            checkIndexes = listOf(1, 2, 3),
+            modifier = Modifier.padding(16.dp)
+        )
     }
 }

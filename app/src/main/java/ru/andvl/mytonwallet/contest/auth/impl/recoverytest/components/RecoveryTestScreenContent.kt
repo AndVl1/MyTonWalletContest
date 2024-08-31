@@ -19,7 +19,7 @@ import ru.andvl.mytonwallet.contest.ui.components.TonWalletButton
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
-fun RecoveryTestContent(
+fun RecoveryTestScreenContent(
     state: RecoveryTestState,
     onAction: (RecoveryTestAction) -> Unit,
     modifier: Modifier = Modifier
@@ -29,16 +29,19 @@ fun RecoveryTestContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        RecoveryTestHeader()
+        RecoveryTestScreenHeader(state.checkIndexes)
         Spacer(modifier = Modifier.height(24.dp))
         RecoveryWordsInputSection(
             wordsWithIndexes = state.wordsWithIndexes,
-            onValueChange = { _, _ -> /*TODO*/ }
+            onValueChange = { index, word ->
+                onAction(RecoveryTestAction.OnWordUpdated(index, word))
+            },
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(32.dp))
         TonWalletButton(
             text = stringResource(R.string.auth_recovery_test_continue),
-            onClick = { /*TODO*/ },
+            onClick = { onAction(RecoveryTestAction.OnContinueClicked) },
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -46,9 +49,9 @@ fun RecoveryTestContent(
 
 @Preview(showBackground = true)
 @Composable
-fun RecoveryTestContentPreview() {
+private fun RecoveryTestScreenContentPreview() {
     MyTonWalletContestTheme {
-        RecoveryTestContent(
+        RecoveryTestScreenContent(
             state = RecoveryTestState(
                 wordsWithIndexes = mapOf(
                     1 to "abcd",

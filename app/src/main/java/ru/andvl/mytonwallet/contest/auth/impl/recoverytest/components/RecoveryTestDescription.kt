@@ -32,7 +32,7 @@ fun RecoveryTestDescription(
             }
 
             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                append(index.toString())
+                append((index + 1).toString())
             }
         }
 
