@@ -28,8 +28,8 @@
             console.log('Received update:', type);
         }
 
-        async function callApi(apiMethod) {
-            const response = await api.callApi(apiMethod);
+        async function callApi(apiMethod, ...args) {
+            const response = await api.callApi(apiMethod, ...args);
             console.log("API response:", response);
 
             AndroidInterface.onApiResult(JSON.stringify(response))

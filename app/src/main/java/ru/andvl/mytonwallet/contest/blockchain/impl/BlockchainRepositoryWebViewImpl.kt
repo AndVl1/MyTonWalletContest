@@ -4,7 +4,9 @@ import android.util.Log
 import android.webkit.JavascriptInterface
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
@@ -41,6 +43,13 @@ class BlockchainRepositoryWebViewImpl(
             .shuffled()
             .take(MNEMONIC_CHECK_COUNT)
             .sorted()
+    }
+
+    override suspend fun validateMnemonic(mnemonic: List<String>): Boolean {
+        val mnemonicJson = Json.encodeToString(mnemonic)
+        val jsonString = evaluateJs("callApi('validateMnemonic', $mnemonicJson)").getOrThrow()
+
+        return Json.parseToJsonElement(jsonString).jsonPrimitive.boolean
     }
 
     private suspend fun evaluateJs(script: String): Result<String> {
