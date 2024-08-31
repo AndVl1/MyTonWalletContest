@@ -1,25 +1,20 @@
 package ru.andvl.mytonwallet.contest
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arkivanov.decompose.defaultComponentContext
@@ -59,7 +54,6 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .imePadding()
                     )
-//                    WebViewComponent()
                 }
             }
         }
@@ -69,16 +63,14 @@ class MainActivity : ComponentActivity() {
 class BlockchainViewModel(
     private val blockchainRepository: BlockchainRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow("empty")
+    private val _state = MutableStateFlow(emptyList<String>())
     val state = _state.asStateFlow()
 
     fun onClicked() {
         viewModelScope.launch {
             val result = blockchainRepository.getMnemonicWordList()
-            Log.e("BlockchainViewModel", "result: $result")
-            if (result.isSuccess) {
-                _state.update { result.getOrDefault("no result") }
-            }
+            Log.d("BlockchainViewModel", "result: $result")
+            _state.update { result }
         }
     }
 }
@@ -94,58 +86,14 @@ fun Test(modifier: Modifier = Modifier) {
             onClick = viewModel::onClicked,
             text = "Click",
         )
-        Text(text = state)
-    }
-}
-
-
-@SuppressLint("SetJavaScriptEnabled")
-@Composable
-fun WebViewComponent() {
-    val context = LocalContext.current
-    val webView = remember { WebView(context) }
-
-    AndroidView(
-        factory = {
-            webView.apply {
-                settings.javaScriptEnabled = true
-                settings.domStorageEnabled = true
-                settings.allowFileAccess = true
-                settings.allowContentAccess = true
-                settings.allowUniversalAccessFromFileURLs = true
-                settings.allowFileAccessFromFileURLs = true
-
-//                addJavascriptInterface(WebAppInterface(context), "AndroidInterface")
-
-                webViewClient = object : WebViewClient() {
-                    override fun onPageFinished(view: WebView, url: String) {
-                        super.onPageFinished(view, url)
-                        // Call JavaScript function after page is loaded
-                        view.evaluateJavascript("initApi()") {}
-                        view.evaluateJavascript("callApi('getMnemonicWordList').then(result => result)") { result ->
-                            println(result)
-                        }
-//                        view.evaluateJavascript()
-                    }
+        if (state.isNotEmpty()) {
+            LazyColumn {
+                items(state) {
+                    Text(text = it)
                 }
-
-                webChromeClient = WebChromeClient()
-                loadUrl("file:///android_asset/index.html")
             }
-        },
-        modifier = Modifier
-    )
-}
-
-fun callJavaScriptFunction(
-    webView: WebView,
-    functionName: String,
-    vararg params: String
-) {
-    val paramStr = params.joinToString(",")
-    val jsCode = "$functionName($paramStr);"
-
-    webView.evaluateJavascript(jsCode) {
-        println(it)
+        } else {
+            Text("empty")
+        }
     }
 }

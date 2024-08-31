@@ -28,18 +28,11 @@
             console.log('Received update:', type);
         }
 
-        function callApi(apiMethod) {
-            return new Promise((resolve) => {
-                console.log("Calling API with method:", apiMethod);
+        async function callApi(apiMethod) {
+            const response = await api.callApi(apiMethod);
+            console.log("API response:", response);
 
-                setTimeout(() => {
-                    const response = "hello world"; // Имитация ответа API
-                    console.log("API simulated response:", response);
-
-                    AndroidInterface.onApiResult(response);
-                    resolve(response); // Возвращаем результат
-                }, 3000); // Задержка в 3 секунды
-            });
+            AndroidInterface.onApiResult(JSON.stringify(response))
         }
     </script>
 </head>
