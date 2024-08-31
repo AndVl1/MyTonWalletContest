@@ -52,19 +52,25 @@ class AuthDecomposeComponentImpl(
         config: AuthNavigationConfig.WalletCreatedFlow,
         componentContext: ComponentContext
     ): DecomposeComponent = when (config) {
-        is AuthNavigationConfig.BiometricLockScreen -> TODO()
+        is AuthNavigationConfig.BiometricLockScreen -> BiometricLockDecomposeComponentImpl(
+            componentContext,
+            navigation
+        )
+
         is AuthNavigationConfig.RecoveryListScreen -> TODO()
         is AuthNavigationConfig.RecoveryTestScreen -> TODO()
         is AuthNavigationConfig.SetPasscodeScreen -> SetPasscodeDecomposeComponentImpl(
             componentContext,
             navigation
         )
+
         is AuthNavigationConfig.ConfirmPasscodeScreen -> ConfirmPasscodeDecomposeComponentImpl(
             componentContext,
             navigation,
             config.correctPasscode,
             config.passcodeLength
         )
+
         is AuthNavigationConfig.WalletCreatedStartScreen -> WalletCreatedStartDecomposeComponentImpl(
             componentContext,
             navigation
