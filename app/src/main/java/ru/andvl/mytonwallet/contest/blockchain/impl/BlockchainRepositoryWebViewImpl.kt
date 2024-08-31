@@ -8,6 +8,8 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
+import ru.andvl.mytonwallet.contest.blockchain.util.MNEMONIC_CHECK_COUNT
+import ru.andvl.mytonwallet.contest.blockchain.util.MNEMONIC_COUNT
 import ru.andvl.mytonwallet.contest.blockchain.util.WebViewHolder
 import kotlin.coroutines.resume
 
@@ -25,6 +27,20 @@ class BlockchainRepositoryWebViewImpl(
 
         val jsonElement = Json.parseToJsonElement(jsonString)
         return jsonElement.jsonArray.map { it.jsonPrimitive.content }
+    }
+
+    override suspend fun generateMnemonic(): List<String> {
+        val jsonString = evaluateJs("callApi('generateMnemonic')").getOrThrow()
+
+        val jsonElement = Json.parseToJsonElement(jsonString)
+        return jsonElement.jsonArray.map { it.jsonPrimitive.content }
+    }
+
+    override fun getMnemonicCheckIndexes(): List<Int> {
+        return List(MNEMONIC_COUNT) { it }
+            .shuffled()
+            .take(MNEMONIC_CHECK_COUNT)
+            .sorted()
     }
 
     private suspend fun evaluateJs(script: String): Result<String> {
