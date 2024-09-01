@@ -26,7 +26,7 @@ val Typography = Typography(
     headlineLarge = Typography().headlineLarge.copy(fontFamily = fontFamily),
     headlineMedium = Typography().headlineMedium.copy(  // fontSize = 28.sp
         fontFamily = fontFamily,
-        fontWeight = FontWeight.Medium
+        fontWeight = FontWeight.Bold
     ),
     headlineSmall = Typography().headlineSmall.copy(fontFamily = fontFamily),
     titleLarge = Typography().titleLarge.copy(fontFamily = fontFamily),
