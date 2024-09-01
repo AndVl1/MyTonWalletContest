@@ -27,7 +27,11 @@ class RecoveryListViewModel : BaseViewModel<RecoveryListAction, RecoveryListStat
         viewModelScope.launch {
             when (event) {
                 RecoveryListAction.DoneClicked -> {
-                    _navigationEvents.emit(RecoveryListNavigationEvent.NavigateToRecoveryTest)
+                    _navigationEvents.emit(
+                        RecoveryListNavigationEvent.NavigateToRecoveryTest(
+                            recoveryWords = _state.value.recoveryWords
+                        )
+                    )
                 }
 
                 RecoveryListAction.NavigateBack -> {

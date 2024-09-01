@@ -4,27 +4,27 @@ import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.pushToFront
 import ru.andvl.mytonwallet.contest.arch.core.viewModelWithFactory
 import ru.andvl.mytonwallet.contest.auth.impl.model.AuthNavigationConfig
-import ru.andvl.mytonwallet.contest.auth.impl.recoverylist.CreateRecoveryListScreen
-import ru.andvl.mytonwallet.contest.auth.impl.recoverylist.RecoveryListViewModel
+import ru.andvl.mytonwallet.contest.auth.impl.recoverytest.CreateRecoveryTestScreen
+import ru.andvl.mytonwallet.contest.auth.impl.recoverytest.RecoveryTestViewModel
 import ru.andvl.mytonwallet.contest.decompose.ScreenDecomposeComponent
 
-class RecoveryListDecomposeComponentImpl(
+class RecoveryTestDecomposeComponentImpl(
     componentContext: ComponentContext,
-    private val navigation: StackNavigation<AuthNavigationConfig>
+    private val navigation: StackNavigation<AuthNavigationConfig>,
+    private val recoveryWords: List<String>
 ) : ScreenDecomposeComponent(componentContext) {
 
     @Composable
     override fun Render() {
         val viewModel = viewModelWithFactory(null) {
-            RecoveryListViewModel()
+            RecoveryTestViewModel(recoveryWords)
         }
-        CreateRecoveryListScreen(
+        CreateRecoveryTestScreen(
             navigateBack = { navigation.pop() },
-            navigateToRecoveryTest = {
-                navigation.pushToFront(AuthNavigationConfig.RecoveryTestScreen(it))
+            navigateToHome = {
+                /*TODO*/
             },
             viewModel = viewModel
         )
