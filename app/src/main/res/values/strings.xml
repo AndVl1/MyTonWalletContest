@@ -24,5 +24,9 @@
     <string name="auth_recovery_test_title">Let’s test</string>
     <string name="auth_recovery_test_description_start">Let’s check that you wrote it down correctly. Please enter the words</string>
     <string name="auth_recovery_test_continue">Continue</string>
+    <string name="auth_recovery_test_wrong_words_title">Wrong words</string>
+    <string name="auth_recovery_test_wrong_words_description">The secret words you have entered don’t match your recovery phrase.</string>
+    <string name="auth_recovery_test_wrong_words_show_phrase">Show phrase</string>
+    <string name="auth_recovery_test_wrong_words_try_again">Try again</string>
     <string name="and">and</string>
 </resources>

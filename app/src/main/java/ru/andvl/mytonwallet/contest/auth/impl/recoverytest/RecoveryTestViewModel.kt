@@ -33,6 +33,9 @@ class RecoveryTestViewModel(
                 }
 
                 is RecoveryTestAction.OnWordUpdated -> updateWord(event.index, event.word)
+                is RecoveryTestAction.OnWrongWordsDismiss -> {
+                    _state.update { it.copy(isWrongWords = false) }
+                }
                 is RecoveryTestAction.OnContinueClicked -> onContinueClicked()
             }
         }

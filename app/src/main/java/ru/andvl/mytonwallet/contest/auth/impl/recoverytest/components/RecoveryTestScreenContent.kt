@@ -36,6 +36,7 @@ fun RecoveryTestScreenContent(
             onValueChange = { index, word ->
                 onAction(RecoveryTestAction.OnWordUpdated(index, word))
             },
+            onDone = { onAction(RecoveryTestAction.OnContinueClicked) },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(32.dp))
