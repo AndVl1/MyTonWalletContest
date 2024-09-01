@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components
+package ru.andvl.mytonwallet.contest.auth.impl.recoverylist.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -19,37 +19,30 @@ import ru.andvl.mytonwallet.contest.auth.impl.ui.WalletCreatedFlowTitleWithDescr
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
-fun SetPasscodeScreenHeader(
-    passcodeLength: Int,
-    modifier: Modifier = Modifier
-) {
+fun RecoveryListScreenHeader(modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
         Image(
-            painter = painterResource(R.drawable.monkey_eyes_closed),
+            painter = painterResource(R.drawable.recovery),
             contentDescription = null,
             modifier = Modifier.size(124.dp)
         )
         Spacer(modifier = Modifier.height(24.dp))
         WalletCreatedFlowTitleWithDescription(
-            title = stringResource(R.string.auth_set_passcode_screen_title),
-            description = stringResource(
-                R.string.auth_set_passcode_screen_description,
-                passcodeLength
-            )
+            title = stringResource(R.string.auth_recovery_list_title),
+            description = stringResource(R.string.auth_recovery_list_description),
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun SetPasscodeScreenHeaderPreview() {
+private fun RecoveryListScreenHeaderPreview() {
     MyTonWalletContestTheme {
-        SetPasscodeScreenHeader(
-            passcodeLength = 4,
+        RecoveryListScreenHeader(
             modifier = Modifier.padding(16.dp)
         )
     }

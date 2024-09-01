@@ -2,13 +2,16 @@ package ru.andvl.mytonwallet.contest.auth.impl.setpasscode
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components.SetPasscodeScreenContent
+import ru.andvl.mytonwallet.contest.auth.impl.ui.WalletCreatedFlowTopBar
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SetPasscodeScreen(
     state: SetPasscodeState,
@@ -17,7 +20,7 @@ fun SetPasscodeScreen(
 ) {
     Scaffold(
         topBar = {
-            SetPasscodeScreenTopBar(
+            WalletCreatedFlowTopBar(
                 onBackClicked = { onAction(SetPasscodeAction.NavigateBack) }
             )
         },

@@ -56,8 +56,10 @@ class AuthDecomposeComponentImpl(
             componentContext,
             navigation
         )
-
-        is AuthNavigationConfig.RecoveryListScreen -> TODO()
+        is AuthNavigationConfig.RecoveryListScreen -> RecoveryListDecomposeComponentImpl(
+            componentContext,
+            navigation
+        )
         is AuthNavigationConfig.RecoveryTestScreen -> TODO()
         is AuthNavigationConfig.SetPasscodeScreen -> SetPasscodeDecomposeComponentImpl(
             componentContext,
