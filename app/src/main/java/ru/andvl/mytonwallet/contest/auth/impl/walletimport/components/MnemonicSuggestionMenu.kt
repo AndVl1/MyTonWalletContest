@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastForEach
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
@@ -26,6 +27,14 @@ fun MnemonicSuggestionMenu(
 
     Row(
         modifier = modifier
+            .shadow(
+                elevation = 2.dp,
+                shape = shape,
+                clip = false,
+                spotColor = MaterialTheme.colorScheme.onBackground.copy(
+                    alpha = 0.1f
+                )
+            )
             .background(
                 color = MaterialTheme.colorScheme.background,
                 shape = shape
@@ -39,16 +48,8 @@ fun MnemonicSuggestionMenu(
             )
             .clip(shape)
             .horizontalScroll(rememberScrollState())
-            .shadow(
-                elevation = 2.dp,
-                shape = shape,
-                clip = false,
-                spotColor = MaterialTheme.colorScheme.onBackground.copy(
-                    alpha = 0.1f
-                )
-            )
     ) {
-        words.forEach { suggestion ->
+        words.fastForEach { suggestion ->
             MnemonicSuggestion(
                 word = suggestion,
                 onClick = { onSuggestionClick(suggestion) }

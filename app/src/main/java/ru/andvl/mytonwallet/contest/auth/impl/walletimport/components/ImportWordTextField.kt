@@ -18,6 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +40,8 @@ fun ImportWordTextField(
     isError: Boolean = false
 ) {
     var expanded by remember { mutableStateOf(false) }
+    val focusRequester = remember { FocusRequester() }
+    var isFocused by remember { mutableStateOf(false) }
 
     Box(
         contentAlignment = Alignment.TopCenter,
@@ -56,14 +61,23 @@ fun ImportWordTextField(
             },
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
-            isError = isError
+            isError = isError,
+            modifier = Modifier
+                .focusRequester(focusRequester)
+                .onFocusChanged { focusState ->
+                    isFocused = focusState.isFocused
+                    expanded = isFocused
+                }
         )
 
-        if (suggestions.isNotEmpty()) {
+        if (value.isNotEmpty() && suggestions.isNotEmpty()) {
             AnimatedVisibility(visible = expanded) {
                 MnemonicSuggestionMenu(
                     words = suggestions,
-                    onSuggestionClick = { expanded = false },
+                    onSuggestionClick = {
+                        onValueChange(it)
+                        expanded = false
+                    },
                     modifier = Modifier
                         .offset(y = (-56).dp)
                         .wrapContentWidth()
