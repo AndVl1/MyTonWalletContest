@@ -28,5 +28,13 @@
     <string name="auth_recovery_test_wrong_words_description">The secret words you have entered don’t match your recovery phrase.</string>
     <string name="auth_recovery_test_wrong_words_show_phrase">Show phrase</string>
     <string name="auth_recovery_test_wrong_words_try_again">Try again</string>
+    <string name="auth_wallet_import_title">Import wallet</string>
+    <string name="auth_wallet_import_description_start">You can restore access to your wallet by entering the</string>
+    <string name="auth_wallet_import_description_secret_words">%1$d secret words</string>
+    <string name="auth_wallet_import_description_end">that you wrote down when creating the wallet.</string>
+    <string name="auth_wallet_import_continue">Continue</string>
+    <string name="auth_wallet_import_wrong_phrase_title">Wrong phrase</string>
+    <string name="auth_wallet_import_wrong_phrase_description">Looks like you entered an invalid mnemonic phrase.</string>
+    <string name="auth_wallet_import_wrong_phrase_close">Close</string>
     <string name="and">and</string>
 </resources>

@@ -30,7 +30,12 @@ fun RecoveryTextField(
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
+    isError: Boolean = false
 ) {
+    val textColor = MaterialTheme.colorScheme.let {
+        if (isError) it.error else it.onBackground
+    }
+    
     Box(
         modifier = modifier
             .background(
@@ -53,7 +58,9 @@ fun RecoveryTextField(
             BasicTextField(
                 value = value,
                 onValueChange = onValueChange,
-                textStyle = MaterialTheme.typography.bodyLarge,
+                textStyle = MaterialTheme.typography.bodyLarge.copy(
+                    color = textColor
+                ),
                 singleLine = true,
                 cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                 keyboardOptions = keyboardOptions,
@@ -72,6 +79,7 @@ private fun RecoveryTextFieldPreview() {
             index = 1,
             value = "word",
             onValueChange = {},
+            isError = false,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)

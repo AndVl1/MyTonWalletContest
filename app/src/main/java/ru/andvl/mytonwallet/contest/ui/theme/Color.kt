@@ -17,6 +17,7 @@ val onSurfaceLight = Color(0xFF000000)
 val onSurfaceVariantLight = Color(0xFF898A8D)
 val surfaceContainerLight = Color(0xFFE4E4E6)
 val surfaceTintLight = Color(0xFF3D3E40)
+val errorLight = Color(0xFFFF3B30)
 
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)

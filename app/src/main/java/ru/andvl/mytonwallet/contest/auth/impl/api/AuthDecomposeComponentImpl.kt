@@ -91,7 +91,8 @@ class AuthDecomposeComponentImpl(
         componentContext: ComponentContext
     ): DecomposeComponent = when (config) {
         is AuthNavigationConfig.WalletImportScreen -> WalletImportDecomposeComponentImpl(
-            componentContext
+            componentContext,
+            navigation
         )
     }
 
