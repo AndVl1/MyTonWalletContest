@@ -1,11 +1,24 @@
 package ru.andvl.mytonwallet.contest.auth.impl.walletimport
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import ru.andvl.mytonwallet.contest.R
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.auth.impl.walletimport.components.WalletImportScreenContent
-import ru.andvl.mytonwallet.contest.ui.components.TonWalletAlertDialog
+import ru.andvl.mytonwallet.contest.auth.impl.walletimport.components.WalletImportTopBar
+import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
 fun WalletImportScreen(
@@ -13,67 +26,50 @@ fun WalletImportScreen(
     onAction: (WalletImportAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (state.showErrorDialog) {
-        TonWalletAlertDialog(
-            title = stringResource(R.string.auth_wallet_import_wrong_phrase_title),
-            description = stringResource(R.string.auth_wallet_import_wrong_phrase_description),
-            onDismissRequest = { onAction(WalletImportAction.OnWrongWordsDismiss) },
-            dismissButtonText = stringResource(R.string.auth_wallet_import_wrong_phrase_close),
-            onDismissButtonClicked = { onAction(WalletImportAction.OnWrongWordsDismiss) }
-        )
+    val scrollState = rememberLazyListState()
+    val focusManager = LocalFocusManager.current
+
+    Scaffold(
+        topBar = {
+            WalletImportTopBar(
+                scrollState = scrollState,
+                onBackClicked = { onAction(WalletImportAction.NavigateBack) }
+            )
+        },
+        modifier = modifier
+    ) { innerPadding ->
+        LazyColumn(
+            state = scrollState,
+            contentPadding = innerPadding,
+            modifier = Modifier
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() },
+                    onClick = { focusManager.clearFocus() }
+                )
+                .fillMaxSize()
+                .padding(horizontal = 48.dp)
+        ) {
+            item {
+                WalletImportScreenContent(
+                    state = state,
+                    onAction = onAction,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(48.dp))
+            }
+        }
     }
-
-    WalletImportScreenContent(
-        state = state,
-        onAction = onAction
-    )
-
-//    Column(
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        modifier = modifier
-//            .verticalScroll(rememberScrollState())
-//            .padding(16.dp)
-//    ) {
-//        Text(
-//            text = stringResource(id = R.string.auth_wallet_import_title),
-//            style = MaterialTheme.typography.headlineMedium
-//            ,
-//            modifier = Modifier.padding(bottom = 8.dp)
-//        )
-//        Text(
-//            text = stringResource(id = R.string.auth_wallet_import_description_start),
-//            style = MaterialTheme.typography.bodyLarge,
-//            color = MaterialTheme.colorScheme.onSurfaceVariant,
-//            modifier = Modifier.padding(bottom = 16.dp)
-//        )
-//
-//        // Mnemonic Fields
-//        Column {
-//            for (i in 1..24) {
-//                RecoveryTextField(
-//                    index = i,
-//                    value = state.words[i - 1],
-//                    onValueChange = { onAction(WalletImportAction.OnWordUpdated(i - 1, it)) },
-//                    keyboardOptions = KeyboardOptions.Default.copy(
-//                        imeAction = if (i == 24) ImeAction.Done else ImeAction.Next
-//                    ),
-//                    keyboardActions = KeyboardActions(onDone = {
-//                        if (i == 24) {
-//                            onAction(WalletImportAction.OnContinueClicked)
-//                        }
-//                    }),
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(vertical = 4.dp)
-//                )
-//            }
-//        }
-//        Spacer(modifier = Modifier.height(24.dp))
-//        TonWalletButton(
-//            text = stringResource(id = R.string.auth_wallet_import_continue),
-//            onClick = { onAction(WalletImportAction.OnContinueClicked) }
-//        )
-//    }
 }
 
+
+@Preview(showBackground = true)
+@Composable
+private fun WalletImportScreenPreview() {
+    MyTonWalletContestTheme {
+        WalletImportScreen(
+            state = WalletImportState(),
+            onAction = {}
+        )
+    }
+}

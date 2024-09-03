@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.andvl.mytonwallet.contest.auth.impl.ui.MnemonicTextField
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
@@ -33,7 +34,7 @@ fun RecoveryWordsInputSection(
     ) {
         val wordIndexes = wordsWithIndexes.keys
         wordIndexes.forEachIndexed { i, wordIndex ->
-            RecoveryTextField(
+            MnemonicTextField(
                 index = wordIndex + 1,
                 value = wordsWithIndexes[wordIndex]!!,
                 onValueChange = { onValueChange(wordIndex, it) },

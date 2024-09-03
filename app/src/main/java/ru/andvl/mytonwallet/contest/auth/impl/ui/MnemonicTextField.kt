@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.auth.impl.recoverytest.components
+package ru.andvl.mytonwallet.contest.auth.impl.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
-fun RecoveryTextField(
+fun MnemonicTextField(
     index: Int,
     value: String,
     onValueChange: (String) -> Unit,
@@ -75,7 +75,7 @@ fun RecoveryTextField(
 @Composable
 private fun RecoveryTextFieldPreview() {
     MyTonWalletContestTheme {
-        RecoveryTextField(
+        MnemonicTextField(
             index = 1,
             value = "word",
             onValueChange = {},

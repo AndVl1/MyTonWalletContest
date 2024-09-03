@@ -15,11 +15,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastForEachIndexed
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
 fun ImportWordsInputSection(
-    wordsWithIndexes: Map<Int, String>,
+    mnemonicWords: List<String>,
+    inputWords: List<String>,
     onValueChange: (Int, String) -> Unit,
     onDone: () -> Unit,
     modifier: Modifier = Modifier
@@ -31,15 +33,16 @@ fun ImportWordsInputSection(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        val wordIndexes = wordsWithIndexes.keys
-        wordIndexes.forEachIndexed { i, wordIndex ->
+        inputWords.fastForEachIndexed { index, word ->
+            val suggestions = mnemonicWords.filter { it.contains(word) }
+            
             ImportWordTextField(
-                index = wordIndex + 1,
-                value = wordsWithIndexes[wordIndex]!!,
-                onValueChange = { onValueChange(wordIndex, it) },
+                index = index + 1,
+                value = word,
+                onValueChange = { onValueChange(index, it) },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text,
-                    imeAction = if (i < wordIndexes.size - 1) ImeAction.Next else ImeAction.Done,
+                    imeAction = if (index < inputWords.size - 1) ImeAction.Next else ImeAction.Done,
                 ),
                 keyboardActions = KeyboardActions(
                     onNext = { focusManager.moveFocus(FocusDirection.Next) },
@@ -48,7 +51,8 @@ fun ImportWordsInputSection(
                         onDone()
                     }
                 ),
-                suggestions = listOf("win", "word", "work"),
+                suggestions = suggestions,
+                isError = suggestions.isEmpty(),
                 modifier = Modifier.fillMaxWidth()
             )
         }
@@ -60,10 +64,11 @@ fun ImportWordsInputSection(
 private fun ImportWordsInputSectionPreview() {
     MyTonWalletContestTheme {
         ImportWordsInputSection(
-            wordsWithIndexes = mapOf(
-                1 to "abcd",
-                15 to "a",
-                20 to ""
+            mnemonicWords = listOf("word", "work", "will", "world"),
+            inputWords = listOf(
+                "abcd",
+                "w",
+                ""
             ),
             onValueChange = { _, _ -> },
             onDone = {},

@@ -29,17 +29,18 @@ fun WalletImportScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        WalletImportScreenHeader(state.words.size)
-        Spacer(modifier = Modifier.height(24.dp))
-//        ImportWordsInputSection(
-//            words = state.words,
-//            onValueChange = { index, word ->
-//                onAction(WalletImportAction.OnWordUpdated(index, word))
-//            },
-//            onDone = {},
-//            modifier = Modifier.fillMaxWidth()
-//        )
+        WalletImportScreenHeader(state.inputWords.size)
         Spacer(modifier = Modifier.height(32.dp))
+        ImportWordsInputSection(
+            mnemonicWords = state.mnemonicWords,
+            inputWords = state.inputWords,
+            onValueChange = { index, word ->
+                onAction(WalletImportAction.OnWordUpdated(index, word))
+            },
+            onDone = { onAction(WalletImportAction.OnContinueClicked) },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(24.dp))
         TonWalletButton(
             text = stringResource(R.string.auth_wallet_import_continue),
             onClick = { onAction(WalletImportAction.OnContinueClicked) },

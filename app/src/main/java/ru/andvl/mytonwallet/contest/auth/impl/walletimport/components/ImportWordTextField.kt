@@ -1,6 +1,8 @@
 package ru.andvl.mytonwallet.contest.auth.impl.walletimport.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -20,7 +22,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.andvl.mytonwallet.contest.auth.impl.recoverytest.components.RecoveryTextField
+import ru.andvl.mytonwallet.contest.auth.impl.ui.MnemonicTextField
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
@@ -39,8 +41,13 @@ fun ImportWordTextField(
     Box(
         contentAlignment = Alignment.TopCenter,
         modifier = modifier
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = { expanded = true }
+            )
     ) {
-        RecoveryTextField(
+        MnemonicTextField(
             index = index,
             value = value,
             onValueChange = {
@@ -82,7 +89,7 @@ private fun ImportWordTextFieldPreview() {
             suggestions = listOf("word", "world", "work", "weer"),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 64.dp, start = 16.dp, end = 16.dp)
+                .padding(top = 64.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)
         )
     }
 }
