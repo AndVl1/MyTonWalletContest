@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.auth.impl.walletimport.components.WalletImportScreenContent
 import ru.andvl.mytonwallet.contest.auth.impl.walletimport.components.WalletImportTopBar
+import ru.andvl.mytonwallet.contest.auth.impl.walletimport.components.WrongPhraseDialog
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
@@ -27,7 +28,6 @@ fun WalletImportScreen(
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberLazyListState()
-    val focusManager = LocalFocusManager.current
 
     Scaffold(
         topBar = {
@@ -38,6 +38,15 @@ fun WalletImportScreen(
         },
         modifier = modifier
     ) { innerPadding ->
+        val focusManager = LocalFocusManager.current
+
+        if (state.showErrorDialog) {
+            WrongPhraseDialog(
+                onCloseClicked = { onAction(WalletImportAction.OnWrongPhraseDismiss) },
+                onDismissRequest = { onAction(WalletImportAction.OnWrongPhraseDismiss) }
+            )
+        }
+
         LazyColumn(
             state = scrollState,
             contentPadding = innerPadding,
