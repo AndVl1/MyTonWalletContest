@@ -37,6 +37,7 @@ fun ImportWordTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     suggestions: List<String> = emptyList(),
+    onSuggestionClick: (String) -> Unit,
     isError: Boolean = false
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -75,7 +76,7 @@ fun ImportWordTextField(
                 MnemonicSuggestionMenu(
                     words = suggestions,
                     onSuggestionClick = {
-                        onValueChange(it)
+                        onSuggestionClick(it)
                         expanded = false
                     },
                     modifier = Modifier
@@ -101,6 +102,7 @@ private fun ImportWordTextFieldPreview() {
                 imeAction = ImeAction.Done,
             ),
             suggestions = listOf("word", "world", "work", "weer"),
+            onSuggestionClick = {},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 64.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)

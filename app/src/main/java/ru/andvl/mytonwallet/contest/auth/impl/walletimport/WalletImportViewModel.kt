@@ -1,5 +1,6 @@
 package ru.andvl.mytonwallet.contest.auth.impl.walletimport
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -7,14 +8,24 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.andvl.mytonwallet.contest.arch.BaseViewModel
+import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
 
-class WalletImportViewModel : BaseViewModel<WalletImportAction, WalletImportState>() {
+class WalletImportViewModel(
+    private val blockchainRepository: BlockchainRepository
+) : BaseViewModel<WalletImportAction, WalletImportState>() {
     private val _state = MutableStateFlow(WalletImportState())
     override val state: StateFlow<WalletImportState> = _state.asStateFlow()
 
     private val _navigationEvents = MutableSharedFlow<WalletImportNavigationEvent>()
     val navigationEvents = _navigationEvents.asSharedFlow()
+
+    init {
+        viewModelScope.launch {
+            getMnemonicWordList()
+        }
+    }
 
     override fun obtainEvent(event: WalletImportAction) {
         viewModelScope.launch {
@@ -32,10 +43,18 @@ class WalletImportViewModel : BaseViewModel<WalletImportAction, WalletImportStat
         }
     }
 
+    private suspend fun getMnemonicWordList() {
+        val words = withContext(Dispatchers.Main) {
+            blockchainRepository.getMnemonicWordList()
+        }
+        _state.update { it.copy(mnemonicWords = words) }
+    }
+
+
     private fun updateWord(index: Int, word: String) {
         _state.update { state ->
             val updatedInputWords = state.inputWords.toMutableList().apply {
-                this[index] = word
+                this[index] = word.lowercase()
             }
             state.copy(inputWords = updatedInputWords)
         }
@@ -47,11 +66,13 @@ class WalletImportViewModel : BaseViewModel<WalletImportAction, WalletImportStat
         else _navigationEvents.emit(WalletImportNavigationEvent.NavigateToSetPasscode)
     }
 
-    private fun checkWords(): Boolean {
+    private suspend fun checkWords(): Boolean {
         val currentState = _state.value
 
         return currentState.inputWords.all {
             it.isNotEmpty() && it.isNotBlank() && it in currentState.mnemonicWords
+        } && withContext(Dispatchers.Main) {
+            blockchainRepository.validateMnemonic(currentState.inputWords)
         }
     }
 }
