@@ -30,7 +30,10 @@ val Typography = Typography(
     ),
     headlineSmall = Typography().headlineSmall.copy(fontFamily = fontFamily),
     titleLarge = Typography().titleLarge.copy(fontFamily = fontFamily),
-    titleMedium = Typography().titleMedium.copy(fontFamily = fontFamily),
+    titleMedium = Typography().titleMedium.copy(
+        fontFamily = fontFamily,
+        fontWeight = FontWeight.Bold
+    ),
     titleSmall = Typography().titleSmall.copy(fontFamily = fontFamily),
     bodyLarge = Typography().bodyLarge.copy(fontFamily = fontFamily),  // 16.sp
     bodyMedium = Typography().bodyMedium.copy(fontFamily = fontFamily),

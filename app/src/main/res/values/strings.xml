@@ -36,5 +36,10 @@
     <string name="auth_wallet_import_wrong_phrase_title">Wrong phrase</string>
     <string name="auth_wallet_import_wrong_phrase_description">Looks like you entered an invalid mnemonic phrase.</string>
     <string name="auth_wallet_import_wrong_phrase_close">Close</string>
+    <string name="auth_wallet_title">MyTonWallet</string>
+    <string name="auth_wallet_add">Add</string>
+    <string name="auth_wallet_send">Send</string>
+    <string name="auth_wallet_earn">Earn</string>
+    <string name="auth_wallet_swap">Swap</string>
     <string name="and">and</string>
 </resources>
