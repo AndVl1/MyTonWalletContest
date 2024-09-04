@@ -8,9 +8,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.andvl.mytonwallet.contest.arch.BaseViewModel
+import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
 
 class RecoveryTestViewModel(
-    private val recoveryWords: List<String>
+    private val recoveryWords: List<String>,
+    private val blockchainRepository: BlockchainRepository
 ) : BaseViewModel<RecoveryTestAction, RecoveryTestState>() {
     private val _state = MutableStateFlow(RecoveryTestState())
 
@@ -67,7 +69,7 @@ class RecoveryTestViewModel(
     }
 
     private fun generateRecoveryCheckIndexes() {
-        val indexes = listOf(1, 15, 20) // TODO использовать репозиторий
+        val indexes = blockchainRepository.getMnemonicCheckIndexes()
         _state.update {
             it.copy(
                 checkIndexes = indexes,
