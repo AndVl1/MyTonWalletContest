@@ -28,7 +28,8 @@ fun WalletScreenHeader(modifier: Modifier = Modifier) {
             onAddButtonClicked = { /*TODO*/ },
             onSendButtonClicked = { /*TODO*/ },
             onEarnButtonClicked = { /*TODO*/ },
-            onSwapButtonClicked = { /*TODO*/ }
+            onSwapButtonClicked = { /*TODO*/ },
+            modifier = Modifier.padding(16.dp)
         )
     }
 }

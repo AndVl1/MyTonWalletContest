@@ -41,5 +41,6 @@
     <string name="auth_wallet_send">Send</string>
     <string name="auth_wallet_earn">Earn</string>
     <string name="auth_wallet_swap">Swap</string>
+    <string name="auth_wallet_no_transactions">You have no transactions\nin this wallet yet.</string>
     <string name="and">and</string>
 </resources>
