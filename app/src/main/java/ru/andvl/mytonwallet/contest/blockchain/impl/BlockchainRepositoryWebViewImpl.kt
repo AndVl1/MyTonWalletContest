@@ -24,6 +24,17 @@ class BlockchainRepositoryWebViewImpl(
 
     private var continuation: CancellableContinuation<Result<String>>? = null
 
+    override suspend fun checkApiAvailability(): Boolean {
+        val jsonString = evaluateJs(
+            "callApi('checkApiAvailability', {" +
+                    "    blockchainKey: 'ton'," +
+                    "    network: 'mainnet'" +
+                    "})"
+        ).getOrThrow()
+
+        return Json.parseToJsonElement(jsonString).jsonPrimitive.boolean
+    }
+
     override suspend fun getMnemonicWordList(): List<String> {
         val jsonString = evaluateJs("callApi('getMnemonicWordList')").getOrThrow()
 
