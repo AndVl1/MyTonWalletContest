@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.pushToFront
+import com.arkivanov.decompose.router.stack.replaceCurrent
 import ru.andvl.mytonwallet.contest.arch.core.viewModelWithFactory
 import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.ConfirmPasscodeViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode.CreateConfirmPasscodeScreen
@@ -26,7 +26,7 @@ class ConfirmPasscodeDecomposeComponentImpl(
         CreateConfirmPasscodeScreen(
             navigateBack = { navigation.pop() },
             navigateToBiometricLock = {
-                navigation.pushToFront(AuthNavigationConfig.BiometricLockScreen())
+                navigation.replaceCurrent(AuthNavigationConfig.BiometricLockScreen())
             },
             viewModel = viewModel
         )
