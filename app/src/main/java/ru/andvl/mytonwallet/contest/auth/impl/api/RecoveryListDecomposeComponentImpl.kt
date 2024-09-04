@@ -5,10 +5,12 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushToFront
+import org.koin.compose.koinInject
 import ru.andvl.mytonwallet.contest.arch.core.viewModelWithFactory
 import ru.andvl.mytonwallet.contest.auth.impl.model.AuthNavigationConfig
 import ru.andvl.mytonwallet.contest.auth.impl.recoverylist.CreateRecoveryListScreen
 import ru.andvl.mytonwallet.contest.auth.impl.recoverylist.RecoveryListViewModel
+import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
 import ru.andvl.mytonwallet.contest.decompose.ScreenDecomposeComponent
 
 class RecoveryListDecomposeComponentImpl(
@@ -18,8 +20,9 @@ class RecoveryListDecomposeComponentImpl(
 
     @Composable
     override fun Render() {
+        val blockchainRepository: BlockchainRepository = koinInject()
         val viewModel = viewModelWithFactory(null) {
-            RecoveryListViewModel()
+            RecoveryListViewModel(blockchainRepository)
         }
         CreateRecoveryListScreen(
             navigateBack = { navigation.pop() },

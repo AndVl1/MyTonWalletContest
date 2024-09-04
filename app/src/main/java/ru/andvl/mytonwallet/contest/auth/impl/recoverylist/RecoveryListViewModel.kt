@@ -1,6 +1,6 @@
 package ru.andvl.mytonwallet.contest.auth.impl.recoverylist
 
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -8,9 +8,13 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.andvl.mytonwallet.contest.arch.BaseViewModel
+import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
 
-class RecoveryListViewModel : BaseViewModel<RecoveryListAction, RecoveryListState>() {
+class RecoveryListViewModel(
+    private val blockchainRepository: BlockchainRepository
+) : BaseViewModel<RecoveryListAction, RecoveryListState>() {
     private val _state = MutableStateFlow(RecoveryListState())
     override val state: StateFlow<RecoveryListState> = _state.asStateFlow()
 
@@ -42,34 +46,7 @@ class RecoveryListViewModel : BaseViewModel<RecoveryListAction, RecoveryListStat
     }
 
     private suspend fun getRecoveryWords() {
-        // TODO add implementation with api repository
-        delay(1000L)
-        val words = listOf(
-            "keep",
-            "secret",
-            "word",
-            "keep",
-            "secret",
-            "word",
-            "keep",
-            "secret",
-            "word",
-            "keep",
-            "secret",
-            "word",
-            "keep",
-            "secret",
-            "word",
-            "keep",
-            "secret",
-            "word",
-            "keep",
-            "secret",
-            "word",
-            "keep",
-            "secret",
-            "word",
-        )
+        val words = withContext(Dispatchers.Main) { blockchainRepository.generateMnemonic() }
 
         _state.update { it.copy(recoveryWords = words) }
     }
