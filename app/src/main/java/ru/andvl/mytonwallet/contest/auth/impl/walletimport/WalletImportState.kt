@@ -2,10 +2,9 @@ package ru.andvl.mytonwallet.contest.auth.impl.walletimport
 
 import ru.andvl.mytonwallet.contest.arch.State
 
-sealed interface WalletImportState : State {
-    object Init : WalletImportState
-    data class Words(
-        // TODO придумать как сделать строже. 24 слова для импорта
-        val words: List<String>
-    ): WalletImportState
-}
+data class WalletImportState(
+    val mnemonicWords: List<String> = listOf("word", "world", "work", "wolf", "woman"),
+    val inputWords: List<String> = List(24) { "" },
+    val showErrorDialog: Boolean = false
+) : State
+
