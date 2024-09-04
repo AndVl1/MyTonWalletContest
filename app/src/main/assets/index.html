@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My App</title>
+    <script src="./bundle.js"></script>
+    <script>
+        function initApi() {
+            if (typeof api !== 'undefined') {
+                try {
+                    api.initApi(onUpdate, {
+                        isElectron: false,
+                        isNativeBottomSheet: false,
+                        isIosApp: false,
+                        isAndroidApp: true
+                    });
+                } catch (error) {
+                    console.error('Error during API initialization:', error);
+                }
+            } else {
+                console.error('API is not available.');
+            }
+        }
+
+        function onUpdate(update) {
+            const { type } = update;
+            console.log('Received update:', type);
+        }
+
+        async function callApi(apiMethod, ...args) {
+            const response = await api.callApi(apiMethod, ...args);
+            console.log("API response:", response);
+
+            AndroidInterface.onApiResult(JSON.stringify(response))
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
