@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.home.impl.model
+package ru.andvl.mytonwallet.contest.bottombar.impl.model
 
 import androidx.compose.ui.graphics.painter.Painter
 import java.math.BigDecimal

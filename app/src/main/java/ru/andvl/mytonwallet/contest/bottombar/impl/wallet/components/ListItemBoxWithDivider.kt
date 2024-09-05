@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.home.impl.wallet.components
+package ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope

@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.home.impl.wallet.components
+package ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme

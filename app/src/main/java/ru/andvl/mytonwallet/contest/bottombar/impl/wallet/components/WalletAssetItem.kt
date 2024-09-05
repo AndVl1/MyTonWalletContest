@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.home.impl.wallet.components
+package ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
-import ru.andvl.mytonwallet.contest.home.impl.model.AssetToken
-import ru.andvl.mytonwallet.contest.home.impl.model.AssetTokenType
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetToken
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetTokenType
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 import ru.andvl.mytonwallet.contest.ui.theme.ProfitColor
 import ru.andvl.mytonwallet.contest.utils.formatPercent

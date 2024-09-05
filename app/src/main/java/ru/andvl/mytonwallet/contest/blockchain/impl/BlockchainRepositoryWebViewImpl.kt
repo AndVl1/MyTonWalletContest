@@ -13,6 +13,7 @@ import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
 import ru.andvl.mytonwallet.contest.blockchain.util.MNEMONIC_CHECK_COUNT
 import ru.andvl.mytonwallet.contest.blockchain.util.MNEMONIC_COUNT
 import ru.andvl.mytonwallet.contest.blockchain.util.WebViewHolder
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetToken
 import kotlin.coroutines.resume
 
 class BlockchainRepositoryWebViewImpl(
@@ -21,6 +22,8 @@ class BlockchainRepositoryWebViewImpl(
     init {
         webView.addJavascriptInterface(WebAppInterface())
     }
+
+    private var currentAccountId: String? = null
 
     private var continuation: CancellableContinuation<Result<String>>? = null
 
@@ -63,6 +66,21 @@ class BlockchainRepositoryWebViewImpl(
         return Json.parseToJsonElement(jsonString).jsonPrimitive.boolean
     }
 
+    override fun updateCurrentAccountId(id: String) {
+        currentAccountId = id
+    }
+
+    override suspend fun getCurrentAccountTokenBalances(): List<AssetToken> {
+        if (currentAccountId != null) {
+            val accountIdJson = Json.encodeToString(currentAccountId)
+            val jsonString =
+                evaluateJs("callApi('getAccountTokenBalances', $accountIdJson)").getOrThrow()
+            return listOf()
+        } else {
+            return emptyList()
+        }
+    }
+
     private suspend fun evaluateJs(script: String): Result<String> {
         return suspendCancellableCoroutine { cont ->
             continuation = cont
@@ -74,7 +92,6 @@ class BlockchainRepositoryWebViewImpl(
     // TODO getAccountTransactionSlice(accountId: string)
     // TODO getTokenTransactionSlice(accountId: string)
     // TODO getAccountBalance(accountId: string)
-    // TODO getAccountTokenBalances(accountId: string)
 
     private inner class WebAppInterface {
         @JavascriptInterface
