@@ -3,16 +3,21 @@ package ru.andvl.mytonwallet.contest.auth.impl.api
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.pushToFront
 import com.arkivanov.decompose.value.Value
 import ru.andvl.mytonwallet.contest.auth.api.AuthDecomposeComponent
 import ru.andvl.mytonwallet.contest.auth.api.AuthLaunchType
 import ru.andvl.mytonwallet.contest.auth.impl.model.AuthNavigationConfig
 import ru.andvl.mytonwallet.contest.decompose.DecomposeComponent
 import ru.andvl.mytonwallet.contest.decompose.DecomposeOnBackParameter
+import ru.andvl.mytonwallet.contest.setuppasscode.api.SetUpPasscodeDecomposeComponent
 
 class AuthDecomposeComponentImpl(
     componentContext: ComponentContext,
-    launchType: AuthLaunchType
+    launchType: AuthLaunchType,
+    private val navigateToMain: () -> Unit,
+    private val setUpPasscodeFactory: SetUpPasscodeDecomposeComponent.Factory
 ) : AuthDecomposeComponent<AuthNavigationConfig>(), ComponentContext by componentContext {
 
     override val stack: Value<ChildStack<AuthNavigationConfig, DecomposeComponent>> =
@@ -52,9 +57,15 @@ class AuthDecomposeComponentImpl(
         config: AuthNavigationConfig.WalletCreatedFlow,
         componentContext: ComponentContext
     ): DecomposeComponent = when (config) {
-        is AuthNavigationConfig.BiometricLockScreen -> BiometricLockDecomposeComponentImpl(
+        is AuthNavigationConfig.WalletCreatedStartScreen -> WalletCreatedStartDecomposeComponentImpl(
             componentContext,
             navigation
+        )
+
+        is AuthNavigationConfig.WalletCreatedSetUpPasscode -> setUpPasscodeFactory(
+            componentContext,
+            onBack = { navigation.pop() },
+            navigateNext = { navigation.pushToFront(AuthNavigationConfig.RecoveryListScreen()) }
         )
 
         is AuthNavigationConfig.RecoveryListScreen -> RecoveryListDecomposeComponentImpl(
@@ -65,24 +76,8 @@ class AuthDecomposeComponentImpl(
         is AuthNavigationConfig.RecoveryTestScreen -> RecoveryTestDecomposeComponentImpl(
             componentContext,
             navigation,
-            config.recoveryWords
-        )
-
-        is AuthNavigationConfig.SetPasscodeScreen -> SetPasscodeDecomposeComponentImpl(
-            componentContext,
-            navigation
-        )
-
-        is AuthNavigationConfig.ConfirmPasscodeScreen -> ConfirmPasscodeDecomposeComponentImpl(
-            componentContext,
-            navigation,
-            config.correctPasscode,
-            config.passcodeLength
-        )
-
-        is AuthNavigationConfig.WalletCreatedStartScreen -> WalletCreatedStartDecomposeComponentImpl(
-            componentContext,
-            navigation
+            config.recoveryWords,
+            navigateToMain
         )
     }
 
@@ -94,6 +89,12 @@ class AuthDecomposeComponentImpl(
             componentContext,
             navigation
         )
+
+        AuthNavigationConfig.WalletImportSetUpPasscode -> setUpPasscodeFactory(
+            componentContext,
+            onBack = { navigation.pop() },
+            navigateNext = navigateToMain
+        )
     }
 
     private fun getInitialConfiguration(launchType: AuthLaunchType): AuthNavigationConfig {
@@ -103,11 +104,19 @@ class AuthDecomposeComponentImpl(
         }
     }
 
-    class Factory : AuthDecomposeComponent.Factory {
+    class Factory(
+        private val setUpPasscodeFactory: SetUpPasscodeDecomposeComponent.Factory
+    ) : AuthDecomposeComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
             launchType: AuthLaunchType,
-            onBack: DecomposeOnBackParameter
-        ): AuthDecomposeComponent<*> = AuthDecomposeComponentImpl(componentContext, launchType)
+            onBack: DecomposeOnBackParameter,
+            navigateToMain: () -> Unit,
+        ): AuthDecomposeComponent<*> = AuthDecomposeComponentImpl(
+            componentContext,
+            launchType,
+            navigateToMain,
+            setUpPasscodeFactory
+        )
     }
 }

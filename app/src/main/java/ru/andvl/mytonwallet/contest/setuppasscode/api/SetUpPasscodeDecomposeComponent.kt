@@ -1,16 +1,15 @@
-package ru.andvl.mytonwallet.contest.auth.api
+package ru.andvl.mytonwallet.contest.setuppasscode.api
 
 import com.arkivanov.decompose.ComponentContext
 import ru.andvl.mytonwallet.contest.decompose.CompositeDecomposeComponent
 import ru.andvl.mytonwallet.contest.decompose.DecomposeOnBackParameter
 
-abstract class AuthDecomposeComponent<C : Any> : CompositeDecomposeComponent<C>() {
+abstract class SetUpPasscodeDecomposeComponent<C : Any> : CompositeDecomposeComponent<C>() {
     fun interface Factory {
         operator fun invoke(
             componentContext: ComponentContext,
-            launchType: AuthLaunchType,
             onBack: DecomposeOnBackParameter,
-            navigateToMain: () -> Unit
-        ): AuthDecomposeComponent<*>
+            navigateNext: () -> Unit,
+        ): SetUpPasscodeDecomposeComponent<*>
     }
 }

@@ -10,19 +10,23 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pushToFront
+import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
 import ru.andvl.mytonwallet.contest.auth.api.AuthDecomposeComponent
 import ru.andvl.mytonwallet.contest.auth.api.AuthLaunchType
+import ru.andvl.mytonwallet.contest.bottombar.api.BottomBarDecomposeComponent
 import ru.andvl.mytonwallet.contest.decompose.DecomposeComponent
 import ru.andvl.mytonwallet.contest.decompose.DecomposeOnBackParameter
 import ru.andvl.mytonwallet.contest.decompose.popOr
+import ru.andvl.mytonwallet.contest.decompose.popToRoot
 import ru.andvl.mytonwallet.contest.root.api.RootDecomposeComponent
 import ru.andvl.mytonwallet.contest.root.api.model.RootScreenConfig
 
 class RootDecomposeComponentImpl(
     componentContext: ComponentContext,
     private val onBack: DecomposeOnBackParameter,
-    private val authFactory: AuthDecomposeComponent.Factory
+    private val authFactory: AuthDecomposeComponent.Factory,
+    private val bottomBarFactory: BottomBarDecomposeComponent.Factory
 ) : RootDecomposeComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<RootScreenConfig>()
@@ -52,8 +56,21 @@ class RootDecomposeComponentImpl(
         componentContext: ComponentContext
     ): DecomposeComponent {
         return when (rootScreenConfig) {
-            RootScreenConfig.AddWallet -> authFactory.invoke(componentContext, AuthLaunchType.Empty, ::internalOnBack)
-            RootScreenConfig.Login -> authFactory.invoke(componentContext, AuthLaunchType.Passcode, ::internalOnBack)
+            RootScreenConfig.AddWallet -> authFactory.invoke(
+                componentContext,
+                AuthLaunchType.Empty,
+                ::internalOnBack,
+                ::navigateToMain
+            )
+
+            RootScreenConfig.Login -> authFactory.invoke(
+                componentContext,
+                AuthLaunchType.Passcode,
+                ::internalOnBack,
+                ::navigateToMain
+            )
+
+            RootScreenConfig.Main -> bottomBarFactory.invoke(componentContext, ::internalOnBack)
         }
     }
 
@@ -66,12 +83,20 @@ class RootDecomposeComponentImpl(
         navigation.popOr(onBack::invoke)
     }
 
+    private fun navigateToMain() {
+        navigation.popToRoot {
+            navigation.replaceCurrent(RootScreenConfig.Main)
+        }
+    }
+
     class Factory(
-        private val authFactory: AuthDecomposeComponent.Factory
+        private val authFactory: AuthDecomposeComponent.Factory,
+        private val bottomBarFactory: BottomBarDecomposeComponent.Factory
     ) : RootDecomposeComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
             onBack: DecomposeOnBackParameter
-        ): RootDecomposeComponent = RootDecomposeComponentImpl(componentContext, onBack, authFactory)
+        ): RootDecomposeComponent =
+            RootDecomposeComponentImpl(componentContext, onBack, authFactory, bottomBarFactory)
     }
 }

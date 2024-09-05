@@ -30,6 +30,20 @@ class WalletImportViewModel(
     override fun obtainEvent(event: WalletImportAction) {
         viewModelScope.launch {
             when (event) {
+                is WalletImportAction.TESTNavigate -> {
+                    _state.update {
+                        it.copy(
+                            inputWords = listOf(
+                                "lava", "life", "bacon", "either",
+                                "chapter", "lunch", "soda", "syrup",
+                                "attitude", "option", "embody", "vacant",
+                                "coconut", "labor", "butter", "rescue",
+                                "year", "civil", "never", "wave",
+                                "monkey", "fog", "sun", "pattern",
+                            )
+                        )
+                    }
+                }
                 is WalletImportAction.OnContinueClicked -> onContinueClicked()
                 is WalletImportAction.NavigateBack -> {
                     _navigationEvents.emit(WalletImportNavigationEvent.NavigateBack)

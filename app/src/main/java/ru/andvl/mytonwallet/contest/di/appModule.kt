@@ -10,14 +10,19 @@ import ru.andvl.mytonwallet.contest.bottombar.api.BottomBarDecomposeComponent
 import ru.andvl.mytonwallet.contest.bottombar.impl.api.BottomBarDecomposeComponentImpl
 import ru.andvl.mytonwallet.contest.root.api.RootDecomposeComponent
 import ru.andvl.mytonwallet.contest.root.impl.RootDecomposeComponentImpl
+import ru.andvl.mytonwallet.contest.setuppasscode.api.SetUpPasscodeDecomposeComponent
+import ru.andvl.mytonwallet.contest.setuppasscode.impl.api.SetUpPasscodeDecomposeComponentImpl
 
 val appModule = module {
     single { WebViewHolder(get()) }
     single<AuthDecomposeComponent.Factory> {
-        AuthDecomposeComponentImpl.Factory()
+        AuthDecomposeComponentImpl.Factory(get())
     }
     single<RootDecomposeComponent.Factory> {
-        RootDecomposeComponentImpl.Factory(get())
+        RootDecomposeComponentImpl.Factory(get(), get())
+    }
+    single<SetUpPasscodeDecomposeComponent.Factory> {
+        SetUpPasscodeDecomposeComponentImpl.Factory()
     }
     single<BottomBarDecomposeComponent.Factory> {
         BottomBarDecomposeComponentImpl.Factory()

@@ -27,7 +27,8 @@ fun WalletImportScreen(
         topBar = {
             WalletImportTopBar(
                 scrollState = scrollState,
-                onBackClicked = { onAction(WalletImportAction.NavigateBack) }
+                onBackClicked = { onAction(WalletImportAction.NavigateBack) },
+                onTESTNavigate = { onAction(WalletImportAction.TESTNavigate) },
             )
         },
         modifier = modifier

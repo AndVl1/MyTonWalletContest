@@ -2,6 +2,8 @@ package ru.andvl.mytonwallet.contest.auth.impl.walletimport.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,6 +30,7 @@ import kotlin.math.max
 fun WalletImportTopBar(
     scrollState: LazyListState,
     onBackClicked: () -> Unit,
+    onTESTNavigate: () -> Unit, // TODO delete
     modifier: Modifier = Modifier
 ) {
     val topBarHeight = 64.dp
@@ -61,6 +64,12 @@ fun WalletImportTopBar(
                     tint = MaterialTheme.colorScheme.tertiary,
                     contentDescription = null
                 )
+            }
+        },
+        // TODO delete
+        actions = {
+            IconButton(onClick = onTESTNavigate) {
+                Icon(imageVector = Icons.Default.AccountCircle, contentDescription = null)
             }
         },
         modifier = modifier
