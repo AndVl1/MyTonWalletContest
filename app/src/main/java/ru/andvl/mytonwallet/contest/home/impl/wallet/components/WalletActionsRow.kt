@@ -30,25 +30,25 @@ fun WalletActionsRow(
     ) {
         WalletActionButton(
             icon = ImageVector.vectorResource(R.drawable.ic_add),
-            title = stringResource(R.string.auth_wallet_add),
+            title = stringResource(R.string.main_wallet_add),
             onClick = onAddButtonClicked,
             modifier = Modifier.weight(1f)
         )
         WalletActionButton(
             icon = ImageVector.vectorResource(R.drawable.ic_send),
-            title = stringResource(R.string.auth_wallet_send),
+            title = stringResource(R.string.main_wallet_send),
             onClick = onSendButtonClicked,
             modifier = Modifier.weight(1f)
         )
         WalletActionButton(
             icon = ImageVector.vectorResource(R.drawable.ic_earn),
-            title = stringResource(R.string.auth_wallet_earn),
+            title = stringResource(R.string.main_wallet_earn),
             onClick = onEarnButtonClicked,
             modifier = Modifier.weight(1f)
         )
         WalletActionButton(
             icon = ImageVector.vectorResource(R.drawable.ic_swap),
-            title = stringResource(R.string.auth_wallet_swap),
+            title = stringResource(R.string.main_wallet_swap),
             onClick = onSwapButtonClicked,
             modifier = Modifier.weight(1f)
         )

@@ -24,7 +24,7 @@ fun WalletScreenTitleWithBalance(
         modifier = modifier
     ) {
         Text(
-            text = stringResource(R.string.auth_wallet_title),
+            text = stringResource(R.string.main_wallet_title),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.tertiary

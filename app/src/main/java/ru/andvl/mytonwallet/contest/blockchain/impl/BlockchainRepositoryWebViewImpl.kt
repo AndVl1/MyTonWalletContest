@@ -70,6 +70,12 @@ class BlockchainRepositoryWebViewImpl(
         }
     }
 
+    // TODO getAccountNewestTxId(accountId: string)
+    // TODO getAccountTransactionSlice(accountId: string)
+    // TODO getTokenTransactionSlice(accountId: string)
+    // TODO getAccountBalance(accountId: string)
+    // TODO getAccountTokenBalances(accountId: string)
+
     private inner class WebAppInterface {
         @JavascriptInterface
         fun onApiResult(result: String) {

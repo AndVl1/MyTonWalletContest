@@ -34,7 +34,7 @@ fun WalletNoTransactions(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(R.string.auth_wallet_no_transactions),
+            text = stringResource(R.string.main_wallet_no_transactions),
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center
         )
