@@ -26,7 +26,7 @@ class WalletImportDecomposeComponentImpl(
 
         CreateWalletImportScreen(
             navigateToSetPasscode = {
-                navigation.pushToFront(AuthNavigationConfig.WalletImportSetUpPasscode)
+                navigation.pushToFront(AuthNavigationConfig.WalletImportSetUpPasscode(it))
             },
             navigateBack = { navigation.pop() },
             viewModel = viewModel

@@ -9,7 +9,9 @@ abstract class SetUpPasscodeDecomposeComponent<C : Any> : CompositeDecomposeComp
         operator fun invoke(
             componentContext: ComponentContext,
             onBack: DecomposeOnBackParameter,
-            navigateNext: () -> Unit,
+            navigateNext: (passcode: String) -> Unit,
+            isImport: Boolean,
+            mnemonic: List<String>?
         ): SetUpPasscodeDecomposeComponent<*>
     }
 }

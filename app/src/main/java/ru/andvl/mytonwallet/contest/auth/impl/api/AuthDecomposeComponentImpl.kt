@@ -65,18 +65,24 @@ class AuthDecomposeComponentImpl(
         is AuthNavigationConfig.WalletCreatedSetUpPasscode -> setUpPasscodeFactory(
             componentContext,
             onBack = { navigation.pop() },
-            navigateNext = { navigation.pushToFront(AuthNavigationConfig.RecoveryListScreen()) }
+            navigateNext = {
+                navigation.pushToFront(AuthNavigationConfig.RecoveryListScreen(it))
+            },
+            isImport = false,
+            mnemonic = null
         )
 
         is AuthNavigationConfig.RecoveryListScreen -> RecoveryListDecomposeComponentImpl(
             componentContext,
-            navigation
+            navigation,
+            config.passcode
         )
 
         is AuthNavigationConfig.RecoveryTestScreen -> RecoveryTestDecomposeComponentImpl(
             componentContext,
             navigation,
             config.recoveryWords,
+            config.passcode,
             navigateToMain
         )
     }
@@ -90,10 +96,12 @@ class AuthDecomposeComponentImpl(
             navigation
         )
 
-        AuthNavigationConfig.WalletImportSetUpPasscode -> setUpPasscodeFactory(
+        is AuthNavigationConfig.WalletImportSetUpPasscode -> setUpPasscodeFactory(
             componentContext,
             onBack = { navigation.pop() },
-            navigateNext = navigateToMain
+            navigateNext = { navigateToMain() },
+            isImport = true,
+            mnemonic = config.mnemonic
         )
     }
 

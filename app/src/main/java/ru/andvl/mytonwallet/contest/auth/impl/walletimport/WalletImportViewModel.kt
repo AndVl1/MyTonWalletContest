@@ -44,6 +44,7 @@ class WalletImportViewModel(
                         )
                     }
                 }
+
                 is WalletImportAction.OnContinueClicked -> onContinueClicked()
                 is WalletImportAction.NavigateBack -> {
                     _navigationEvents.emit(WalletImportNavigationEvent.NavigateBack)
@@ -77,7 +78,11 @@ class WalletImportViewModel(
     private suspend fun onContinueClicked() {
         val isChecked = checkWords()
         if (!isChecked) _state.update { it.copy(showErrorDialog = true) }
-        else _navigationEvents.emit(WalletImportNavigationEvent.NavigateToSetPasscode)
+        else _navigationEvents.emit(
+            WalletImportNavigationEvent.NavigateToSetPasscode(
+                _state.value.inputWords
+            )
+        )
     }
 
     private suspend fun checkWords(): Boolean {

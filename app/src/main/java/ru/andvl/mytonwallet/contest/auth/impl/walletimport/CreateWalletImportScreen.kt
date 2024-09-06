@@ -9,7 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 
 @Composable
 fun CreateWalletImportScreen(
-    navigateToSetPasscode: () -> Unit,
+    navigateToSetPasscode: (mnemonic: List<String>) -> Unit,
     navigateBack: () -> Unit,
     viewModel: WalletImportViewModel
 ) {
@@ -21,7 +21,9 @@ fun CreateWalletImportScreen(
             navigationEvents.collect { navigationEvent ->
                 when (navigationEvent) {
                     is WalletImportNavigationEvent.NavigateBack -> navigateBack()
-                    is WalletImportNavigationEvent.NavigateToSetPasscode -> navigateToSetPasscode()
+                    is WalletImportNavigationEvent.NavigateToSetPasscode -> navigateToSetPasscode(
+                        navigationEvent.mnemonic
+                    )
                 }
             }
         }

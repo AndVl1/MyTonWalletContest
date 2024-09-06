@@ -1,5 +1,7 @@
 package ru.andvl.mytonwallet.contest.bottombar.impl.wallet
 
+import android.util.Log
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -7,6 +9,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.andvl.mytonwallet.contest.arch.BaseViewModel
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
 
@@ -41,7 +44,17 @@ class WalletViewModel(
     }
 
     private suspend fun getAssetTokens() {
-        val assetTokens = blockchainRepository.getCurrentAccountTokenBalances()
-        _state.update { it.copy(assetTokens = assetTokens) }
+        try {
+            withContext(Dispatchers.Main) {
+                val assetTokens = blockchainRepository.getCurrentAccountTokenBalances()
+                _state.update { it.copy(assetTokens = assetTokens) }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, e.message, e)
+        }
+    }
+
+    companion object {
+        const val TAG = "WalletViewModel"
     }
 }

@@ -11,7 +11,9 @@ import ru.andvl.mytonwallet.contest.setuppasscode.impl.model.SetUpPasscodeNaviga
 
 class SetUpPasscodeDecomposeComponentImpl(
     componentContext: ComponentContext,
-    private val navigateNext: () -> Unit,
+    private val navigateNext: (passcode: String) -> Unit,
+    private val isImport: Boolean,
+    private val mnemonic: List<String>?,
 ) : SetUpPasscodeDecomposeComponent<SetUpPasscodeNavigationConfig>(),
     ComponentContext by componentContext {
     override val stack: Value<ChildStack<SetUpPasscodeNavigationConfig, DecomposeComponent>> =
@@ -41,6 +43,9 @@ class SetUpPasscodeDecomposeComponentImpl(
 
         is SetUpPasscodeNavigationConfig.BiometricLockScreen -> BiometricLockDecomposeComponentImpl(
             componentContext,
+            config.passcode,
+            mnemonic,
+            isImport,
             navigateNext
         )
     }
@@ -49,8 +54,10 @@ class SetUpPasscodeDecomposeComponentImpl(
         override fun invoke(
             componentContext: ComponentContext,
             onBack: DecomposeOnBackParameter,
-            navigateNext: () -> Unit,
+            navigateNext: (passcode: String) -> Unit,
+            isImport: Boolean,
+            mnemonic: List<String>?
         ): SetUpPasscodeDecomposeComponent<*> =
-            SetUpPasscodeDecomposeComponentImpl(componentContext, navigateNext)
+            SetUpPasscodeDecomposeComponentImpl(componentContext, navigateNext, isImport, mnemonic)
     }
 }

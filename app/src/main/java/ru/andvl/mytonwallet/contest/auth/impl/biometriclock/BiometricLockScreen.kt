@@ -21,14 +21,24 @@ import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.auth.impl.ui.WalletCreatedFlowTitleWithDescription
 import ru.andvl.mytonwallet.contest.ui.components.ButtonStyle
+import ru.andvl.mytonwallet.contest.ui.components.Loading
+import ru.andvl.mytonwallet.contest.ui.components.LoadingStyle
 import ru.andvl.mytonwallet.contest.ui.components.TonWalletButton
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
 fun BiometricLockScreen(
+    state: BiometricLockState,
     onAction: (BiometricLockAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    if (state is BiometricLockState.Loading) {
+        Loading(
+            modifier = modifier.fillMaxSize(),
+            style = LoadingStyle.DIALOG
+        )
+    }
+
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -71,6 +81,7 @@ fun BiometricLockScreen(
 private fun BiometricLockScreenPreview() {
     MyTonWalletContestTheme {
         BiometricLockScreen(
+            state = BiometricLockState.Init,
             onAction = {},
         )
     }

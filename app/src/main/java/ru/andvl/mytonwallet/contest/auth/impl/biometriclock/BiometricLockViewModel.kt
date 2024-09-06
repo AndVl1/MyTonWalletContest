@@ -1,15 +1,24 @@
 package ru.andvl.mytonwallet.contest.auth.impl.biometriclock
 
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.andvl.mytonwallet.contest.arch.BaseViewModel
+import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
 
-class BiometricLockViewModel : BaseViewModel<BiometricLockAction, BiometricLockState>() {
+class BiometricLockViewModel(
+    private val passcode: String,
+    private val mnemonic: List<String>? = null,
+    private val isImport: Boolean,
+    private val blockchainRepository: BlockchainRepository
+) : BaseViewModel<BiometricLockAction, BiometricLockState>() {
     private val _state = MutableStateFlow<BiometricLockState>(BiometricLockState.Init)
 
     override val state: StateFlow<BiometricLockState> = _state.asStateFlow()
@@ -21,14 +30,35 @@ class BiometricLockViewModel : BaseViewModel<BiometricLockAction, BiometricLockS
         viewModelScope.launch {
             when (event) {
                 is BiometricLockAction.OnEnableClicked -> {
-                    // TODO enable biometric auth
-                    _navigationEvents.emit(BiometricLockNavigationEvent.NavigateToRecoveryList)
+                    // TODO save preference
+                    navigateNext()
                 }
 
                 is BiometricLockAction.OnSkipClicked -> {
-                    _navigationEvents.emit(BiometricLockNavigationEvent.NavigateToRecoveryList)
+                    navigateNext()
                 }
             }
         }
+    }
+
+    private suspend fun navigateNext() {
+        if (isImport && mnemonic != null) {
+            _state.update { BiometricLockState.Loading }
+            try {
+                withContext(Dispatchers.Main) {
+                    blockchainRepository.createAccount(mnemonic, passcode, true)
+                }
+                _navigationEvents.emit(BiometricLockNavigationEvent.NavigateNext)
+            } catch (e: Exception) {
+                Log.e(TAG, e.message, e)
+            }
+            _state.update { BiometricLockState.Loaded }
+        } else {
+            _navigationEvents.emit(BiometricLockNavigationEvent.NavigateNext)
+        }
+    }
+
+    companion object {
+        const val TAG = "BiometricLockViewModel"
     }
 }

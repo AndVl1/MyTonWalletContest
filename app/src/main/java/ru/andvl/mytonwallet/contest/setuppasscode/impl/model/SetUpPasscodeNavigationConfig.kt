@@ -15,5 +15,7 @@ sealed interface SetUpPasscodeNavigationConfig {
     ) : SetUpPasscodeNavigationConfig
 
     @Serializable
-    data object BiometricLockScreen : SetUpPasscodeNavigationConfig
+    data class BiometricLockScreen(
+        val passcode: String
+    ) : SetUpPasscodeNavigationConfig
 }

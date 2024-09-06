@@ -20,11 +20,14 @@ sealed interface AuthNavigationConfig {
     data object WalletCreatedSetUpPasscode : WalletCreatedFlow
 
     @Serializable
-    class RecoveryListScreen : WalletCreatedFlow
+    data class RecoveryListScreen(
+        val passcode: String
+    ) : WalletCreatedFlow
 
     @Serializable
     data class RecoveryTestScreen(
-        val recoveryWords: List<String>
+        val recoveryWords: List<String>,
+        val passcode: String
     ) : WalletCreatedFlow
 
     sealed interface WalletImportFlow : AuthNavigationConfig
@@ -33,5 +36,7 @@ sealed interface AuthNavigationConfig {
     class WalletImportScreen : WalletImportFlow
 
     @Serializable
-    data object WalletImportSetUpPasscode : WalletImportFlow
+    data class WalletImportSetUpPasscode(
+        val mnemonic: List<String>
+    ) : WalletImportFlow
 }

@@ -1,5 +1,7 @@
 package ru.andvl.mytonwallet.contest.auth.impl.recoverytest
 
+import android.util.Log
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -7,11 +9,13 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.andvl.mytonwallet.contest.arch.BaseViewModel
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
 
 class RecoveryTestViewModel(
     private val recoveryWords: List<String>,
+    private val passcode: String,
     private val blockchainRepository: BlockchainRepository
 ) : BaseViewModel<RecoveryTestAction, RecoveryTestState>() {
     private val _state = MutableStateFlow(RecoveryTestState())
@@ -38,6 +42,7 @@ class RecoveryTestViewModel(
                 is RecoveryTestAction.OnWrongWordsDismiss -> {
                     _state.update { it.copy(isWrongWords = false) }
                 }
+
                 is RecoveryTestAction.OnContinueClicked -> onContinueClicked()
             }
         }
@@ -56,7 +61,18 @@ class RecoveryTestViewModel(
     private suspend fun onContinueClicked() {
         val isChecked = checkWords()
         if (!isChecked) _state.update { it.copy(isWrongWords = true) }
-        else _navigationEvents.emit(RecoveryTestNavigationEvent.NavigateToHome)
+        else {
+            _state.update { it.copy(isLoading = true) }
+            try {
+                withContext(Dispatchers.Main) {
+                    blockchainRepository.createAccount(recoveryWords, passcode)
+                }
+                _navigationEvents.emit(RecoveryTestNavigationEvent.NavigateToHome)
+            } catch (e: Exception) {
+                Log.e(TAG, e.message, e)
+            }
+            _state.update { it.copy(isLoading = false) }
+        }
     }
 
     private fun checkWords(): Boolean {
@@ -76,5 +92,9 @@ class RecoveryTestViewModel(
                 wordsWithIndexes = indexes.associateWith { "" }
             )
         }
+    }
+
+    companion object {
+        const val TAG = "RecoveryTestViewModel"
     }
 }

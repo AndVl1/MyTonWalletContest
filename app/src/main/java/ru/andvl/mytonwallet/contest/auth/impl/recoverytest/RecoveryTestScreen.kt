@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.auth.impl.recoverytest.components.RecoveryTestScreenContent
 import ru.andvl.mytonwallet.contest.auth.impl.recoverytest.components.WrongWordsDialog
 import ru.andvl.mytonwallet.contest.auth.impl.ui.WalletCreatedFlowTopBar
+import ru.andvl.mytonwallet.contest.ui.components.Loading
+import ru.andvl.mytonwallet.contest.ui.components.LoadingStyle
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,6 +51,13 @@ fun RecoveryTestScreen(
             )
         }
 
+        if (state.isLoading) {
+            Loading(
+                modifier = modifier.fillMaxSize(),
+                style = LoadingStyle.DIALOG
+            )
+        }
+
         RecoveryTestScreenContent(
             state = state,
             onAction = onAction,
@@ -71,7 +80,8 @@ private fun RecoveryTestScreenPreview() {
     MyTonWalletContestTheme {
         RecoveryTestScreen(
             state = RecoveryTestState(
-                isWrongWords = true,
+                isWrongWords = false,
+                isLoading = false,
                 wordsWithIndexes = mapOf(
                     1 to "abcd",
                     15 to "a",

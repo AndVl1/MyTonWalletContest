@@ -9,5 +9,11 @@ interface BlockchainRepository {
     suspend fun validateMnemonic(mnemonic: List<String>): Boolean
     suspend fun checkApiAvailability(): Boolean
     fun updateCurrentAccountId(id: String)
+    suspend fun createAccount(
+        mnemonic: List<String>,
+        passcode: String,
+        isImport: Boolean = false
+    )
+
     suspend fun getCurrentAccountTokenBalances(): List<AssetToken>
 }

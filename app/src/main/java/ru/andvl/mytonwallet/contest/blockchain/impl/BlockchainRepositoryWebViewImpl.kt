@@ -10,6 +10,7 @@ import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
+import ru.andvl.mytonwallet.contest.blockchain.impl.dto.AuthResultDto
 import ru.andvl.mytonwallet.contest.blockchain.util.MNEMONIC_CHECK_COUNT
 import ru.andvl.mytonwallet.contest.blockchain.util.MNEMONIC_COUNT
 import ru.andvl.mytonwallet.contest.blockchain.util.WebViewHolder
@@ -24,6 +25,8 @@ class BlockchainRepositoryWebViewImpl(
     }
 
     private var currentAccountId: String? = null
+    private var currentAccountAddress: String? = null
+    private val network: String = "mainnet"
 
     private var continuation: CancellableContinuation<Result<String>>? = null
 
@@ -31,7 +34,7 @@ class BlockchainRepositoryWebViewImpl(
         val jsonString = evaluateJs(
             "callApi('checkApiAvailability', {" +
                     "    blockchainKey: 'ton'," +
-                    "    network: 'mainnet'" +
+                    "    network: '$network'" +
                     "})"
         ).getOrThrow()
 
@@ -68,6 +71,29 @@ class BlockchainRepositoryWebViewImpl(
 
     override fun updateCurrentAccountId(id: String) {
         currentAccountId = id
+    }
+
+    override suspend fun createAccount(
+        mnemonic: List<String>,
+        passcode: String,
+        isImport: Boolean
+    ) {
+        val method = if (isImport) "importMnemonic" else "createWallet"
+        val mnemonicJson = Json.encodeToString(mnemonic)
+        val jsonString = evaluateJs(
+            """
+            callApi('$method', "$network", $mnemonicJson, '$passcode')
+            """.trimIndent()
+        ).getOrThrow()
+
+        val result: AuthResultDto = Json.decodeFromString(jsonString)
+
+        if (result.error != null || result.accountId == null || result.address == null) {
+            throw Exception(result.error)
+        } else {
+            currentAccountId = result.accountId
+            currentAccountAddress = result.address
+        }
     }
 
     override suspend fun getCurrentAccountTokenBalances(): List<AssetToken> {

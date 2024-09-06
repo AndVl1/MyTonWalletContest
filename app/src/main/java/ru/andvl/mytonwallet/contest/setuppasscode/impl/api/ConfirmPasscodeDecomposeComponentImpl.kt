@@ -26,7 +26,11 @@ class ConfirmPasscodeDecomposeComponentImpl(
         CreateConfirmPasscodeScreen(
             navigateBack = { navigation.pop() },
             navigateToBiometricLock = {
-                navigation.replaceCurrent(SetUpPasscodeNavigationConfig.BiometricLockScreen)
+                navigation.replaceCurrent(
+                    SetUpPasscodeNavigationConfig.BiometricLockScreen(
+                        correctPasscode
+                    )
+                )
             },
             viewModel = viewModel
         )

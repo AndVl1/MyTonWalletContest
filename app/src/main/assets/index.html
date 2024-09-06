@@ -29,10 +29,14 @@
         }
 
         async function callApi(apiMethod, ...args) {
-            const response = await api.callApi(apiMethod, ...args);
-            console.log("API response:", response);
-
-            AndroidInterface.onApiResult(JSON.stringify(response))
+            try {
+                const response = await api.callApi(apiMethod, ...args);
+                console.log("API response:", response);
+                AndroidInterface.onApiResult(JSON.stringify(response));
+            } catch (error) {
+                console.error("API call error:", error);
+                AndroidInterface.onApiResult(JSON.stringify({ error: error.message }));
+            }
         }
     </script>
 </head>

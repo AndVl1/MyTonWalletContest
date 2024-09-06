@@ -2,13 +2,14 @@ package ru.andvl.mytonwallet.contest.auth.impl.biometriclock
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 
 @Composable
 fun CreateBiometricLockScreen(
-    navigateToRecoveryList: () -> Unit,
+    navigateNext: () -> Unit,
     viewModel: BiometricLockViewModel
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -18,13 +19,14 @@ fun CreateBiometricLockScreen(
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             navigationEvents.collect { navigationEvent ->
                 when (navigationEvent) {
-                    is BiometricLockNavigationEvent.NavigateToRecoveryList -> navigateToRecoveryList()
+                    is BiometricLockNavigationEvent.NavigateNext -> navigateNext()
                 }
             }
         }
     }
 
     BiometricLockScreen(
+        state = viewModel.state.collectAsState().value,
         onAction = viewModel::obtainEvent
     )
 }

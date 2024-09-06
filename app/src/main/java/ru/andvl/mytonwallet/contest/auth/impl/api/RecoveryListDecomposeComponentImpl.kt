@@ -15,7 +15,8 @@ import ru.andvl.mytonwallet.contest.decompose.ScreenDecomposeComponent
 
 class RecoveryListDecomposeComponentImpl(
     componentContext: ComponentContext,
-    private val navigation: StackNavigation<AuthNavigationConfig>
+    private val navigation: StackNavigation<AuthNavigationConfig>,
+    private val passcode: String
 ) : ScreenDecomposeComponent(componentContext) {
 
     @Composable
@@ -27,7 +28,7 @@ class RecoveryListDecomposeComponentImpl(
         CreateRecoveryListScreen(
             navigateBack = { navigation.pop() },
             navigateToRecoveryTest = {
-                navigation.pushToFront(AuthNavigationConfig.RecoveryTestScreen(it))
+                navigation.pushToFront(AuthNavigationConfig.RecoveryTestScreen(it, passcode))
             },
             viewModel = viewModel
         )
