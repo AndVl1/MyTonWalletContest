@@ -8,7 +8,6 @@ sealed interface RootScreenConfig {
     object AddWallet : RootScreenConfig
     @Serializable
     object Login : RootScreenConfig
-
     @Serializable
     object Main : RootScreenConfig
 }

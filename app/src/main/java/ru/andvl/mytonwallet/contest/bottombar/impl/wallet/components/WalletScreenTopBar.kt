@@ -1,6 +1,7 @@
 package ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -88,6 +89,7 @@ fun WalletScreenTopBar(
             titleContentColor = MaterialTheme.colorScheme.onBackground,
             actionIconContentColor = MaterialTheme.colorScheme.tertiary,
         ),
+        windowInsets = WindowInsets(0.dp),
         modifier = modifier
     )
 }

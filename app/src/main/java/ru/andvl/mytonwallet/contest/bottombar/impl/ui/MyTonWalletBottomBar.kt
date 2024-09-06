@@ -1,6 +1,8 @@
 package ru.andvl.mytonwallet.contest.bottombar.impl.ui
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.BottomBarEnum
+import ru.andvl.mytonwallet.contest.ui.theme.ListDividerColor
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 
 @Composable
@@ -24,12 +27,20 @@ fun MyTonWalletBottomBar(
     modifier: Modifier = Modifier
 ) {
     BottomAppBar(
-        tonalElevation = 0.5.dp,
+        tonalElevation = 0.dp,
+        containerColor = MaterialTheme.colorScheme.background,
+        contentColor = MaterialTheme.colorScheme.background,
         contentPadding = PaddingValues(0.dp),
         modifier = modifier
+            .border(
+                width = 0.5.dp,
+                color = ListDividerColor
+            )
     ) {
         NavigationBar(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            tonalElevation = 0.dp,
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.background,
         ) {
             BottomBarEnum.entries.forEach { bottomBarTab ->
                 NavigationBarItem(
@@ -63,13 +74,14 @@ fun MyTonWalletBottomBar(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun MyTonWalletBottomBarPreview() {
     MyTonWalletContestTheme {
         MyTonWalletBottomBar(
             selectedTab = BottomBarEnum.WALLET,
-            onSelect = {}
+            onSelect = {},
+            modifier = Modifier.padding(top = 16.dp)
         )
     }
 }

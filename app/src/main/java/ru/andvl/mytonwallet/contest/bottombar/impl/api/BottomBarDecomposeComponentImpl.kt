@@ -30,7 +30,7 @@ class BottomBarDecomposeComponentImpl(
 
     @Composable
     @Suppress("NonSkippableComposable")
-    override fun Render(modifier: Modifier) {
+    override fun Render() {
         val childStack by stack.subscribeAsState()
 
         BottomBarScreen(
@@ -56,9 +56,20 @@ class BottomBarDecomposeComponentImpl(
             navigation
         )
 
-        is BottomBarConfig.AssetsScreen -> TODO()
-        is BottomBarConfig.BrowserScreen -> TODO()
-        is BottomBarConfig.SettingsScreen -> TODO()
+        is BottomBarConfig.AssetsScreen -> AssetsDecomposeComponentImpl(
+            componentContext,
+            navigation
+        )
+
+        is BottomBarConfig.BrowserScreen -> BrowserDecomposeComponentImpl(
+            componentContext,
+            navigation
+        )
+
+        is BottomBarConfig.SettingsScreen -> SettingsDecomposeComponentImpl(
+            componentContext,
+            navigation
+        )
     }
 
     class Factory : BottomBarDecomposeComponent.Factory {

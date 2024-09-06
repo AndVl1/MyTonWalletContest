@@ -18,7 +18,6 @@ import ru.andvl.mytonwallet.contest.bottombar.api.BottomBarDecomposeComponent
 import ru.andvl.mytonwallet.contest.decompose.DecomposeComponent
 import ru.andvl.mytonwallet.contest.decompose.DecomposeOnBackParameter
 import ru.andvl.mytonwallet.contest.decompose.popOr
-import ru.andvl.mytonwallet.contest.decompose.popToRoot
 import ru.andvl.mytonwallet.contest.root.api.RootDecomposeComponent
 import ru.andvl.mytonwallet.contest.root.api.model.RootScreenConfig
 
@@ -70,7 +69,10 @@ class RootDecomposeComponentImpl(
                 ::navigateToMain
             )
 
-            RootScreenConfig.Main -> bottomBarFactory.invoke(componentContext, ::internalOnBack)
+            RootScreenConfig.Main -> bottomBarFactory.invoke(
+                componentContext,
+                ::internalOnBack
+            )
         }
     }
 
@@ -84,9 +86,7 @@ class RootDecomposeComponentImpl(
     }
 
     private fun navigateToMain() {
-        navigation.popToRoot {
-            navigation.replaceCurrent(RootScreenConfig.Main)
-        }
+        navigation.replaceCurrent(RootScreenConfig.Main)
     }
 
     class Factory(
