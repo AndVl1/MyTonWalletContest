@@ -30,7 +30,7 @@ fun WalletScreenContent(
         modifier = modifier.fillMaxSize()
     ) {
         item {
-            WalletScreenHeader()
+            WalletScreenHeader(state.balance)
         }
         item {
             HorizontalDivider(

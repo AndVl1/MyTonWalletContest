@@ -1,4 +1,4 @@
-package ru.andvl.mytonwallet.contest.blockchain.impl.dto
+package ru.andvl.mytonwallet.contest.blockchain.impl.dtos
 
 import kotlinx.serialization.Serializable
 

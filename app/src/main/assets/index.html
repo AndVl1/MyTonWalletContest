@@ -6,6 +6,21 @@
     <title>My App</title>
     <script src="./bundle.js"></script>
     <script>
+        const AVAILABLE_UPDATE_TYPES = ['updateBalances', 'updateTokens'];
+
+        function serializeBigInt(value) {
+            if (typeof value === 'bigint') {
+                return value.toString();
+            } else if (typeof value === 'object' && value !== null) {
+                for (const key in value) {
+                    if (value.hasOwnProperty(key)) {
+                        value[key] = serializeBigInt(value[key]);
+                    }
+                }
+            }
+            return value;
+        }
+
         function initApi() {
             if (typeof api !== 'undefined') {
                 try {
@@ -26,13 +41,24 @@
         function onUpdate(update) {
             const { type } = update;
             console.log('Received update:', type);
+
+            const serializedUpdate = serializeBigInt(update);
+
+            if (typeof AndroidInterface !== 'undefined' && AndroidInterface.onApiUpdate && AVAILABLE_UPDATE_TYPES.includes(type)) {
+                AndroidInterface.onApiUpdate(JSON.stringify(serializedUpdate));
+            }
         }
 
         async function callApi(apiMethod, ...args) {
             try {
                 const response = await api.callApi(apiMethod, ...args);
                 console.log("API response:", response);
-                AndroidInterface.onApiResult(JSON.stringify(response));
+
+                const serializedResponse = JSON.stringify(response, (key, value) =>
+                    typeof value === 'bigint' ? value.toString() : value
+                );
+
+                AndroidInterface.onApiResult(serializedResponse);
             } catch (error) {
                 console.error("API call error:", error);
                 AndroidInterface.onApiResult(JSON.stringify({ error: error.message }));
