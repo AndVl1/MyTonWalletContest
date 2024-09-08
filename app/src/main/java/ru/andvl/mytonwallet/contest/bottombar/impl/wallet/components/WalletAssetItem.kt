@@ -13,13 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetToken
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetTokenType
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.TokenImage
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 import ru.andvl.mytonwallet.contest.ui.theme.ProfitColor
 import ru.andvl.mytonwallet.contest.utils.formatPercent
@@ -36,8 +36,8 @@ fun WalletAssetItem(
 ) {
     Row(
         modifier = modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { onClick() },
+            .clickable { onClick() }
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         TokenIcon(isStacking = true)
@@ -109,7 +109,7 @@ fun PreviewAssetItem() {
                 type = AssetTokenType.VESTED,
                 slug = "",
                 name = "Staked TON",
-                image = painterResource(R.drawable.toncoin),
+                image = TokenImage.Resource(R.drawable.toncoin),
                 amount = BigDecimal(1000),
                 amountUsd = BigDecimal(8000),
                 price = 8f,

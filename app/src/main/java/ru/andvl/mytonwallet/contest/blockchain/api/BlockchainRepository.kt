@@ -1,6 +1,7 @@
 package ru.andvl.mytonwallet.contest.blockchain.api
 
 import kotlinx.coroutines.flow.Flow
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetToken
 import ru.andvl.mytonwallet.contest.database.entities.BalanceEntity
 import java.math.BigInteger
 
@@ -18,5 +19,6 @@ interface BlockchainRepository {
     )
 
     suspend fun getCurrentAccountWalletBalance(): BigInteger
-    suspend fun getCurrentAccountTokenBalances(): Flow<List<BalanceEntity>>
+    suspend fun getCurrentAccountBalances(): Flow<List<BalanceEntity>>
+    suspend fun getCurrentAccountAssetTokens(): Flow<List<AssetToken>>
 }

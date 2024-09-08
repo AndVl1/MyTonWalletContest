@@ -1,13 +1,12 @@
 package ru.andvl.mytonwallet.contest.bottombar.impl.model
 
-import androidx.compose.ui.graphics.painter.Painter
 import java.math.BigDecimal
 
 data class AssetToken(
     val type: AssetTokenType,
     val slug: String,
     val name: String,
-    val image: Painter?,
+    val image: TokenImage?,
     val amount: BigDecimal,
     val amountUsd: BigDecimal,
     val price: Float,
@@ -15,6 +14,11 @@ data class AssetToken(
     val change: Float,
     val apy: Float? = null
 )
+
+sealed interface TokenImage {
+    data class Resource(val resId: Int) : TokenImage
+    data class Url(val url: String) : TokenImage
+}
 
 /*
 export type UserToken = {

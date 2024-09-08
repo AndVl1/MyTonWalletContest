@@ -26,7 +26,7 @@ class WalletViewModel(
     init {
         viewModelScope.launch {
             getWalletBalance()
-//            getAssetTokens()
+            getAssetTokens()
         }
     }
 
@@ -55,16 +55,18 @@ class WalletViewModel(
         }
     }
 
-//    private suspend fun getAssetTokens() {
-//        try {
-//            withContext(Dispatchers.Main) {
-//                val assetTokens = blockchainRepository.getCurrentAccountTokenBalances()
-//                _state.update { it.copy(assetTokens = assetTokens) }
-//            }
-//        } catch (e: Exception) {
-//            Log.e(TAG, e.message, e)
-//        }
-//    }
+    private suspend fun getAssetTokens() {
+        try {
+            withContext(Dispatchers.Main) {
+                blockchainRepository.getCurrentAccountAssetTokens().collect { assetTokens ->
+                    Log.d("getAssetTokens", assetTokens.toString())
+                    _state.update { it.copy(assetTokens = assetTokens) }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, e.message, e)
+        }
+    }
 
     companion object {
         const val TAG = "WalletViewModel"

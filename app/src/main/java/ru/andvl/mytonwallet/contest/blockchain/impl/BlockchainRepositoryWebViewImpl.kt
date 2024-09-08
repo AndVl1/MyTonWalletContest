@@ -5,7 +5,11 @@ import android.webkit.JavascriptInterface
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.serialization.encodeToString
@@ -20,6 +24,9 @@ import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.TokenDto
 import ru.andvl.mytonwallet.contest.blockchain.util.MNEMONIC_CHECK_COUNT
 import ru.andvl.mytonwallet.contest.blockchain.util.MNEMONIC_COUNT
 import ru.andvl.mytonwallet.contest.blockchain.util.WebViewHolder
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetToken
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetTokenType
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.TokenImage
 import ru.andvl.mytonwallet.contest.database.daos.BalanceDao
 import ru.andvl.mytonwallet.contest.database.daos.TokenDao
 import ru.andvl.mytonwallet.contest.database.entities.BalanceEntity
@@ -108,7 +115,34 @@ class BlockchainRepositoryWebViewImpl(
         }
     }
 
-    override suspend fun getCurrentAccountTokenBalances(): Flow<List<BalanceEntity>> {
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override suspend fun getCurrentAccountAssetTokens(): Flow<List<AssetToken>> {
+        return getCurrentAccountBalances().flatMapConcat { balances ->
+            val assetTokensFlows = balances.map { balance ->
+                tokenDao.getTokenBySlug(balance.slug).map { token ->
+                    AssetToken(
+                        type = AssetTokenType.VESTED, // TODO
+                        slug = balance.slug,
+                        name = token.name,
+                        image = token.image?.let { TokenImage.Url(it) },
+                        amount = balance.balance.toBigDecimal().movePointLeft(token.decimals),
+                        amountUsd = balance.balance.toBigDecimal()
+                            .movePointLeft(token.decimals) * token.priceUsd.toBigDecimal(),
+                        price = token.price.toFloat(),
+                        symbol = token.symbol,
+                        change = token.percentChange24h.toFloat(),
+                        apy = null // TODO
+                    )
+                }
+            }
+            combine(assetTokensFlows) { assetTokensArray ->
+                assetTokensArray.toList()
+            }
+        }
+    }
+
+
+    override suspend fun getCurrentAccountBalances(): Flow<List<BalanceEntity>> {
         currentAccountId?.let {
             return balanceDao.getBalancesForAccount(it)
         } ?: throw NoSuchElementException()
