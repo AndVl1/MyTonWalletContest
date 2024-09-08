@@ -7,6 +7,7 @@ import ru.andvl.mytonwallet.contest.arch.core.viewModelWithFactory
 import ru.andvl.mytonwallet.contest.auth.impl.biometriclock.BiometricLockViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.biometriclock.CreateBiometricLockScreen
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
+import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
 import ru.andvl.mytonwallet.contest.decompose.ScreenDecomposeComponent
 
 class BiometricLockDecomposeComponentImpl(
@@ -19,8 +20,15 @@ class BiometricLockDecomposeComponentImpl(
     @Composable
     override fun Render() {
         val blockchainRepository: BlockchainRepository = koinInject()
+        val userSettingsRepository: UserSettingsRepository = koinInject()
         val viewModel = viewModelWithFactory(null) {
-            BiometricLockViewModel(passcode, mnemonic, isImport, blockchainRepository)
+            BiometricLockViewModel(
+                passcode,
+                mnemonic,
+                isImport,
+                blockchainRepository,
+                userSettingsRepository
+            )
         }
         CreateBiometricLockScreen(
             navigateNext = { navigateNext(passcode) },

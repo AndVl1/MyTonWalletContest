@@ -12,12 +12,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.andvl.mytonwallet.contest.arch.BaseViewModel
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
+import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
 
 class BiometricLockViewModel(
     private val passcode: String,
     private val mnemonic: List<String>? = null,
     private val isImport: Boolean,
-    private val blockchainRepository: BlockchainRepository
+    private val blockchainRepository: BlockchainRepository,
+    private val userSettingsRepository: UserSettingsRepository,
 ) : BaseViewModel<BiometricLockAction, BiometricLockState>() {
     private val _state = MutableStateFlow<BiometricLockState>(BiometricLockState.Init)
 
@@ -30,7 +32,7 @@ class BiometricLockViewModel(
         viewModelScope.launch {
             when (event) {
                 is BiometricLockAction.OnEnableClicked -> {
-                    // TODO save preference
+                    userSettingsRepository.updateAuthByFingerPrint(true)
                     navigateNext()
                 }
 

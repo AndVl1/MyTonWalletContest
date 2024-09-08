@@ -1,27 +1,44 @@
 package ru.andvl.mytonwallet.contest.auth.impl.passcode
 
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.andvl.mytonwallet.contest.arch.BaseViewModel
+import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
 
-class PasscodeViewModel : BaseViewModel<PasscodeAction, PasscodeState>() {
+class PasscodeViewModel(
+    private val userSettingsRepository: UserSettingsRepository
+) : BaseViewModel<PasscodeAction, PasscodeState>() {
     private val _state = MutableStateFlow(PasscodeState())
-
     override val state = _state.asStateFlow()
 
     private val _navigationEvents = MutableSharedFlow<PasscodeNavigationEvent>()
     val navigationEvents = _navigationEvents.asSharedFlow()
 
+    init {
+        viewModelScope.launch {
+            val isFingerprintAvailable = userSettingsRepository.getAuthByFingerPrint().first()
+            val correctPasscode = userSettingsRepository.getPasscode().first()
+
+            _state.update {
+                it.copy(
+                    isFingerprintAvailable = isFingerprintAvailable,
+                    correctPasscode = correctPasscode,
+                    correctPasscodeLength = correctPasscode.length
+                )
+            }
+        }
+    }
+
     override fun obtainEvent(event: PasscodeAction) {
         viewModelScope.launch {
             when (event) {
                 is PasscodeAction.NavigateNext -> {
-                    _navigationEvents.emit(PasscodeNavigationEvent.NavigateToWallet)
+                    _navigationEvents.emit(PasscodeNavigationEvent.NavigateToMain)
                 }
 
                 is PasscodeAction.OnPasscodeButtonClicked -> {
@@ -84,7 +101,7 @@ class PasscodeViewModel : BaseViewModel<PasscodeAction, PasscodeState>() {
     }
 
     private fun checkPasscode(input: String): Boolean {
-        return input == "1234"
+        return input == _state.value.correctPasscode
     }
 
     private fun resetErrorState() {

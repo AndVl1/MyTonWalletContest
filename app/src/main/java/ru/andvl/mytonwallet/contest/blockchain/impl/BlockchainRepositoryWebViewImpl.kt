@@ -30,22 +30,34 @@ import ru.andvl.mytonwallet.contest.bottombar.impl.model.TokenImage
 import ru.andvl.mytonwallet.contest.database.daos.BalanceDao
 import ru.andvl.mytonwallet.contest.database.daos.TokenDao
 import ru.andvl.mytonwallet.contest.database.entities.BalanceEntity
+import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
 import ru.andvl.mytonwallet.contest.mappers.toEntity
 import java.math.BigInteger
 import kotlin.coroutines.resume
 
 class BlockchainRepositoryWebViewImpl(
     private val webView: WebViewHolder,
+    private val userSettingsRepository: UserSettingsRepository,
     private val balanceDao: BalanceDao,
     private val tokenDao: TokenDao
 ) : BlockchainRepository {
-    init {
-        webView.addJavascriptInterface(WebAppInterface())
-    }
-
     private var currentAccountId: String? = null
     private var currentAccountAddress: String? = null
     private val network: String = "mainnet"
+
+    init {
+        webView.addJavascriptInterface(WebAppInterface())
+
+        CoroutineScope(Dispatchers.Main).launch {
+            userSettingsRepository.getWalletAccountId().collect {
+                currentAccountId = it
+            }
+
+            userSettingsRepository.getWalletAddress().collect {
+                currentAccountAddress = it
+            }
+        }
+    }
 
     private var continuation: CancellableContinuation<Result<String>>? = null
 
@@ -88,8 +100,8 @@ class BlockchainRepositoryWebViewImpl(
         return Json.parseToJsonElement(jsonString).jsonPrimitive.boolean
     }
 
-    override fun updateCurrentAccountId(id: String) {
-        currentAccountId = id
+    override suspend fun updateCurrentAccountId(id: String) {
+        userSettingsRepository.updateWalletAccountId(id)
     }
 
     override suspend fun createAccount(
@@ -111,7 +123,9 @@ class BlockchainRepositoryWebViewImpl(
             throw Exception(result.error)
         } else {
             currentAccountId = result.accountId
+            userSettingsRepository.updateWalletAccountId(result.accountId)
             currentAccountAddress = result.address
+            userSettingsRepository.updateWalletAddress(result.address)
         }
     }
 
@@ -140,7 +154,6 @@ class BlockchainRepositoryWebViewImpl(
             }
         }
     }
-
 
     override suspend fun getCurrentAccountBalances(): Flow<List<BalanceEntity>> {
         currentAccountId?.let {

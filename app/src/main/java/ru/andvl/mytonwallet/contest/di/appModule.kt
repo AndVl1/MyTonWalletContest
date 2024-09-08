@@ -12,6 +12,8 @@ import ru.andvl.mytonwallet.contest.bottombar.impl.api.BottomBarDecomposeCompone
 import ru.andvl.mytonwallet.contest.database.MyTonWalletDatabase
 import ru.andvl.mytonwallet.contest.database.daos.BalanceDao
 import ru.andvl.mytonwallet.contest.database.daos.TokenDao
+import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
+import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepositoryImpl
 import ru.andvl.mytonwallet.contest.root.api.RootDecomposeComponent
 import ru.andvl.mytonwallet.contest.root.impl.RootDecomposeComponentImpl
 import ru.andvl.mytonwallet.contest.setuppasscode.api.SetUpPasscodeDecomposeComponent
@@ -23,7 +25,7 @@ val appModule = module {
         AuthDecomposeComponentImpl.Factory(get())
     }
     single<RootDecomposeComponent.Factory> {
-        RootDecomposeComponentImpl.Factory(get(), get())
+        RootDecomposeComponentImpl.Factory(get(), get(), get())
     }
     single<SetUpPasscodeDecomposeComponent.Factory> {
         SetUpPasscodeDecomposeComponentImpl.Factory()
@@ -32,7 +34,10 @@ val appModule = module {
         BottomBarDecomposeComponentImpl.Factory()
     }
     single<BlockchainRepository> {
-        BlockchainRepositoryWebViewImpl(get(), get(), get())
+        BlockchainRepositoryWebViewImpl(get(), get(), get(), get())
+    }
+    single<UserSettingsRepository> {
+        UserSettingsRepositoryImpl(get())
     }
     single<MyTonWalletDatabase> {
         Room.databaseBuilder(

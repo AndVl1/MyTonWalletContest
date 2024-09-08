@@ -7,6 +7,8 @@ import ru.andvl.mytonwallet.contest.arch.State
 import ru.andvl.mytonwallet.contest.auth.impl.model.KeyboardDigitWithDescription
 
 data class PasscodeState(
+    val isFingerprintAvailable: Boolean = false,
+    val correctPasscode: String = "",
     val correctPasscodeLength: Int = PasscodeLength.FOUR.value,
     val inputPasscode: String = "",
     val isPasswordIncorrect: Boolean = false

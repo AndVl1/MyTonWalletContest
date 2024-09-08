@@ -49,7 +49,7 @@ class AuthDecomposeComponentImpl(
 
         AuthNavigationConfig.PasscodeScreen -> PasscodeDecomposeComponentImpl(
             componentContext,
-            navigation
+            navigateToMain
         )
     }
 

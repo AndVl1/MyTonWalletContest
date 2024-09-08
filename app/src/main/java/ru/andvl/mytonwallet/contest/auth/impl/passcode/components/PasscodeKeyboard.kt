@@ -3,6 +3,7 @@ package ru.andvl.mytonwallet.contest.auth.impl.passcode.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
@@ -37,6 +38,13 @@ fun PasscodeKeyboard(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
+                if (rowButtons.size < 3) {
+                    Spacer(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                    )
+                }
                 rowButtons.fastForEach { button ->
                     when (button) {
                         is PasscodeButtonItem.DigitButton -> {

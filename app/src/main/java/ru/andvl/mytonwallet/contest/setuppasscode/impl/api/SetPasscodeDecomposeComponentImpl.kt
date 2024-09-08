@@ -31,7 +31,7 @@ class SetPasscodeDecomposeComponentImpl(
                     )
                 )
             },
-            viewModel
+            viewModel = viewModel
         )
     }
 }
