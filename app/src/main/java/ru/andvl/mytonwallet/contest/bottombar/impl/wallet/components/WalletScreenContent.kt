@@ -1,14 +1,14 @@
 package ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,27 +24,15 @@ fun WalletScreenContent(
     scrollState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
-    LazyColumn(
-        state = scrollState,
-        contentPadding = contentPadding,
-        modifier = modifier.fillMaxSize()
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier
     ) {
-        item {
-            WalletScreenHeader(state.balance)
+        repeat(70) {
+            Text("hhh")
         }
-        item {
-            HorizontalDivider(
-                thickness = 12.dp,
-                color = MaterialTheme.colorScheme.tertiaryContainer
-            )
-        }
-        item {
-            if (state.assetTokens.isEmpty()) {
-                WalletNoTransactions(modifier = Modifier.fillMaxSize())
-            } else {
-                WalletAssets()
-            }
-        }
+//            WalletAssets()
     }
 }
 
