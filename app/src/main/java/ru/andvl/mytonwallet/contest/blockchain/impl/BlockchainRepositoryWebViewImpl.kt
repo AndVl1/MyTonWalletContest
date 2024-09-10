@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -162,9 +163,12 @@ class BlockchainRepositoryWebViewImpl(
     }
 
     override suspend fun getCurrentAccountWalletBalance(): BigInteger {
+
+        val address = userSettingsRepository.getWalletAddress().first()
+
         val jsonString = evaluateJs(
             """
-            callApi('getWalletBalance', "$network", "$currentAccountAddress")
+            callApi('getWalletBalance', "$network", "$address")
             """.trimIndent()
         ).getOrThrow()
 

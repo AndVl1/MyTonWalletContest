@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.WalletActionsRow
 import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.WalletNoTransactions
+import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.WalletScreenContent
 import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.WalletScreenTitleWithBalance
 import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.WalletScreenTopBar
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
@@ -71,15 +72,15 @@ fun WalletScreen(
                 thickness = 12.dp,
                 color = MaterialTheme.colorScheme.tertiaryContainer
             )
-//            if (state.assetTokens.isEmpty()) {
-            WalletNoTransactions(modifier = Modifier.weight(1f))
-//            } else {
-//                WalletScreenContent(
-//                    state = state,
-//                    onAction = onAction,
-//                    modifier = Modifier.fillMaxSize()
-//                )
-//            }
+            if (state.assetTokens.isEmpty()) {
+                WalletNoTransactions(modifier = Modifier.weight(1f))
+            } else {
+                WalletScreenContent(
+                    state = state,
+                    onAction = onAction,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
         }
     }
 }
