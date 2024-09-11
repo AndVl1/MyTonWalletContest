@@ -24,6 +24,7 @@ fun WalletScreenContent(
         modifier = modifier
     ) {
         WalletAssets(state.assetTokens)
+
     }
 }
 

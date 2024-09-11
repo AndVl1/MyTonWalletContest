@@ -18,6 +18,7 @@ interface BlockchainRepository {
         isImport: Boolean = false
     )
 
+    suspend fun activateAccount()
     suspend fun getCurrentAccountWalletBalance(): BigInteger
     suspend fun getCurrentAccountBalances(): Flow<List<BalanceEntity>>
     suspend fun getCurrentAccountAssetTokens(): Flow<List<AssetToken>>

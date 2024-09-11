@@ -40,7 +40,7 @@ fun WalletAssetItem(
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        TokenIcon(isStacking = true)
+        TokenIcon(isStacking = assetToken.type == AssetTokenType.STACKED && assetToken.apy != null)
         Spacer(modifier = Modifier.width(12.dp))
         Column(
             modifier = Modifier.weight(1f)
@@ -70,7 +70,7 @@ fun WalletAssetItem(
                     )
                 }
 
-                if (assetToken.type == AssetTokenType.VESTED && assetToken.change > 0) {
+                if (assetToken.type != AssetTokenType.STACKED && assetToken.change > 0) {
                     Text(
                         text = stringResource(
                             R.string.main_wallet_asset_change_up,
@@ -106,7 +106,7 @@ fun PreviewAssetItem() {
     MyTonWalletContestTheme {
         WalletAssetItem(
             assetToken = AssetToken(
-                type = AssetTokenType.VESTED,
+                type = AssetTokenType.SIMPLE,
                 slug = "",
                 name = "Staked TON",
                 image = TokenImage.Resource(R.drawable.toncoin),

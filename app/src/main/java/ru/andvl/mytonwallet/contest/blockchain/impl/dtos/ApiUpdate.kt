@@ -22,4 +22,14 @@ sealed class ApiUpdate {
         val tokens: Map<String, TokenDto>,
         val baseCurrency: String
     ) : ApiUpdate()
+
+    @Serializable
+    @SerialName("updateStaking")
+    data class Stacking(
+        override val type: String = "updateStaking",
+        val accountId: String,
+        val stakingCommonData: ApiStakingCommonData,
+        val stakingState: ApiStakingState,
+        val backendStakingState: ApiBackendStakingState
+    ) : ApiUpdate()
 }

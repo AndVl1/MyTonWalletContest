@@ -18,19 +18,24 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
+import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
 import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.ApiUpdate
 import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.AuthResultDto
 import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.TokenDto
 import ru.andvl.mytonwallet.contest.blockchain.util.MNEMONIC_CHECK_COUNT
 import ru.andvl.mytonwallet.contest.blockchain.util.MNEMONIC_COUNT
+import ru.andvl.mytonwallet.contest.blockchain.util.MYCOIN_SLUG
+import ru.andvl.mytonwallet.contest.blockchain.util.TONCOIN_SLUG
 import ru.andvl.mytonwallet.contest.blockchain.util.WebViewHolder
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetToken
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetTokenType
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.TokenImage
 import ru.andvl.mytonwallet.contest.database.daos.BalanceDao
+import ru.andvl.mytonwallet.contest.database.daos.StakingStateDao
 import ru.andvl.mytonwallet.contest.database.daos.TokenDao
 import ru.andvl.mytonwallet.contest.database.entities.BalanceEntity
+import ru.andvl.mytonwallet.contest.database.entities.StakingStateEntity
 import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
 import ru.andvl.mytonwallet.contest.mappers.toEntity
 import java.math.BigInteger
@@ -40,7 +45,8 @@ class BlockchainRepositoryWebViewImpl(
     private val webView: WebViewHolder,
     private val userSettingsRepository: UserSettingsRepository,
     private val balanceDao: BalanceDao,
-    private val tokenDao: TokenDao
+    private val tokenDao: TokenDao,
+    private val stakingStateDao: StakingStateDao
 ) : BlockchainRepository {
     private var currentAccountId: String? = null
     private var currentAccountAddress: String? = null
@@ -130,23 +136,54 @@ class BlockchainRepositoryWebViewImpl(
         }
     }
 
+    override suspend fun activateAccount() {
+        val accountId = userSettingsRepository.getWalletAccountId().first()
+
+        evaluateJs(
+            """
+            callApi('activateAccount', "$accountId")
+            """.trimIndent()
+        ).getOrThrow()
+    }
+
+
     @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun getCurrentAccountAssetTokens(): Flow<List<AssetToken>> {
+        val accountId = userSettingsRepository.getWalletAccountId().first()
+
         return getCurrentAccountBalances().flatMapConcat { balances ->
             val assetTokensFlows = balances.map { balance ->
                 tokenDao.getTokenBySlug(balance.slug).map { token ->
+                    val stakingState = stakingStateDao.getStakingStateByAccountId(accountId)
+
                     AssetToken(
-                        type = AssetTokenType.VESTED, // TODO
+                        type = when (token.slug) {
+                            TONCOIN_SLUG -> {
+                                AssetTokenType.STACKED
+                            }
+
+                            MYCOIN_SLUG -> {
+                                AssetTokenType.VESTED
+                            }
+
+                            else -> {
+                                AssetTokenType.SIMPLE
+                            }
+                        },
                         slug = balance.slug,
                         name = token.name,
-                        image = token.image?.let { TokenImage.Url(it) },
+                        image = if (token.slug == TONCOIN_SLUG) {
+                            TokenImage.Resource(R.drawable.toncoin)
+                        } else {
+                            token.image?.let { TokenImage.Url(it) }
+                        },
                         amount = balance.balance.toBigDecimal().movePointLeft(token.decimals),
                         amountUsd = balance.balance.toBigDecimal()
                             .movePointLeft(token.decimals) * token.priceUsd.toBigDecimal(),
                         price = token.price.toFloat(),
                         symbol = token.symbol,
                         change = token.percentChange24h.toFloat(),
-                        apy = null // TODO
+                        apy = if (token.slug == TONCOIN_SLUG) stakingState?.apy else null
                     )
                 }
             }
@@ -163,7 +200,6 @@ class BlockchainRepositoryWebViewImpl(
     }
 
     override suspend fun getCurrentAccountWalletBalance(): BigInteger {
-
         val address = userSettingsRepository.getWalletAddress().first()
 
         val jsonString = evaluateJs(
@@ -178,7 +214,7 @@ class BlockchainRepositoryWebViewImpl(
     private suspend fun evaluateJs(script: String): Result<String> {
         return suspendCancellableCoroutine { cont ->
             continuation = cont
-            webView.evaluateJavascript(script, {})
+            webView.evaluateJavascript(script) {}
         }
     }
 
@@ -198,6 +234,14 @@ class BlockchainRepositoryWebViewImpl(
 
         CoroutineScope(Dispatchers.IO).launch {
             tokenDao.insertTokens(tokenEntities)
+        }
+    }
+
+    fun updateStaking(update: ApiUpdate.Stacking) {
+        val newStakingState: StakingStateEntity = update.toEntity()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            stakingStateDao.updateStakingState(newStakingState)
         }
     }
 
@@ -227,9 +271,10 @@ class BlockchainRepositoryWebViewImpl(
             val json = Json { ignoreUnknownKeys = true }
             when (val update = json.decodeFromString(ApiUpdate.serializer(), updateJson)) {
                 is ApiUpdate.Balances -> {
-                    val balancesToUpdate = update.balancesToUpdate.mapValues { (_, balanceString) ->
-                        BigInteger(balanceString)
-                    }
+                    val balancesToUpdate =
+                        update.balancesToUpdate.mapValues { (_, balanceString) ->
+                            BigInteger(balanceString)
+                        }
 
                     updateBalances(
                         update.accountId,
@@ -240,6 +285,8 @@ class BlockchainRepositoryWebViewImpl(
                 is ApiUpdate.Tokens -> {
                     updateTokens(update.tokens.values.toList())
                 }
+
+                is ApiUpdate.Stacking -> updateStaking(update)
             }
         }
     }
