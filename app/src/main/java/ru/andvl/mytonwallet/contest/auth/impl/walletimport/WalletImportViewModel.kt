@@ -30,7 +30,7 @@ class WalletImportViewModel(
     override fun obtainEvent(event: WalletImportAction) {
         viewModelScope.launch {
             when (event) {
-                is WalletImportAction.TESTNavigate -> {
+                is WalletImportAction.AutofillAccountWithoutTransactions -> {
                     _state.update {
                         it.copy(
                             inputWords = listOf(
@@ -40,6 +40,21 @@ class WalletImportViewModel(
                                 "coconut", "labor", "butter", "rescue",
                                 "year", "civil", "never", "wave",
                                 "monkey", "fog", "sun", "pattern",
+                            )
+                        )
+                    }
+                }
+
+                is WalletImportAction.AutofillAccountWithTransactions -> {
+                    _state.update {
+                        it.copy(
+                            inputWords = listOf(
+                                "sure", "trim", "oxygen", "access",
+                                "lava", "sad", "pride", "marriage",
+                                "happy", "umbrella", "join", "roof",
+                                "include", "damage", "dust", "panel",
+                                "canvas", "magic", "chicken", "post",
+                                "actress", "course", "report", "shop",
                             )
                         )
                     }

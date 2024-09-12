@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,7 +31,8 @@ import kotlin.math.max
 fun WalletImportTopBar(
     scrollState: LazyListState,
     onBackClicked: () -> Unit,
-    onTESTNavigate: () -> Unit, // TODO delete
+    onAutofillAccountWithTransactionsClicked: () -> Unit, // TODO delete
+    onAutofillAccountWithoutTransactionsClicked: () -> Unit, // TODO delete
     modifier: Modifier = Modifier
 ) {
     val topBarHeight = 64.dp
@@ -68,7 +70,10 @@ fun WalletImportTopBar(
         },
         // TODO delete
         actions = {
-            IconButton(onClick = onTESTNavigate) {
+            IconButton(onClick = onAutofillAccountWithoutTransactionsClicked) {
+                Icon(imageVector = Icons.Default.Face, contentDescription = null)
+            }
+            IconButton(onClick = onAutofillAccountWithTransactionsClicked) {
                 Icon(imageVector = Icons.Default.AccountCircle, contentDescription = null)
             }
         },

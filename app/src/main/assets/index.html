@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My App</title>
-    <script src="./bundle.js"></script>
     <script>
-        const AVAILABLE_UPDATE_TYPES = ['updateBalances', 'updateTokens', 'updateStaking'];
+        const AVAILABLE_UPDATE_TYPES = ['updateBalances', 'updateTokens', 'updateStaking', 'newActivities'];
 
         function serializeBigInt(value) {
             if (typeof value === 'bigint') {
@@ -45,7 +44,7 @@
             const serializedUpdate = serializeBigInt(update);
 
             if (typeof AndroidInterface !== 'undefined' && AndroidInterface.onApiUpdate && AVAILABLE_UPDATE_TYPES.includes(type)) {
-                AndroidInterface.onApiUpdate(JSON.stringify(serializedUpdate));
+                AndroidInterface.onApiUpdate(JSON.stringify(type), JSON.stringify(serializedUpdate));
             }
         }
 
@@ -65,6 +64,7 @@
             }
         }
     </script>
+    <script src="./bundle.js"></script>
 </head>
 <body>
 </body>

@@ -35,7 +35,7 @@ val appModule = module {
         BottomBarDecomposeComponentImpl.Factory()
     }
     single<BlockchainRepository> {
-        BlockchainRepositoryWebViewImpl(get(), get(), get(), get(), get())
+        BlockchainRepositoryWebViewImpl(get(), get(), get(), get(), get(), get())
     }
     single<UserSettingsRepository> {
         UserSettingsRepositoryImpl(get())
