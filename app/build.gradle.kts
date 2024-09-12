@@ -94,6 +94,9 @@ dependencies {
 
     // DataStore
     implementation(libs.androidx.datastore.preferences)
+
+    // DateTime
+    implementation(libs.kotlinx.datetime)
 }
 
 //vkompose {

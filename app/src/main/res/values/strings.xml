@@ -46,4 +46,6 @@
     <string name="percent">%</string>
     <string name="main_wallet_asset_apy">APY %1$s%%</string>
     <string name="main_wallet_asset_change_up">+%1$s%%</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 </resources>
