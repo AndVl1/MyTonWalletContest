@@ -26,6 +26,7 @@ class WalletViewModel(
     init {
         viewModelScope.launch {
             getWalletBalance()
+            fetchAllActivitySlice()
             getAssetTokens()
         }
     }
@@ -61,6 +62,18 @@ class WalletViewModel(
                 blockchainRepository.getCurrentAccountAssetTokens().collect { assetTokens ->
                     Log.d("getAssetTokens", assetTokens.toString())
                     _state.update { it.copy(assetTokens = assetTokens) }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, e.message, e)
+        }
+    }
+
+    private suspend fun fetchAllActivitySlice() {
+        try {
+            withContext(Dispatchers.Main) {
+                blockchainRepository.fetchAllActivitySlice(50).apply {
+                    _state.update { it.copy(historyActivities = this) }
                 }
             }
         } catch (e: Exception) {

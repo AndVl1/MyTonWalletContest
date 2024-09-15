@@ -22,18 +22,108 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.HistoryActivity
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 import ru.andvl.mytonwallet.contest.ui.theme.ProfitColor
+import ru.andvl.mytonwallet.contest.utils.formatTime
 
 @Composable
 fun WalletTransactionItem(
+    activity: HistoryActivity,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    Row(
+        modifier = modifier
+            .clickable { onClick() }
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (activity !is HistoryActivity.SwappedTransaction) {
+            Image( // TODO url
+                painter = painterResource(R.drawable.toncoin),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+            )
+        } else {
 
+        }
+        Spacer(modifier = Modifier.width(12.dp))
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
+            if (activity !is HistoryActivity.SwappedTransaction) {
+                Text(
+                    text = "UQBK...y8I1",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            } else {
+                Row {
+                    Text(
+                        text = activity.from,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_double_arrow),
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        contentDescription = null
+                    )
+                    Text(
+                        text = activity.to,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+            }
+            Text(
+                text = stringResource(activity.nameRes) + " · " + formatTime(activity.dateTime),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.tertiary
+            )
+        }
+
+        Column(
+            horizontalAlignment = Alignment.End
+        ) {
+            Text(
+                text = "12 TON",
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            Text(
+                text = "\$96",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.tertiary
+            )
+        }
+    }
+
+//    when (activity) {
+//        is HistoryActivity.SentTransaction -> {
+//            Text(text = "Sent")
+//        }
+//
+//        is HistoryActivity.ReceivedTransaction -> {
+//            Text(text = "Received")
+//        }
+//
+//        is HistoryActivity.SwappedTransaction -> {
+//            Text(text = "Swapped")
+//        }
+//
+//        is HistoryActivity.NftReceivedTransaction -> {
+//            Text(text = "NftReceived")
+//        }
+//
+//        is HistoryActivity.NftSentTransaction -> {
+//            Text(text = "NftSent")
+//        }
+//    }
 }
 
 @Composable

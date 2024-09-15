@@ -25,7 +25,7 @@ sealed class ApiActivity {
         val normalizedAddress: String,
         val inMsgHash: String,
         val shouldHide: Boolean? = null,
-        val type: String? = null,
+        val type: ApiTransactionType? = null,
         val metadata: ApiTransactionMetadata? = null,
         val nft: ApiNft? = null
     ) : ApiActivity()

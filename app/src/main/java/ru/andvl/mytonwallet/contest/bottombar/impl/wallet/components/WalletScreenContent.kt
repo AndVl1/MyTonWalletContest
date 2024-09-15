@@ -30,7 +30,7 @@ fun WalletScreenContent(
             thickness = 12.dp,
             color = MaterialTheme.colorScheme.tertiaryContainer
         )
-        WalletTransactionHistory()
+        WalletTransactionHistory(state.historyActivities)
     }
 }
 

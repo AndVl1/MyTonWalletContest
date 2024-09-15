@@ -3,8 +3,10 @@ package ru.andvl.mytonwallet.contest.mappers
 import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.ApiStakingState
 import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.ApiUpdate
 import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.StakingStateResultDto
+import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.SwapTokenDto
 import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.TokenDto
 import ru.andvl.mytonwallet.contest.database.entities.StakingStateEntity
+import ru.andvl.mytonwallet.contest.database.entities.SwapTokenEntity
 import ru.andvl.mytonwallet.contest.database.entities.TokenEntity
 
 fun TokenDto.toEntity(): TokenEntity {
@@ -21,6 +23,23 @@ fun TokenDto.toEntity(): TokenEntity {
         price = quote.price,
         priceUsd = quote.priceUsd,
         percentChange24h = quote.percentChange24h
+    )
+}
+
+fun SwapTokenDto.toEntity(): SwapTokenEntity {
+    return SwapTokenEntity(
+        slug = slug,
+        name = name,
+        symbol = symbol,
+        blockchain = blockchain,
+        decimals = decimals,
+        image = image,
+        isPopular = isPopular,
+        color = color,
+        price = price,
+        priceUsd = priceUsd,
+        contract = contract,
+//        keywords = keywords
     )
 }
 

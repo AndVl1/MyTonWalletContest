@@ -48,4 +48,8 @@
     <string name="main_wallet_asset_change_up">+%1$s%%</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+    <string name="main_wallet_transaction_sent">Sent</string>
+    <string name="main_wallet_transaction_received">Received</string>
+    <string name="main_wallet_transaction_nft_received">Received NFT</string>
+    <string name="main_wallet_transaction_nft_sent">Sent NFT</string>
 </resources>

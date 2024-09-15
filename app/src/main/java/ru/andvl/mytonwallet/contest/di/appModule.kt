@@ -12,6 +12,7 @@ import ru.andvl.mytonwallet.contest.bottombar.impl.api.BottomBarDecomposeCompone
 import ru.andvl.mytonwallet.contest.database.MyTonWalletDatabase
 import ru.andvl.mytonwallet.contest.database.daos.BalanceDao
 import ru.andvl.mytonwallet.contest.database.daos.StakingStateDao
+import ru.andvl.mytonwallet.contest.database.daos.SwapTokenDao
 import ru.andvl.mytonwallet.contest.database.daos.TokenDao
 import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
 import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepositoryImpl
@@ -35,7 +36,7 @@ val appModule = module {
         BottomBarDecomposeComponentImpl.Factory()
     }
     single<BlockchainRepository> {
-        BlockchainRepositoryWebViewImpl(get(), get(), get(), get(), get(), get())
+        BlockchainRepositoryWebViewImpl(get(), get(), get(), get(), get(), get(), get())
     }
     single<UserSettingsRepository> {
         UserSettingsRepositoryImpl(get())
@@ -53,6 +54,9 @@ val appModule = module {
     }
     single<TokenDao> {
         get<MyTonWalletDatabase>().tokenDao()
+    }
+    single<SwapTokenDao> {
+        get<MyTonWalletDatabase>().swapTokenDao()
     }
     single<StakingStateDao> {
         get<MyTonWalletDatabase>().stakingStateDao()

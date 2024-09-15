@@ -21,7 +21,9 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
-import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.ApiNewActivities
+import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.ApiActivity
+import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.ApiNewActivitiesDto
+import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.ApiTransactionType
 import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.ApiUpdate
 import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.ApiUpdateType
 import ru.andvl.mytonwallet.contest.blockchain.impl.dtos.AuthResultDto
@@ -33,14 +35,18 @@ import ru.andvl.mytonwallet.contest.blockchain.util.TONCOIN_SLUG
 import ru.andvl.mytonwallet.contest.blockchain.util.WebViewHolder
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetToken
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetTokenType
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.HistoryActivity
+import ru.andvl.mytonwallet.contest.bottombar.impl.model.Nft
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.TokenImage
 import ru.andvl.mytonwallet.contest.database.daos.BalanceDao
 import ru.andvl.mytonwallet.contest.database.daos.StakingStateDao
+import ru.andvl.mytonwallet.contest.database.daos.SwapTokenDao
 import ru.andvl.mytonwallet.contest.database.daos.TokenDao
 import ru.andvl.mytonwallet.contest.database.entities.BalanceEntity
 import ru.andvl.mytonwallet.contest.database.entities.StakingStateEntity
 import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
 import ru.andvl.mytonwallet.contest.mappers.toEntity
+import ru.andvl.mytonwallet.contest.utils.timestampToDateTime
 import java.math.BigInteger
 import kotlin.coroutines.resume
 
@@ -50,6 +56,7 @@ class BlockchainRepositoryWebViewImpl(
     private val userSettingsRepository: UserSettingsRepository,
     private val balanceDao: BalanceDao,
     private val tokenDao: TokenDao,
+    private val swapTokenDao: SwapTokenDao,
     private val stakingStateDao: StakingStateDao
 ) : BlockchainRepository {
     private var currentAccountId: String? = null
@@ -217,6 +224,108 @@ class BlockchainRepositoryWebViewImpl(
         return BigInteger(Json.decodeFromString<String>(jsonString))
     }
 
+    override suspend fun fetchAllActivitySlice(limit: Int): List<HistoryActivity> {
+        val accountId = userSettingsRepository.getWalletAccountId().first()
+        val jsonString = evaluateJs(
+            """
+            callApi('fetchAllActivitySlice', "$accountId", {}, $limit)
+            """.trimIndent()
+        ).getOrThrow()
+
+        val json = Json {
+            classDiscriminator = "kind"
+            ignoreUnknownKeys = true
+        }
+
+        val result: List<ApiActivity> = json.decodeFromString(jsonString)
+        return result.map {
+            when (it) {
+                is ApiActivity.ApiTransactionActivity -> {
+                    when (it.type) {
+                        ApiTransactionType.NFT_RECEIVED -> {
+                            HistoryActivity.NftReceivedTransaction(
+                                dateTime = timestampToDateTime(it.timestamp),
+                                from = it.fromAddress,
+                                fee = it.fee.toFloat(),
+                                nft = it.nft!!.let { nft ->
+                                    Nft(
+                                        index = nft.index,
+                                        name = nft.name,
+                                        description = nft.description,
+                                        image = nft.image,
+                                        address = nft.address,
+                                        thumbnail = nft.thumbnail,
+                                    )
+                                }
+                            )
+                        }
+
+                        ApiTransactionType.NFT_TRANSFERRED -> {
+                            HistoryActivity.NftSentTransaction(
+                                dateTime = timestampToDateTime(it.timestamp),
+                                to = it.toAddress,
+                                fee = it.fee.toFloat(),
+                                nft = it.nft!!.let { nft ->
+                                    Nft(
+                                        index = nft.index,
+                                        name = nft.name,
+                                        description = nft.description,
+                                        image = nft.image,
+                                        address = nft.address,
+                                        thumbnail = nft.thumbnail,
+                                    )
+                                }
+                            )
+                        }
+
+//                        ApiTransactionType.SWAP -> {
+//                            HistoryActivity.SwappedTransaction(
+//                                  TODO
+//                            )
+//                        }
+                        else -> {
+                            if (it.isIncoming) {
+                                HistoryActivity.ReceivedTransaction(
+                                    dateTime = timestampToDateTime(it.timestamp),
+                                    amount = it.amount.toBigDecimal(),
+                                    amountUsd = it.amount.toBigDecimal() * tokenDao.getTokenBySlug(
+                                        it.slug
+                                    )
+                                        .first().price.toBigDecimal(),
+                                    message = it.inMsgHash,
+                                    from = it.fromAddress,
+                                    fee = it.fee.toFloat(),
+                                )
+                            } else {
+                                HistoryActivity.SentTransaction(
+                                    dateTime = timestampToDateTime(it.timestamp),
+                                    amount = it.amount.toBigDecimal(),
+                                    amountUsd = it.amount.toBigDecimal() * tokenDao.getTokenBySlug(
+                                        it.slug
+                                    ).first().price.toBigDecimal(),
+                                    message = it.comment,
+                                    to = it.toAddress,
+                                    fee = it.fee.toFloat(),
+                                )
+                            }
+                        }
+                    }
+                }
+
+                is ApiActivity.ApiSwapActivity -> {
+                    HistoryActivity.SwappedTransaction(
+                        dateTime = timestampToDateTime(it.timestamp),
+                        from = it.from,
+                        fromAmount = it.fromAmount.toBigDecimal(),
+                        to = it.to,
+                        toAmount = it.toAmount.toBigDecimal(),
+                        fee = it.swapFee.toFloat()
+                    )
+                }
+            }
+        }
+    }
+
     private suspend fun evaluateJs(script: String): Result<String> {
         return suspendCancellableCoroutine { cont ->
             continuation = cont
@@ -243,6 +352,16 @@ class BlockchainRepositoryWebViewImpl(
         }
     }
 
+    fun updateSwapTokens(update: ApiUpdate.SwapTokens) {
+        val swapTokens = update.tokens.values.toList()
+        val tokenEntities = swapTokens.map { it.toEntity() }
+        Log.d("updateSwapTokens", "Updated swap tokens: $tokenEntities")
+
+        CoroutineScope(Dispatchers.IO).launch {
+            swapTokenDao.insertTokens(tokenEntities)
+        }
+    }
+
     fun updateStaking(update: ApiUpdate.Stacking) {
         val newStakingState: StakingStateEntity = update.toEntity()
 
@@ -251,7 +370,7 @@ class BlockchainRepositoryWebViewImpl(
         }
     }
 
-    fun updateNewActivities(update: ApiNewActivities) {
+    fun updateNewActivities(update: ApiNewActivitiesDto) {
         Log.d("updateNewActivities", update.toString())
     }
 
@@ -304,6 +423,12 @@ class BlockchainRepositoryWebViewImpl(
                     updateTokens(updateTokens.tokens.values.toList())
                 }
 
+                ApiUpdateType.SWAP_TOKENS -> {
+                    val updateSwapTokens: ApiUpdate.SwapTokens =
+                        json.decodeFromString(updateJson)
+                    updateSwapTokens(updateSwapTokens)
+                }
+
                 ApiUpdateType.STAKING -> {
                     val updateStaking: ApiUpdate.Stacking = json.decodeFromString(updateJson)
                     updateStaking(updateStaking)
@@ -314,7 +439,7 @@ class BlockchainRepositoryWebViewImpl(
                         classDiscriminator = "kind"
                         ignoreUnknownKeys = true
                     }
-                    val updateNewActivities: ApiNewActivities =
+                    val updateNewActivities: ApiNewActivitiesDto =
                         jsonNewActivities.decodeFromString(updateJson)
                     updateNewActivities(updateNewActivities)
                 }

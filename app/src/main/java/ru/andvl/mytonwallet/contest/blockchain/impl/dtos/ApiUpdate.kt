@@ -24,6 +24,13 @@ sealed class ApiUpdate {
     ) : ApiUpdate()
 
     @Serializable
+    @SerialName("updateSwapTokens")
+    data class SwapTokens(
+        override val updateType: ApiUpdateType = ApiUpdateType.SWAP_TOKENS,
+        val tokens: Map<String, SwapTokenDto>
+    ) : ApiUpdate()
+
+    @Serializable
     @SerialName("updateStaking")
     data class Stacking(
         override val updateType: ApiUpdateType = ApiUpdateType.STAKING,
@@ -51,6 +58,9 @@ enum class ApiUpdateType {
     @SerialName("updateTokens")
     TOKENS,
 
+    @SerialName("updateSwapTokens")
+    SWAP_TOKENS,
+
     @SerialName("updateStaking")
     STAKING,
 
@@ -59,7 +69,7 @@ enum class ApiUpdateType {
 }
 
 @Serializable
-data class ApiNewActivities(
+data class ApiNewActivitiesDto(
     val accountId: String,
     val activities: List<ApiActivity>,
     val noForward: Boolean? = null,
