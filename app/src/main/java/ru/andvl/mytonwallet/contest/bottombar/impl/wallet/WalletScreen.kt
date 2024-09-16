@@ -1,5 +1,11 @@
 package ru.andvl.mytonwallet.contest.bottombar.impl.wallet
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -75,31 +81,46 @@ fun WalletScreen(
                 onViewInExplorerClicked = { onAction(WalletAction.OnViewInExplorerClicked) }
             )
         }
-
-        if (state.assetTokens.isEmpty()) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-                WalletScreenHeader(
+        AnimatedContent(
+            targetState = state.assetTokens.isEmpty(),
+            transitionSpec = {
+                (fadeIn(
+                    animationSpec = tween(
+                        220,
+                        delayMillis = 90
+                    )
+                ) + scaleIn(
+                    initialScale = 0.97f,
+                    animationSpec = tween(220, delayMillis = 90)
+                )).togetherWith(fadeOut(animationSpec = tween(90)))
+            },
+            label = ""
+        ) { isEmpty ->
+            if (isEmpty) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                ) {
+                    WalletScreenHeader(
+                        state = state,
+                        onAction = onAction,
+                        scrollProgress = scrollProgress,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    WalletNoTransactions(modifier = Modifier.weight(1f))
+                }
+            } else {
+                WalletScreenContent(
                     state = state,
                     onAction = onAction,
+                    lazyListState = scrollState,
                     scrollProgress = scrollProgress,
-                    modifier = Modifier.fillMaxWidth()
+                    contentPadding = innerPadding,
+                    modifier = Modifier.fillMaxSize()
                 )
-                WalletNoTransactions(modifier = Modifier.weight(1f))
             }
-        } else {
-            WalletScreenContent(
-                state = state,
-                onAction = onAction,
-                lazyListState = scrollState,
-                scrollProgress = scrollProgress,
-                contentPadding = innerPadding,
-                modifier = Modifier.fillMaxSize()
-            )
         }
     }
 }
