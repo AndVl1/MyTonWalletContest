@@ -1,7 +1,6 @@
 package ru.andvl.mytonwallet.contest.auth.impl.model
 
 import kotlinx.serialization.Serializable
-import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 
 @Serializable
 sealed interface AuthNavigationConfig {
@@ -18,27 +17,26 @@ sealed interface AuthNavigationConfig {
     class WalletCreatedStartScreen : WalletCreatedFlow
 
     @Serializable
-    class SetPasscodeScreen : WalletCreatedFlow
+    data object WalletCreatedSetUpPasscode : WalletCreatedFlow
 
     @Serializable
-    data class ConfirmPasscodeScreen(
-        val correctPasscode: String,
-        val passcodeLength: PasscodeLength
+    data class RecoveryListScreen(
+        val passcode: String
     ) : WalletCreatedFlow
 
     @Serializable
-    class BiometricLockScreen : WalletCreatedFlow
-
-    @Serializable
-    class RecoveryListScreen : WalletCreatedFlow
-
-    @Serializable
     data class RecoveryTestScreen(
-        val recoveryWords: List<String>
+        val recoveryWords: List<String>,
+        val passcode: String
     ) : WalletCreatedFlow
 
     sealed interface WalletImportFlow : AuthNavigationConfig
 
     @Serializable
     class WalletImportScreen : WalletImportFlow
+
+    @Serializable
+    data class WalletImportSetUpPasscode(
+        val mnemonic: List<String>
+    ) : WalletImportFlow
 }

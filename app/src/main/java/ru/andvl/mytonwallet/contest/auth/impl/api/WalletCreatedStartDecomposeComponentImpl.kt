@@ -17,7 +17,7 @@ class WalletCreatedStartDecomposeComponentImpl(
     override fun Render() {
         WalletCreatedStartScreen(
             onSetUpClicked = {
-                navigation.replaceCurrent(AuthNavigationConfig.SetPasscodeScreen())
+                navigation.replaceCurrent(AuthNavigationConfig.WalletCreatedSetUpPasscode)
             }
         )
     }

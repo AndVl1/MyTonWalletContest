@@ -15,20 +15,20 @@ import ru.andvl.mytonwallet.contest.decompose.ScreenDecomposeComponent
 class RecoveryTestDecomposeComponentImpl(
     componentContext: ComponentContext,
     private val navigation: StackNavigation<AuthNavigationConfig>,
-    private val recoveryWords: List<String>
+    private val recoveryWords: List<String>,
+    private val passcode: String,
+    private val navigateToMain: () -> Unit
 ) : ScreenDecomposeComponent(componentContext) {
 
     @Composable
     override fun Render() {
         val blockchainRepository: BlockchainRepository = koinInject()
         val viewModel = viewModelWithFactory(null) {
-            RecoveryTestViewModel(recoveryWords, blockchainRepository)
+            RecoveryTestViewModel(recoveryWords, passcode, blockchainRepository)
         }
         CreateRecoveryTestScreen(
             navigateBack = { navigation.pop() },
-            navigateToHome = {
-                /*TODO*/
-            },
+            navigateToMain = navigateToMain,
             viewModel = viewModel
         )
     }

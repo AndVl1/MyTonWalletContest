@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.pushToFront
 import org.koin.compose.koinInject
 import ru.andvl.mytonwallet.contest.arch.core.viewModelWithFactory
 import ru.andvl.mytonwallet.contest.auth.impl.model.AuthNavigationConfig
@@ -24,7 +25,9 @@ class WalletImportDecomposeComponentImpl(
         }
 
         CreateWalletImportScreen(
-            navigateToSetPasscode = { /*TODO*/ },
+            navigateToSetPasscode = {
+                navigation.pushToFront(AuthNavigationConfig.WalletImportSetUpPasscode(it))
+            },
             navigateBack = { navigation.pop() },
             viewModel = viewModel
         )

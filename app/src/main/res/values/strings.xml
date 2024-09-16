@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyTonWalletContest</string>
+    <string name="app_name">MyTonWallet</string>
     <string name="auth_mytonwallet_title">MyTonWallet</string>
     <string name="auth_no_wallet_screen_description">Securely store and send crypto.</string>
     <string name="auth_create_new_wallet">Create New Wallet</string>
@@ -36,5 +36,32 @@
     <string name="auth_wallet_import_wrong_phrase_title">Wrong phrase</string>
     <string name="auth_wallet_import_wrong_phrase_description">Looks like you entered an invalid mnemonic phrase.</string>
     <string name="auth_wallet_import_wrong_phrase_close">Close</string>
+    <string name="main_wallet_title">MyTonWallet</string>
+    <string name="main_wallet_add">Add</string>
+    <string name="main_wallet_send">Send</string>
+    <string name="main_wallet_earn">Earn</string>
+    <string name="main_wallet_swap">Swap</string>
+    <string name="main_wallet_no_transactions">You have no transactions\nin this wallet yet.</string>
     <string name="and">and</string>
+    <string name="percent">%</string>
+    <string name="main_wallet_asset_apy">APY %1$s%%</string>
+    <string name="main_wallet_asset_change_up">+%1$s%%</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="main_wallet_transaction_sent">Sent</string>
+    <string name="main_wallet_transaction_received">Received</string>
+    <string name="main_wallet_transaction_nft_received">Received NFT</string>
+    <string name="main_wallet_transaction_nft_sent">Sent NFT</string>
+    <string name="main_wallet_encrypted_message">Message is encrypted.</string>
+    <string name="main_wallet_decrypt">Decrypt</string>
+    <string name="main_wallet_transaction_details">Transaction Details</string>
+    <string name="main_wallet_transaction_received_at">Received at</string>
+    <string name="main_wallet_transaction_from">From</string>
+    <string name="main_wallet_transaction_amount">Amount</string>
+    <string name="main_wallet_transaction_fee">Fee</string>
+    <string name="main_wallet_transaction_to">To</string>
+    <string name="main_wallet_transaction_sent_at">Sent at</string>
+    <string name="main_wallet_transaction_swapped_at">Swapped at</string>
+    <string name="main_wallet_transaction_price_per_1">Price per 1 %1$s</string>
+    <string name="main_wallet_transaction_view_in_explorer">View in Explorer</string>
 </resources>

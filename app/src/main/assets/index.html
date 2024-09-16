@@ -4,8 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My App</title>
-    <script src="./bundle.js"></script>
     <script>
+        const AVAILABLE_UPDATE_TYPES = ['updateBalances', 'updateTokens', 'updateStaking', 'newActivities'];
+
+        function serializeBigInt(value) {
+            if (typeof value === 'bigint') {
+                return value.toString();
+            } else if (typeof value === 'object' && value !== null) {
+                for (const key in value) {
+                    if (value.hasOwnProperty(key)) {
+                        value[key] = serializeBigInt(value[key]);
+                    }
+                }
+            }
+            return value;
+        }
+
         function initApi() {
             if (typeof api !== 'undefined') {
                 try {
@@ -26,15 +40,31 @@
         function onUpdate(update) {
             const { type } = update;
             console.log('Received update:', type);
+
+            const serializedUpdate = serializeBigInt(update);
+
+            if (typeof AndroidInterface !== 'undefined' && AndroidInterface.onApiUpdate && AVAILABLE_UPDATE_TYPES.includes(type)) {
+                AndroidInterface.onApiUpdate(JSON.stringify(type), JSON.stringify(serializedUpdate));
+            }
         }
 
         async function callApi(apiMethod, ...args) {
-            const response = await api.callApi(apiMethod, ...args);
-            console.log("API response:", response);
+            try {
+                const response = await api.callApi(apiMethod, ...args);
+                console.log("API response:", response);
 
-            AndroidInterface.onApiResult(JSON.stringify(response))
+                const serializedResponse = JSON.stringify(response, (key, value) =>
+                    typeof value === 'bigint' ? value.toString() : value
+                );
+
+                AndroidInterface.onApiResult(serializedResponse);
+            } catch (error) {
+                console.error("API call error:", error);
+                AndroidInterface.onApiResult(JSON.stringify({ error: error.message }));
+            }
         }
     </script>
+    <script src="./bundle.js"></script>
 </head>
 <body>
 </body>

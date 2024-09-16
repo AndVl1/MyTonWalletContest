@@ -9,7 +9,8 @@ abstract class AuthDecomposeComponent<C : Any> : CompositeDecomposeComponent<C>(
         operator fun invoke(
             componentContext: ComponentContext,
             launchType: AuthLaunchType,
-            onBack: DecomposeOnBackParameter
+            onBack: DecomposeOnBackParameter,
+            navigateToMain: () -> Unit
         ): AuthDecomposeComponent<*>
     }
 }

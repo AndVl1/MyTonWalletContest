@@ -1,6 +1,5 @@
 package ru.andvl.mytonwallet.contest.auth.impl.confirmpasscode
 
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -11,10 +10,12 @@ import ru.andvl.mytonwallet.contest.arch.BaseViewModel
 import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.NumberKeyboardActionType
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.NumberKeyboardButtonItem
+import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
 
 class ConfirmPasscodeViewModel(
     private val correctPasscode: String,
     passcodeLength: PasscodeLength,
+    private val userSettingsRepository: UserSettingsRepository
 ) : BaseViewModel<ConfirmPasscodeAction, ConfirmPasscodeState>() {
     private val _state = MutableStateFlow(
         ConfirmPasscodeState(
@@ -86,6 +87,7 @@ class ConfirmPasscodeViewModel(
         _state.update { it.copy(isPasscodeIncorrect = !isCorrect) }
 
         if (isCorrect) {
+            userSettingsRepository.updatePasscode(correctPasscode)
             _navigationEvents.emit(
                 ConfirmPasscodeNavigationEvent.NavigateToBiometricLock
             )

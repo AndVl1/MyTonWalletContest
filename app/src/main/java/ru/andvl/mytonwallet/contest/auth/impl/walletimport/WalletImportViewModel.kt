@@ -30,6 +30,36 @@ class WalletImportViewModel(
     override fun obtainEvent(event: WalletImportAction) {
         viewModelScope.launch {
             when (event) {
+                is WalletImportAction.AutofillAccountWithoutTransactions -> {
+                    _state.update {
+                        it.copy(
+                            inputWords = listOf(
+                                "lava", "life", "bacon", "either",
+                                "chapter", "lunch", "soda", "syrup",
+                                "attitude", "option", "embody", "vacant",
+                                "coconut", "labor", "butter", "rescue",
+                                "year", "civil", "never", "wave",
+                                "monkey", "fog", "sun", "pattern",
+                            )
+                        )
+                    }
+                }
+
+                is WalletImportAction.AutofillAccountWithTransactions -> {
+                    _state.update {
+                        it.copy(
+                            inputWords = listOf(
+                                "sure", "trim", "oxygen", "access",
+                                "lava", "sad", "pride", "marriage",
+                                "happy", "umbrella", "join", "roof",
+                                "include", "damage", "dust", "panel",
+                                "canvas", "magic", "chicken", "post",
+                                "actress", "course", "report", "shop",
+                            )
+                        )
+                    }
+                }
+
                 is WalletImportAction.OnContinueClicked -> onContinueClicked()
                 is WalletImportAction.NavigateBack -> {
                     _navigationEvents.emit(WalletImportNavigationEvent.NavigateBack)
@@ -63,7 +93,11 @@ class WalletImportViewModel(
     private suspend fun onContinueClicked() {
         val isChecked = checkWords()
         if (!isChecked) _state.update { it.copy(showErrorDialog = true) }
-        else _navigationEvents.emit(WalletImportNavigationEvent.NavigateToSetPasscode)
+        else _navigationEvents.emit(
+            WalletImportNavigationEvent.NavigateToSetPasscode(
+                _state.value.inputWords
+            )
+        )
     }
 
     private suspend fun checkWords(): Boolean {

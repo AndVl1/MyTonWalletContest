@@ -6,11 +6,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CreatePasscodeScreen(
-    navigateToWallet: () -> Unit,
+    navigateToMain: () -> Unit,
     viewModel: PasscodeViewModel,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -20,7 +19,7 @@ fun CreatePasscodeScreen(
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             navigationEvents.collect { navigationEvent ->
                 when (navigationEvent) {
-                    is PasscodeNavigationEvent.NavigateToWallet -> navigateToWallet()
+                    is PasscodeNavigationEvent.NavigateToMain -> navigateToMain()
                 }
             }
         }

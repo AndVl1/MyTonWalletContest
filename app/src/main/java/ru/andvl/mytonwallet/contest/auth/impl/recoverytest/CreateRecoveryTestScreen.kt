@@ -9,7 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 
 @Composable
 fun CreateRecoveryTestScreen(
-    navigateToHome: () -> Unit,
+    navigateToMain: () -> Unit,
     navigateBack: () -> Unit,
     viewModel: RecoveryTestViewModel
 ) {
@@ -21,7 +21,7 @@ fun CreateRecoveryTestScreen(
             navigationEvents.collect { navigationEvent ->
                 when (navigationEvent) {
                     is RecoveryTestNavigationEvent.NavigateBack -> navigateBack()
-                    is RecoveryTestNavigationEvent.NavigateToHome -> navigateToHome()
+                    is RecoveryTestNavigationEvent.NavigateToHome -> navigateToMain()
                 }
             }
         }
