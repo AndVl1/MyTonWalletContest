@@ -1,5 +1,6 @@
 package ru.andvl.mytonwallet.contest.auth.impl.passcode
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -7,17 +8,22 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.andvl.mytonwallet.contest.arch.BaseViewModel
 import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
+import ru.andvl.mytonwallet.contest.utils.BiometricPromptManager
 
 class PasscodeViewModel(
-    private val userSettingsRepository: UserSettingsRepository
+    private val userSettingsRepository: UserSettingsRepository,
+    private val biometricPromptManager: BiometricPromptManager
 ) : BaseViewModel<PasscodeAction, PasscodeState>() {
     private val _state = MutableStateFlow(PasscodeState())
     override val state = _state.asStateFlow()
 
     private val _navigationEvents = MutableSharedFlow<PasscodeNavigationEvent>()
     val navigationEvents = _navigationEvents.asSharedFlow()
+
+    val biometricResults = biometricPromptManager.promptResults
 
     init {
         viewModelScope.launch {
@@ -65,7 +71,8 @@ class PasscodeViewModel(
                     }
                 }
 
-                is PasscodeAction.Fingerprint -> { /*TODO*/
+                is PasscodeAction.Fingerprint -> withContext(Dispatchers.Main) {
+                    biometricPromptManager.showBiometricPrompt()
                 }
 
                 is PasscodeAction.CheckPasscode -> onPasscodeCheck()

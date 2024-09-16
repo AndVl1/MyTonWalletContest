@@ -1,7 +1,9 @@
 package ru.andvl.mytonwallet.contest.di
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import org.koin.dsl.module
+import ru.andvl.mytonwallet.contest.MainActivity
 import ru.andvl.mytonwallet.contest.auth.api.AuthDecomposeComponent
 import ru.andvl.mytonwallet.contest.auth.impl.api.AuthDecomposeComponentImpl
 import ru.andvl.mytonwallet.contest.blockchain.api.BlockchainRepository
@@ -21,9 +23,14 @@ import ru.andvl.mytonwallet.contest.root.api.RootDecomposeComponent
 import ru.andvl.mytonwallet.contest.root.impl.RootDecomposeComponentImpl
 import ru.andvl.mytonwallet.contest.setuppasscode.api.SetUpPasscodeDecomposeComponent
 import ru.andvl.mytonwallet.contest.setuppasscode.impl.api.SetUpPasscodeDecomposeComponentImpl
+import ru.andvl.mytonwallet.contest.utils.BiometricPromptManager
 
 val appModule = module {
     single { WebViewHolder(get()) }
+    single { BiometricPromptManager(get()) }
+    single<AppCompatActivity> {
+        MainActivity.getInstance() as MainActivity
+    }
     single<AuthDecomposeComponent.Factory> {
         AuthDecomposeComponentImpl.Factory(get())
     }

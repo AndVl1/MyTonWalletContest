@@ -64,4 +64,7 @@
     <string name="main_wallet_transaction_swapped_at">Swapped at</string>
     <string name="main_wallet_transaction_price_per_1">Price per 1 %1$s</string>
     <string name="main_wallet_transaction_view_in_explorer">View in Explorer</string>
+    <string name="auth_passcode_fingerprint_title">Unlock to use MyTonWallet</string>
+    <string name="auth_passcode_fingerprint_description">Scan your fingerprint.</string>
+    <string name="auth_passcode_fingerprint_use_passcode">Use Passcode</string>
 </resources>

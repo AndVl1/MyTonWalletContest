@@ -27,6 +27,7 @@ fun CreatePasscodeScreen(
 
     PasscodeScreen(
         state = viewModel.state.collectAsState().value,
+        biometricResult = viewModel.biometricResults.collectAsState(initial = null).value,
         onAction = viewModel::obtainEvent
     )
 }

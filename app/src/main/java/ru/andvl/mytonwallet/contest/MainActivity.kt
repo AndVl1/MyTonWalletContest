@@ -2,10 +2,10 @@ package ru.andvl.mytonwallet.contest
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -19,10 +19,16 @@ import ru.andvl.mytonwallet.contest.root.api.RootDecomposeComponent
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
 import ru.andvl.mytonwallet.contest.ui.utils.WalletStackAnimationProvider
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     private val rootComponentFactory: RootDecomposeComponent.Factory = get()
 
+    companion object {
+        var mainActivity: MainActivity? = null
+        fun getInstance(): MainActivity? = mainActivity
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        mainActivity = this
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(
             navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
@@ -43,5 +49,20 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity = this
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        mainActivity = this
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainActivity = null
     }
 }

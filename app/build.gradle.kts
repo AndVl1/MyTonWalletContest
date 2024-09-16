@@ -98,7 +98,11 @@ dependencies {
     // DateTime
     implementation(libs.kotlinx.datetime)
 
+    // Coil
     implementation(libs.coil.compose)
+
+    // Biometric
+    implementation(libs.androidx.biometric)
 }
 
 //vkompose {

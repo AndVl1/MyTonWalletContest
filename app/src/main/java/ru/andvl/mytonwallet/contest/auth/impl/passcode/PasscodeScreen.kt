@@ -1,5 +1,8 @@
 package ru.andvl.mytonwallet.contest.auth.impl.passcode
 
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,13 +30,33 @@ import ru.andvl.mytonwallet.contest.auth.impl.passcode.components.PasscodeLockTi
 import ru.andvl.mytonwallet.contest.ui.components.DotIndicatorsRow
 import ru.andvl.mytonwallet.contest.ui.components.ErrorShakeBox
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
+import ru.andvl.mytonwallet.contest.utils.BiometricPromptManager
+import ru.andvl.mytonwallet.contest.utils.launchBiometricAuth
 
 @Composable
 fun PasscodeScreen(
     state: PasscodeState,
+    biometricResult: BiometricPromptManager.BiometricResult?,
     onAction: (PasscodeAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val enrollLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+        onResult = {
+            Log.d("LaunchBiometricAuth", "Activity result: $it")
+        }
+    )
+
+    LaunchedEffect(biometricResult) {
+        Log.d("biometricResult", biometricResult.toString())
+
+        if (biometricResult is BiometricPromptManager.BiometricResult.AuthenticationNotSet) {
+            launchBiometricAuth(enrollLauncher)
+        } else if (biometricResult is BiometricPromptManager.BiometricResult.AuthenticationSuccess) {
+            onAction(PasscodeAction.NavigateNext)
+        }
+    }
+
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp)
     ) {
@@ -96,6 +120,7 @@ fun PasscodeScreenPreview() {
             state = PasscodeState(
                 inputPasscode = "12"
             ),
+            biometricResult = BiometricPromptManager.BiometricResult.AuthenticationNotSet,
             onAction = {}
         )
     }
