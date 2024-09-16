@@ -1,21 +1,30 @@
 package ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components
 
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.util.fastForEach
+import kotlinx.datetime.LocalDate
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.HistoryActivity
 
 fun LazyListScope.walletTransactionHistory(
-    history: List<HistoryActivity>,
+    history: Map<LocalDate, List<HistoryActivity>>,
     onHistoryItemClicked: (HistoryActivity) -> Unit,
 ) {
-    itemsIndexed(history) { index, activity ->
-        ListItemBoxWithDivider(
-            hasDivider = index < history.size - 1
-        ) {
-            WalletTransactionItem(
-                activity = activity,
-                onClick = { onHistoryItemClicked(activity) }
-            )
+    items(
+        items = history.entries.toList().sortedByDescending { it.key },
+        key = { it.value }
+    ) { entry ->
+        WalletTransactionDay(day = entry.key)
+
+        entry.value.fastForEach { activity ->
+            ListItemBoxWithDivider(
+                hasDivider = activity != entry.value.last()
+            ) {
+                WalletTransactionItem(
+                    activity = activity,
+                    onClick = { onHistoryItemClicked(activity) }
+                )
+            }
         }
     }
 }

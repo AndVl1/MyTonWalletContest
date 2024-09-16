@@ -86,7 +86,11 @@ class WalletViewModel(
         try {
             withContext(Dispatchers.Main) {
                 blockchainRepository.fetchAllActivitySlice(50).apply {
-                    _state.update { it.copy(historyActivities = this) }
+                    val groupedActivities = this.groupBy { it.dateTime.date }
+
+                    _state.update { currentState ->
+                        currentState.copy(historyActivities = groupedActivities)
+                    }
                 }
             }
         } catch (e: Exception) {
