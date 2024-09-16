@@ -1,27 +1,21 @@
 package ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.util.fastForEachIndexed
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.itemsIndexed
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.HistoryActivity
 
-@Composable
-fun WalletTransactionHistory(
+fun LazyListScope.walletTransactionHistory(
     history: List<HistoryActivity>,
     onHistoryItemClicked: (HistoryActivity) -> Unit,
-    modifier: Modifier = Modifier
 ) {
-    Column(modifier) {
-        history.fastForEachIndexed { index, activity ->
-            ListItemBoxWithDivider(
-                hasDivider = index < history.size - 1
-            ) {
-                WalletTransactionItem(
-                    activity = activity,
-                    onClick = { onHistoryItemClicked(activity) }
-                )
-            }
+    itemsIndexed(history) { index, activity ->
+        ListItemBoxWithDivider(
+            hasDivider = index < history.size - 1
+        ) {
+            WalletTransactionItem(
+                activity = activity,
+                onClick = { onHistoryItemClicked(activity) }
+            )
         }
     }
 }
