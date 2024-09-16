@@ -85,7 +85,7 @@ class WalletViewModel(
     private suspend fun fetchAllActivitySlice() {
         try {
             withContext(Dispatchers.Main) {
-                blockchainRepository.fetchAllActivitySlice(50).apply {
+                blockchainRepository.fetchAllActivitySlice(30).apply {
                     val groupedActivities = this.groupBy { it.dateTime.date }
 
                     _state.update { currentState ->
