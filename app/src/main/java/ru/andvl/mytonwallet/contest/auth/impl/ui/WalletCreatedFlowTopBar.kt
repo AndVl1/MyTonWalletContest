@@ -35,7 +35,8 @@ fun WalletCreatedFlowTopBar(
             }
         },
         colors = TopAppBarDefaults.topAppBarColors().copy(
-            containerColor = Color.Transparent
+            containerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent
         ),
         scrollBehavior = scrollBehavior,
         modifier = modifier
