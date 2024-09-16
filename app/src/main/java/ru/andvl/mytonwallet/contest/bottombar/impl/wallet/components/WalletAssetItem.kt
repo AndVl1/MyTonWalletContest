@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,7 +41,15 @@ fun WalletAssetItem(
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        TokenIcon(isStacking = assetToken.type == AssetTokenType.STACKED && assetToken.apy != null)
+        if (assetToken.image != null) {
+            AssetTokenIcon(
+                image = assetToken.image,
+                isStacking = assetToken.type == AssetTokenType.STACKED && assetToken.apy != null
+            )
+        } else {
+            Spacer(modifier = Modifier.size(48.dp))
+        }
+
         Spacer(modifier = Modifier.width(12.dp))
         Column(
             modifier = Modifier.weight(1f)

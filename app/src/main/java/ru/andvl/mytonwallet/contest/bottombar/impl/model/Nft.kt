@@ -6,5 +6,6 @@ data class Nft(
     val description: String? = null,
     val image: String,
     val address: String,
-    val thumbnail: String
+    val thumbnail: String,
+    val collectionName: String? = null,
 )

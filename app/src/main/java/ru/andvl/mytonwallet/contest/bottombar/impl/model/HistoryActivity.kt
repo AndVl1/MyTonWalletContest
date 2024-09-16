@@ -11,29 +11,33 @@ sealed class HistoryActivity {
     data class SentTransaction(
         override val nameRes: Int = R.string.main_wallet_transaction_sent,
         override val dateTime: LocalDateTime,
+        val token: Token,
         val amount: BigDecimal,
         val amountUsd: BigDecimal,
         val message: String? = null,
         val to: String,
+        val toName: String? = null,
         val fee: Float
     ) : HistoryActivity()
 
     data class ReceivedTransaction(
         override val nameRes: Int = R.string.main_wallet_transaction_received,
         override val dateTime: LocalDateTime,
+        val token: Token,
         val amount: BigDecimal,
         val amountUsd: BigDecimal,
         val message: String? = null,
         val from: String,
+        val fromName: String? = null,
         val fee: Float
     ) : HistoryActivity()
 
     data class SwappedTransaction(
         override val nameRes: Int = R.string.main_wallet_transaction_received,
         override val dateTime: LocalDateTime,
-        val from: String,
+        val fromToken: Token,
         val fromAmount: BigDecimal,
-        val to: String,
+        val toToken: Token,
         val toAmount: BigDecimal,
         val fee: Float
     ) : HistoryActivity()
@@ -42,6 +46,7 @@ sealed class HistoryActivity {
         override val nameRes: Int = R.string.main_wallet_transaction_nft_received,
         override val dateTime: LocalDateTime,
         val from: String,
+        val fromName: String? = null,
         val fee: Float,
         val nft: Nft
     ) : HistoryActivity()
@@ -50,6 +55,7 @@ sealed class HistoryActivity {
         override val nameRes: Int = R.string.main_wallet_transaction_nft_sent,
         override val dateTime: LocalDateTime,
         val to: String,
+        val toName: String? = null,
         val fee: Float,
         val nft: Nft
     ) : HistoryActivity()

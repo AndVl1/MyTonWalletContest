@@ -45,6 +45,7 @@ import ru.andvl.mytonwallet.contest.database.daos.TokenDao
 import ru.andvl.mytonwallet.contest.database.entities.BalanceEntity
 import ru.andvl.mytonwallet.contest.database.entities.StakingStateEntity
 import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
+import ru.andvl.mytonwallet.contest.mappers.toDomain
 import ru.andvl.mytonwallet.contest.mappers.toEntity
 import ru.andvl.mytonwallet.contest.utils.timestampToDateTime
 import java.math.BigInteger
@@ -246,6 +247,7 @@ class BlockchainRepositoryWebViewImpl(
                             HistoryActivity.NftReceivedTransaction(
                                 dateTime = timestampToDateTime(it.timestamp),
                                 from = it.fromAddress,
+                                fromName = it.metadata?.name,
                                 fee = it.fee.toFloat(),
                                 nft = it.nft!!.let { nft ->
                                     Nft(
@@ -255,6 +257,7 @@ class BlockchainRepositoryWebViewImpl(
                                         image = nft.image,
                                         address = nft.address,
                                         thumbnail = nft.thumbnail,
+                                        collectionName = nft.collectionName
                                     )
                                 }
                             )
@@ -264,6 +267,7 @@ class BlockchainRepositoryWebViewImpl(
                             HistoryActivity.NftSentTransaction(
                                 dateTime = timestampToDateTime(it.timestamp),
                                 to = it.toAddress,
+                                toName = it.metadata?.name,
                                 fee = it.fee.toFloat(),
                                 nft = it.nft!!.let { nft ->
                                     Nft(
@@ -273,38 +277,36 @@ class BlockchainRepositoryWebViewImpl(
                                         image = nft.image,
                                         address = nft.address,
                                         thumbnail = nft.thumbnail,
+                                        collectionName = nft.collectionName
                                     )
                                 }
                             )
                         }
 
-//                        ApiTransactionType.SWAP -> {
-//                            HistoryActivity.SwappedTransaction(
-//                                  TODO
-//                            )
-//                        }
                         else -> {
+                            val token = tokenDao.getTokenBySlug(it.slug).first()
                             if (it.isIncoming) {
                                 HistoryActivity.ReceivedTransaction(
                                     dateTime = timestampToDateTime(it.timestamp),
-                                    amount = it.amount.toBigDecimal(),
-                                    amountUsd = it.amount.toBigDecimal() * tokenDao.getTokenBySlug(
-                                        it.slug
-                                    )
-                                        .first().price.toBigDecimal(),
-                                    message = it.inMsgHash,
+                                    token = token.toDomain(),
+                                    amount = it.amount.toBigDecimal().movePointLeft(token.decimals),
+                                    amountUsd = it.amount.toBigDecimal()
+                                        .movePointLeft(token.decimals) * token.price.toBigDecimal(),
+                                    message = it.comment,
                                     from = it.fromAddress,
+                                    fromName = it.metadata?.name,
                                     fee = it.fee.toFloat(),
                                 )
                             } else {
                                 HistoryActivity.SentTransaction(
                                     dateTime = timestampToDateTime(it.timestamp),
-                                    amount = it.amount.toBigDecimal(),
-                                    amountUsd = it.amount.toBigDecimal() * tokenDao.getTokenBySlug(
-                                        it.slug
-                                    ).first().price.toBigDecimal(),
+                                    token = token.toDomain(),
+                                    amount = it.amount.toBigDecimal().movePointLeft(token.decimals),
+                                    amountUsd = it.amount.toBigDecimal()
+                                        .movePointLeft(token.decimals) * token.price.toBigDecimal(),
                                     message = it.comment,
                                     to = it.toAddress,
+                                    toName = it.metadata?.name,
                                     fee = it.fee.toFloat(),
                                 )
                             }
@@ -315,9 +317,9 @@ class BlockchainRepositoryWebViewImpl(
                 is ApiActivity.ApiSwapActivity -> {
                     HistoryActivity.SwappedTransaction(
                         dateTime = timestampToDateTime(it.timestamp),
-                        from = it.from,
+                        fromToken = tokenDao.getTokenBySlug(it.from).first().toDomain(),
                         fromAmount = it.fromAmount.toBigDecimal(),
-                        to = it.to,
+                        toToken = tokenDao.getTokenBySlug(it.to).first().toDomain(),
                         toAmount = it.toAmount.toBigDecimal(),
                         fee = it.swapFee.toFloat()
                     )

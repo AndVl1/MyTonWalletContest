@@ -97,6 +97,8 @@ dependencies {
 
     // DateTime
     implementation(libs.kotlinx.datetime)
+
+    implementation(libs.coil.compose)
 }
 
 //vkompose {
