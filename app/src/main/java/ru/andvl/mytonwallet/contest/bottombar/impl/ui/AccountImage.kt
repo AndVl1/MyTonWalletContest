@@ -13,8 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
@@ -22,13 +24,15 @@ import ru.andvl.mytonwallet.contest.utils.generateVerticalGradient
 
 @Composable
 fun AccountImage(
+    baseColor: Color,
     modifier: Modifier = Modifier,
     name: String? = null,
-    baseColor: Color
+    size: Dp = 48.dp,
+    textStyle: TextStyle = MaterialTheme.typography.titleLarge,
 ) {
     Box(
         modifier = modifier
-            .size(48.dp)
+            .size(size)
             .background(
                 brush = generateVerticalGradient(baseColor),
                 shape = CircleShape
@@ -38,7 +42,7 @@ fun AccountImage(
         if (name != null) {
             Text(
                 text = name.first().toString().uppercase(),
-                style = MaterialTheme.typography.titleLarge,
+                style = textStyle,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.background
             )
@@ -68,7 +72,8 @@ fun AccountImageWithNamePreview() {
 fun AccountImageAnonymousPreview() {
     MyTonWalletContestTheme {
         AccountImage(
-            baseColor = Color.Red
+            baseColor = Color.Red,
+            modifier = Modifier.size(48.dp)
         )
     }
 }

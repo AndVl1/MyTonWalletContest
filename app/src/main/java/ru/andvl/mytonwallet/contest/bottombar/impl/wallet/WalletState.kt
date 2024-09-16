@@ -8,5 +8,7 @@ import java.math.BigInteger
 data class WalletState(
     val balance: BigInteger = BigInteger.ZERO,
     val assetTokens: List<AssetToken> = emptyList(),
-    val historyActivities: List<HistoryActivity> = emptyList()
+    val historyActivities: List<HistoryActivity> = emptyList(),
+    val showTransactionDetails: Boolean = false,
+    val currentTransaction: HistoryActivity? = null
 ) : State

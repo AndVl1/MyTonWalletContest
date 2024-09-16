@@ -38,6 +38,19 @@ class WalletViewModel(
                     _navigationEvents.emit(WalletNavigationEvent.NavigateToSend)
                 }
 
+                is WalletAction.OnTransactionClicked -> {
+                    _state.update {
+                        it.copy(
+                            showTransactionDetails = true,
+                            currentTransaction = event.activity
+                        )
+                    }
+                }
+
+                is WalletAction.OnTransactionDetailsDismiss -> {
+                    _state.update { it.copy(showTransactionDetails = false) }
+                }
+
                 else -> {
                     /*TODO*/
                 }

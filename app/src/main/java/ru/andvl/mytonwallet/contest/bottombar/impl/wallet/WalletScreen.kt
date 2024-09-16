@@ -16,13 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.TransactionBottomSheet
 import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.WalletActionsRow
 import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.WalletNoTransactions
 import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.WalletScreenContent
 import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.WalletScreenTitleWithBalance
 import ru.andvl.mytonwallet.contest.bottombar.impl.wallet.components.WalletScreenTopBar
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
-import ru.andvl.mytonwallet.contest.utils.USD
+import ru.andvl.mytonwallet.contest.utils.USD_SYMBOL
 import kotlin.math.min
 
 @Composable
@@ -40,7 +41,7 @@ fun WalletScreen(
         topBar = {
             WalletScreenTopBar(
                 balance = state.balance.toFloat(),
-                currencySymbol = USD,
+                currencySymbol = USD_SYMBOL,
                 scrollProgress = scrollProgress,
                 onSettingsClicked = { onAction(WalletAction.OnSettingsClicked) },
                 onScanClicked = { onAction(WalletAction.OnScanClicked) }
@@ -48,6 +49,13 @@ fun WalletScreen(
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
+        if (state.showTransactionDetails && state.currentTransaction != null) {
+            TransactionBottomSheet(
+                activity = state.currentTransaction,
+                onDismissRequest = { onAction(WalletAction.OnTransactionDetailsDismiss) },
+                onViewInExplorerClicked = { onAction(WalletAction.OnViewInExplorerClicked) })
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -57,7 +65,7 @@ fun WalletScreen(
         ) {
             WalletScreenTitleWithBalance(
                 balance = state.balance.toFloat(),
-                currencySymbol = USD,
+                currencySymbol = USD_SYMBOL,
                 scrollProgress = scrollProgress
             )
             Spacer(modifier = Modifier.height(16.dp))

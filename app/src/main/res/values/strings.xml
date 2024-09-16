@@ -52,4 +52,16 @@
     <string name="main_wallet_transaction_received">Received</string>
     <string name="main_wallet_transaction_nft_received">Received NFT</string>
     <string name="main_wallet_transaction_nft_sent">Sent NFT</string>
+    <string name="main_wallet_encrypted_message">Message is encrypted.</string>
+    <string name="main_wallet_decrypt">Decrypt</string>
+    <string name="main_wallet_transaction_details">Transaction Details</string>
+    <string name="main_wallet_transaction_received_at">Received at</string>
+    <string name="main_wallet_transaction_from">From</string>
+    <string name="main_wallet_transaction_amount">Amount</string>
+    <string name="main_wallet_transaction_fee">Fee</string>
+    <string name="main_wallet_transaction_to">To</string>
+    <string name="main_wallet_transaction_sent_at">Sent at</string>
+    <string name="main_wallet_transaction_swapped_at">Swapped at</string>
+    <string name="main_wallet_transaction_price_per_1">Price per 1 %1$s</string>
+    <string name="main_wallet_transaction_view_in_explorer">View in Explorer</string>
 </resources>

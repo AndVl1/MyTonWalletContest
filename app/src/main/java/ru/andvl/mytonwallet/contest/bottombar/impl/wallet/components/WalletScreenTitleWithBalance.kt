@@ -12,7 +12,7 @@ import androidx.compose.ui.text.lerp
 import androidx.compose.ui.tooling.preview.Preview
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
-import ru.andvl.mytonwallet.contest.utils.USD
+import ru.andvl.mytonwallet.contest.utils.USD_SYMBOL
 import ru.andvl.mytonwallet.contest.utils.formatBalanceOrTransactionAmount
 
 @Composable
@@ -66,7 +66,7 @@ fun WalletScreenTitleWithBalancePreview() {
     MyTonWalletContestTheme {
         WalletScreenTitleWithBalance(
             balance = 12345.67f,
-            currencySymbol = USD,
+            currencySymbol = USD_SYMBOL,
             scrollProgress = 0f
         )
     }

@@ -30,7 +30,10 @@ fun WalletScreenContent(
             thickness = 12.dp,
             color = MaterialTheme.colorScheme.tertiaryContainer
         )
-        WalletTransactionHistory(state.historyActivities)
+        WalletTransactionHistory(
+            history = state.historyActivities,
+            onHistoryItemClicked = { onAction(WalletAction.OnTransactionClicked(it)) }
+        )
     }
 }
 

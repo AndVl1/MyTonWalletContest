@@ -350,7 +350,8 @@ class BlockchainRepositoryWebViewImpl(
                                     amount = it.amount.toBigDecimal().movePointLeft(token.decimals),
                                     amountUsd = it.amount.toBigDecimal()
                                         .movePointLeft(token.decimals) * token.price.toBigDecimal(),
-                                    message = it.comment,
+                                    comment = it.comment,
+                                    encryptedComment = it.encryptedComment,
                                     from = it.fromAddress,
                                     fromName = it.metadata?.name,
                                     fromColor = accountColor,
@@ -380,7 +381,7 @@ class BlockchainRepositoryWebViewImpl(
                                     amount = it.amount.toBigDecimal().movePointLeft(token.decimals),
                                     amountUsd = it.amount.toBigDecimal()
                                         .movePointLeft(token.decimals) * token.price.toBigDecimal(),
-                                    message = it.comment,
+                                    comment = it.comment,
                                     to = it.toAddress,
                                     toName = it.metadata?.name,
                                     toColor = accountColor,

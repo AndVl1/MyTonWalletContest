@@ -9,6 +9,7 @@ import ru.andvl.mytonwallet.contest.bottombar.impl.model.HistoryActivity
 @Composable
 fun WalletTransactionHistory(
     history: List<HistoryActivity>,
+    onHistoryItemClicked: (HistoryActivity) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier) {
@@ -16,7 +17,10 @@ fun WalletTransactionHistory(
             ListItemBoxWithDivider(
                 hasDivider = index < history.size - 1
             ) {
-                WalletTransactionItem(activity, {})
+                WalletTransactionItem(
+                    activity = activity,
+                    onClick = { onHistoryItemClicked(activity) }
+                )
             }
         }
     }

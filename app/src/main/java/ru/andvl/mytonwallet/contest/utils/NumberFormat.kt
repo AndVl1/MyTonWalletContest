@@ -5,7 +5,7 @@ import java.math.RoundingMode
 
 const val DEFAULT_DECIMAL_PLACES = 9
 const val WHOLE_PART_DELIMITER = ' '
-const val USD = "$"
+const val USD_SYMBOL = "$"
 
 fun formatBalanceOrTransactionAmount(value: Float): String {
     val intPart = value.toInt()
@@ -26,7 +26,7 @@ fun formatBalanceOrTransactionAmount(value: Float): String {
     }
 }
 
-fun formatTokenPrice(value: Float, currency: String = USD): String {
+fun formatTokenPrice(value: Float, currency: String = USD_SYMBOL): String {
     val formatted = "%.2f".format(value).replace(',', '.')
     return "$currency$formatted"
 }
@@ -35,7 +35,7 @@ fun formatPercent(value: Float): String {
     return "%.2f".format(value).replace(',', '.').trimEnd('0').trimEnd(',', '.')
 }
 
-fun formatCurrency(value: BigDecimal, currency: String = USD): String {
+fun formatCurrency(value: BigDecimal, currency: String = USD_SYMBOL): String {
     val formatted = formatInteger(
         value = value,
         noFloor = true
@@ -56,7 +56,7 @@ fun formatTokenAmountUsd(value: BigDecimal): String {
         value = value,
         wholePartDelimiter = ','
     )
-    return "$USD$formatted"
+    return "$USD_SYMBOL$formatted"
 }
 
 fun formatInteger(

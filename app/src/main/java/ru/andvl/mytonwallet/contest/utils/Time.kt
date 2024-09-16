@@ -9,6 +9,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.toJavaLocalDate
+import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
 import ru.andvl.mytonwallet.contest.R
@@ -36,6 +37,14 @@ fun formatHumanDay(date: LocalDate, context: Context): String {
 
 fun formatTime(dateTime: LocalDateTime): String {
     return "%02d:%02d".format(dateTime.hour, dateTime.minute)
+}
+
+fun formatLocalDateTime(dateTime: LocalDateTime): String {
+    val formatter = DateTimeFormatter.ofPattern(
+        "dd MMM, H:mm",
+        getDefaultLocale()
+    )
+    return formatter.format(dateTime.toJavaLocalDateTime())
 }
 
 fun formatFullDay(date: LocalDate): String {

@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.ui.theme.ListDividerColor
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
-import ru.andvl.mytonwallet.contest.utils.USD
+import ru.andvl.mytonwallet.contest.utils.USD_SYMBOL
 import ru.andvl.mytonwallet.contest.utils.formatBalanceOrTransactionAmount
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -113,7 +113,7 @@ private fun WalletScreenTopBarPreview() {
     MyTonWalletContestTheme {
         WalletScreenTopBar(
             balance = 12345.67f,
-            currencySymbol = USD,
+            currencySymbol = USD_SYMBOL,
             scrollProgress = 1f,
             onSettingsClicked = {},
             onScanClicked = {},
