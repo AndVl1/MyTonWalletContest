@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -87,7 +88,6 @@ private fun SwapTransactionPreview() {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 private fun SentNftTransactionPreview() {
@@ -97,6 +97,7 @@ private fun SentNftTransactionPreview() {
                 dateTime = getCurrentDate().atTime(hour = 12, minute = 0),
                 to = "",
                 toName = "alice.ton",
+                toColor = Color.Red,
                 fee = 0.5f,
                 nft = Nft(
                     index = 1,
@@ -130,6 +131,7 @@ private fun ReceivedTransactionPreview() {
                 amountUsd = BigDecimal(0.00000000055),
                 from = "EQDAAp...Mlo1Oi",
                 fromName = "alice.ton",
+                fromColor = Color.Red,
                 fee = 0.5f
             ),
             onClick = {}
@@ -155,6 +157,7 @@ private fun SentTransactionPreview() {
                 amountUsd = BigDecimal(0.00000000055),
                 to = "",
                 toName = "alice.ton",
+                toColor = Color.Red,
                 fee = 0.5f
             ),
             onClick = {}

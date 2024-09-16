@@ -1,5 +1,6 @@
 package ru.andvl.mytonwallet.contest.bottombar.impl.model
 
+import androidx.compose.ui.graphics.Color
 import kotlinx.datetime.LocalDateTime
 import ru.andvl.mytonwallet.contest.R
 import java.math.BigDecimal
@@ -17,6 +18,7 @@ sealed class HistoryActivity {
         val message: String? = null,
         val to: String,
         val toName: String? = null,
+        val toColor: Color,
         val fee: Float
     ) : HistoryActivity()
 
@@ -29,6 +31,7 @@ sealed class HistoryActivity {
         val message: String? = null,
         val from: String,
         val fromName: String? = null,
+        val fromColor: Color,
         val fee: Float
     ) : HistoryActivity()
 
@@ -47,6 +50,7 @@ sealed class HistoryActivity {
         override val dateTime: LocalDateTime,
         val from: String,
         val fromName: String? = null,
+        val fromColor: Color,
         val fee: Float,
         val nft: Nft
     ) : HistoryActivity()
@@ -56,6 +60,7 @@ sealed class HistoryActivity {
         override val dateTime: LocalDateTime,
         val to: String,
         val toName: String? = null,
+        val toColor: Color,
         val fee: Float,
         val nft: Nft
     ) : HistoryActivity()

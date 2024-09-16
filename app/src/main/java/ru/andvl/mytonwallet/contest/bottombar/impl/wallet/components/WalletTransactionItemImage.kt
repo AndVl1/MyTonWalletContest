@@ -48,9 +48,24 @@ fun WalletTransactionItemImage(
             }
         }
 
-        is HistoryActivity.SentTransaction -> AccountImage(name = activity.toName)
-        is HistoryActivity.ReceivedTransaction -> AccountImage(name = activity.fromName)
-        is HistoryActivity.NftSentTransaction -> AccountImage(name = activity.toName)
-        is HistoryActivity.NftReceivedTransaction -> AccountImage(name = activity.fromName)
+        is HistoryActivity.SentTransaction -> AccountImage(
+            name = activity.toName,
+            baseColor = activity.toColor
+        )
+
+        is HistoryActivity.ReceivedTransaction -> AccountImage(
+            name = activity.fromName,
+            baseColor = activity.fromColor
+        )
+
+        is HistoryActivity.NftSentTransaction -> AccountImage(
+            name = activity.toName,
+            baseColor = activity.toColor
+        )
+
+        is HistoryActivity.NftReceivedTransaction -> AccountImage(
+            name = activity.fromName,
+            baseColor = activity.fromColor
+        )
     }
 }

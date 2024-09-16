@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -19,19 +18,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
 import ru.andvl.mytonwallet.contest.ui.theme.MyTonWalletContestTheme
+import ru.andvl.mytonwallet.contest.utils.generateVerticalGradient
 
 @Composable
 fun AccountImage(
     modifier: Modifier = Modifier,
     name: String? = null,
+    baseColor: Color
 ) {
-    val gradientColors = listOf(Color(0xFFFF885E), Color(0xFFFF516A))
-
     Box(
         modifier = modifier
             .size(48.dp)
             .background(
-                brush = Brush.linearGradient(gradientColors),
+                brush = generateVerticalGradient(baseColor),
                 shape = CircleShape
             ),
         contentAlignment = Alignment.Center
@@ -58,7 +57,8 @@ fun AccountImage(
 fun AccountImageWithNamePreview() {
     MyTonWalletContestTheme {
         AccountImage(
-            name = "alice.ton"
+            name = "alice.ton",
+            baseColor = Color(0xFFFF516A)
         )
     }
 }
@@ -67,6 +67,8 @@ fun AccountImageWithNamePreview() {
 @Composable
 fun AccountImageAnonymousPreview() {
     MyTonWalletContestTheme {
-        AccountImage()
+        AccountImage(
+            baseColor = Color.Red
+        )
     }
 }

@@ -10,6 +10,7 @@ import ru.andvl.mytonwallet.contest.blockchain.util.WebViewHolder
 import ru.andvl.mytonwallet.contest.bottombar.api.BottomBarDecomposeComponent
 import ru.andvl.mytonwallet.contest.bottombar.impl.api.BottomBarDecomposeComponentImpl
 import ru.andvl.mytonwallet.contest.database.MyTonWalletDatabase
+import ru.andvl.mytonwallet.contest.database.daos.AccountAddressColorsDao
 import ru.andvl.mytonwallet.contest.database.daos.BalanceDao
 import ru.andvl.mytonwallet.contest.database.daos.StakingStateDao
 import ru.andvl.mytonwallet.contest.database.daos.SwapTokenDao
@@ -60,5 +61,8 @@ val appModule = module {
     }
     single<StakingStateDao> {
         get<MyTonWalletDatabase>().stakingStateDao()
+    }
+    single<AccountAddressColorsDao> {
+        get<MyTonWalletDatabase>().walletAddressColorsDao()
     }
 }

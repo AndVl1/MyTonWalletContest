@@ -1,8 +1,9 @@
 package ru.andvl.mytonwallet.contest.blockchain.impl
 
-import android.content.Context
 import android.util.Log
 import android.webkit.JavascriptInterface
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,27 +39,30 @@ import ru.andvl.mytonwallet.contest.bottombar.impl.model.AssetTokenType
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.HistoryActivity
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.Nft
 import ru.andvl.mytonwallet.contest.bottombar.impl.model.TokenImage
+import ru.andvl.mytonwallet.contest.database.daos.AccountAddressColorsDao
 import ru.andvl.mytonwallet.contest.database.daos.BalanceDao
 import ru.andvl.mytonwallet.contest.database.daos.StakingStateDao
 import ru.andvl.mytonwallet.contest.database.daos.SwapTokenDao
 import ru.andvl.mytonwallet.contest.database.daos.TokenDao
+import ru.andvl.mytonwallet.contest.database.entities.AccountAddressColorsEntity
 import ru.andvl.mytonwallet.contest.database.entities.BalanceEntity
 import ru.andvl.mytonwallet.contest.database.entities.StakingStateEntity
 import ru.andvl.mytonwallet.contest.datastore.UserSettingsRepository
 import ru.andvl.mytonwallet.contest.mappers.toDomain
 import ru.andvl.mytonwallet.contest.mappers.toEntity
+import ru.andvl.mytonwallet.contest.utils.generateRandomColor
 import ru.andvl.mytonwallet.contest.utils.timestampToDateTime
 import java.math.BigInteger
 import kotlin.coroutines.resume
 
 class BlockchainRepositoryWebViewImpl(
-    private val context: Context,
     private val webView: WebViewHolder,
     private val userSettingsRepository: UserSettingsRepository,
     private val balanceDao: BalanceDao,
     private val tokenDao: TokenDao,
     private val swapTokenDao: SwapTokenDao,
-    private val stakingStateDao: StakingStateDao
+    private val stakingStateDao: StakingStateDao,
+    private val accountAddressColorsDao: AccountAddressColorsDao
 ) : BlockchainRepository {
     private var currentAccountId: String? = null
     private var currentAccountAddress: String? = null
@@ -165,8 +169,8 @@ class BlockchainRepositoryWebViewImpl(
         val balances = getCurrentAccountBalances()
         Log.d("balancesCount", balances.first().size.toString())
 
-        return getCurrentAccountBalances().flatMapConcat { balances ->
-            val assetTokensFlows = balances.map { balance ->
+        return getCurrentAccountBalances().flatMapConcat { accountBalances ->
+            val assetTokensFlows = accountBalances.map { balance ->
                 tokenDao.getTokenBySlug(balance.slug).map { token ->
                     val stakingState = stakingStateDao.getStakingStateByAccountId(accountId)
 
@@ -244,10 +248,28 @@ class BlockchainRepositoryWebViewImpl(
                 is ApiActivity.ApiTransactionActivity -> {
                     when (it.type) {
                         ApiTransactionType.NFT_RECEIVED -> {
+                            val accountColor = it.fromAddress.let { address ->
+                                val colorInt =
+                                    accountAddressColorsDao.getColorByAccountAddress(address)
+                                if (colorInt != null) {
+                                    Color(colorInt)
+                                } else {
+                                    generateRandomColor().apply {
+                                        accountAddressColorsDao.updateAccountColor(
+                                            AccountAddressColorsEntity(
+                                                address = address,
+                                                color = this.toArgb()
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+
                             HistoryActivity.NftReceivedTransaction(
                                 dateTime = timestampToDateTime(it.timestamp),
                                 from = it.fromAddress,
                                 fromName = it.metadata?.name,
+                                fromColor = accountColor,
                                 fee = it.fee.toFloat(),
                                 nft = it.nft!!.let { nft ->
                                     Nft(
@@ -264,10 +286,28 @@ class BlockchainRepositoryWebViewImpl(
                         }
 
                         ApiTransactionType.NFT_TRANSFERRED -> {
+                            val accountColor = it.toAddress.let { address ->
+                                val colorInt =
+                                    accountAddressColorsDao.getColorByAccountAddress(address)
+                                if (colorInt != null) {
+                                    Color(colorInt)
+                                } else {
+                                    generateRandomColor().apply {
+                                        accountAddressColorsDao.updateAccountColor(
+                                            AccountAddressColorsEntity(
+                                                address = address,
+                                                color = this.toArgb()
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+
                             HistoryActivity.NftSentTransaction(
                                 dateTime = timestampToDateTime(it.timestamp),
                                 to = it.toAddress,
                                 toName = it.metadata?.name,
+                                toColor = accountColor,
                                 fee = it.fee.toFloat(),
                                 nft = it.nft!!.let { nft ->
                                     Nft(
@@ -285,7 +325,25 @@ class BlockchainRepositoryWebViewImpl(
 
                         else -> {
                             val token = tokenDao.getTokenBySlug(it.slug).first()
+
                             if (it.isIncoming) {
+                                val accountColor = it.fromAddress.let { address ->
+                                    val colorInt =
+                                        accountAddressColorsDao.getColorByAccountAddress(address)
+                                    if (colorInt != null) {
+                                        Color(colorInt)
+                                    } else {
+                                        generateRandomColor().apply {
+                                            accountAddressColorsDao.updateAccountColor(
+                                                AccountAddressColorsEntity(
+                                                    address = address,
+                                                    color = this.toArgb()
+                                                )
+                                            )
+                                        }
+                                    }
+                                }
+
                                 HistoryActivity.ReceivedTransaction(
                                     dateTime = timestampToDateTime(it.timestamp),
                                     token = token.toDomain(),
@@ -295,9 +353,27 @@ class BlockchainRepositoryWebViewImpl(
                                     message = it.comment,
                                     from = it.fromAddress,
                                     fromName = it.metadata?.name,
+                                    fromColor = accountColor,
                                     fee = it.fee.toFloat(),
                                 )
                             } else {
+                                val accountColor = it.toAddress.let { address ->
+                                    val colorInt =
+                                        accountAddressColorsDao.getColorByAccountAddress(address)
+                                    if (colorInt != null) {
+                                        Color(colorInt)
+                                    } else {
+                                        generateRandomColor().apply {
+                                            accountAddressColorsDao.updateAccountColor(
+                                                AccountAddressColorsEntity(
+                                                    address = address,
+                                                    color = this.toArgb()
+                                                )
+                                            )
+                                        }
+                                    }
+                                }
+
                                 HistoryActivity.SentTransaction(
                                     dateTime = timestampToDateTime(it.timestamp),
                                     token = token.toDomain(),
@@ -307,6 +383,7 @@ class BlockchainRepositoryWebViewImpl(
                                     message = it.comment,
                                     to = it.toAddress,
                                     toName = it.metadata?.name,
+                                    toColor = accountColor,
                                     fee = it.fee.toFloat(),
                                 )
                             }
@@ -380,7 +457,6 @@ class BlockchainRepositoryWebViewImpl(
     // callApi('getWalletInfo', "$network", "$currentAccountAddress")
 
     // TODO getAccountNewestTxId(accountId: string)
-    // TODO 0(accountId: string)
     // TODO getTokenTransactionSlice(accountId: string)
     // TODO fetchTokenActivitySlice
     // TODO fetchAllActivitySlice
