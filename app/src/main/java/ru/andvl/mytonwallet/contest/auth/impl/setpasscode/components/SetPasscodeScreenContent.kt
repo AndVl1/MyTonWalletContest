@@ -1,5 +1,8 @@
 package ru.andvl.mytonwallet.contest.auth.impl.setpasscode.components
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -45,7 +48,11 @@ fun SetPasscodeScreenContent(
                 dotsNumber = state.passcodeLength.value,
                 isSelected = { it < state.inputPasscode.length },
                 indicatorsColor = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier
+                    .padding(8.dp)
+                    .animateContentSize(
+                        animationSpec = spring(stiffness = Spring.StiffnessMedium)
+                    )
             )
         }
 
