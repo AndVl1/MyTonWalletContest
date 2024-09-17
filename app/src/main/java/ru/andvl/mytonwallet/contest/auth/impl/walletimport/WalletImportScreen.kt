@@ -1,8 +1,6 @@
 package ru.andvl.mytonwallet.contest.auth.impl.walletimport
 
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
@@ -50,7 +48,6 @@ fun WalletImportScreen(
                 .fillMaxSize()
                 .padding(horizontal = 48.dp)
         )
-        Spacer(modifier = Modifier.height(48.dp))
     }
 }
 

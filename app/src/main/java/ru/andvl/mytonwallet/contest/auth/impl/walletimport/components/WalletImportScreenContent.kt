@@ -107,6 +107,7 @@ fun WalletImportScreenContent(
                 onClick = { onAction(WalletImportAction.OnContinueClicked) },
                 modifier = Modifier.fillMaxWidth()
             )
+            Spacer(modifier = Modifier.height(48.dp))
         }
     }
 }
