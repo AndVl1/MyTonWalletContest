@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.andvl.mytonwallet.contest.R
+import ru.andvl.mytonwallet.contest.auth.impl.passcode.PasscodeLength
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.SetPasscodeAction
 import ru.andvl.mytonwallet.contest.auth.impl.setpasscode.SetPasscodeState
 import ru.andvl.mytonwallet.contest.ui.components.ButtonStyle
@@ -51,7 +52,10 @@ fun SetPasscodeScreenContent(
         TonWalletButton(
             text = stringResource(
                 R.string.auth_set_passcode_change_passcode_length,
-                state.passcodeLength.value
+                when (state.passcodeLength) {
+                    PasscodeLength.FOUR -> PasscodeLength.SIX.value
+                    PasscodeLength.SIX -> PasscodeLength.FOUR.value
+                }
             ),
             buttonStyle = ButtonStyle.SECONDARY,
             onClick = {
