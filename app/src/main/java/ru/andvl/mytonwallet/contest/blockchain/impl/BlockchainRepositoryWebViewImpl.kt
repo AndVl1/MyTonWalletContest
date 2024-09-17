@@ -54,6 +54,7 @@ import ru.andvl.mytonwallet.contest.utils.generateRandomColor
 import ru.andvl.mytonwallet.contest.utils.timestampToDateTime
 import java.math.BigInteger
 import kotlin.coroutines.resume
+import kotlin.math.pow
 
 class BlockchainRepositoryWebViewImpl(
     private val webView: WebViewHolder,
@@ -265,12 +266,14 @@ class BlockchainRepositoryWebViewImpl(
                                 }
                             }
 
+                            val toncoin = tokenDao.getTokenBySlug(TONCOIN_SLUG).first()
+
                             HistoryActivity.NftReceivedTransaction(
                                 dateTime = timestampToDateTime(it.timestamp),
                                 from = it.fromAddress,
                                 fromName = it.metadata?.name,
                                 fromColor = accountColor,
-                                fee = it.fee.toFloat(),
+                                fee = it.fee.toFloat() / 10f.pow(toncoin.decimals),
                                 nft = it.nft!!.let { nft ->
                                     Nft(
                                         index = nft.index,
@@ -303,12 +306,14 @@ class BlockchainRepositoryWebViewImpl(
                                 }
                             }
 
+                            val toncoin = tokenDao.getTokenBySlug(TONCOIN_SLUG).first()
+
                             HistoryActivity.NftSentTransaction(
                                 dateTime = timestampToDateTime(it.timestamp),
                                 to = it.toAddress,
                                 toName = it.metadata?.name,
                                 toColor = accountColor,
-                                fee = it.fee.toFloat(),
+                                fee = it.fee.toFloat() / 10f.pow(toncoin.decimals),
                                 nft = it.nft!!.let { nft ->
                                     Nft(
                                         index = nft.index,
@@ -355,7 +360,7 @@ class BlockchainRepositoryWebViewImpl(
                                     from = it.fromAddress,
                                     fromName = it.metadata?.name,
                                     fromColor = accountColor,
-                                    fee = it.fee.toFloat(),
+                                    fee = it.fee.toFloat() / 10f.pow(token.decimals),
                                 )
                             } else {
                                 val accountColor = it.toAddress.let { address ->
@@ -385,7 +390,7 @@ class BlockchainRepositoryWebViewImpl(
                                     to = it.toAddress,
                                     toName = it.metadata?.name,
                                     toColor = accountColor,
-                                    fee = it.fee.toFloat(),
+                                    fee = it.fee.toFloat() / 10f.pow(token.decimals),
                                 )
                             }
                         }
@@ -393,13 +398,14 @@ class BlockchainRepositoryWebViewImpl(
                 }
 
                 is ApiActivity.ApiSwapActivity -> {
+                    val toncoin = tokenDao.getTokenBySlug(TONCOIN_SLUG).first()
                     HistoryActivity.SwappedTransaction(
                         dateTime = timestampToDateTime(it.timestamp),
                         fromToken = tokenDao.getTokenBySlug(it.from).first().toDomain(),
                         fromAmount = it.fromAmount.toBigDecimal(),
                         toToken = tokenDao.getTokenBySlug(it.to).first().toDomain(),
                         toAmount = it.toAmount.toBigDecimal(),
-                        fee = it.swapFee.toFloat()
+                        fee = it.swapFee.toFloat() / 10f.pow(toncoin.decimals)
                     )
                 }
             }
